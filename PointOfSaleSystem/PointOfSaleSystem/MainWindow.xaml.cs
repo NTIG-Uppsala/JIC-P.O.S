@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,10 +23,29 @@ namespace PointOfSaleSystem
             InitializeComponent();
         }
 
+        private void CalculateTotalPrice(float productPrice)
+        {
+            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            float price = float.Parse(priceText);
+
+            price += productPrice;
+            TotalPrice.Text = price.ToString("0.00") + " kr";
+        }
+
+        private void ResetTotalPrice()
+        {
+            TotalPrice.Text = "0 kr";
+        }
+
         private void CoffeeButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Coffee button pressed!");
-            
+            Debug.WriteLine("Current Directory: " + Directory.GetCurrentDirectory());
+            CalculateTotalPrice(25.99f);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetTotalPrice();
         }
     }
 }

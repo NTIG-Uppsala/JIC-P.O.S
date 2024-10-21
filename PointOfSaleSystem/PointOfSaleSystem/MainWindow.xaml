@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="CoffeeButton" Content="Coffee" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Width="71" Click="CoffeeButton_Click" Background="#FFAB0808" FontSize="18"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="46" Margin="625,316,0,0" VerticalAlignment="Top" Width="165">
+        <Button x:Name="CoffeeButton" Content="Coffee" Margin="10,10,0,0" Click="CoffeeButton_Click" Background="#FFAB0808" FontSize="18" Height="45" VerticalAlignment="Top" HorizontalAlignment="Left" Width="71"/>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,10,53" Height="46" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165">
             <TextBlock x:Name="TotalPrice" TextWrapping="Wrap" Text="0 kr" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
         </Border>
+        <Button x:Name="ResetTotalPriceButton" Content="Reset" Margin="0,0,10,10" Click="ResetButton_Click" Background="Red" FontSize="18" RenderTransformOrigin="1.202,1.371" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="82"/>
 
     </Grid>
 </Window>
