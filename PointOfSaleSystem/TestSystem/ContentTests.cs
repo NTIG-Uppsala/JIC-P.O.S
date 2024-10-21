@@ -1,8 +1,6 @@
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.UIA3;
-using Microsoft.VisualStudio.TestTools.UnitTesting; // Ensure this is included
-using System;
 using System.Diagnostics;
 
 namespace TestSystem
@@ -18,12 +16,7 @@ namespace TestSystem
         public void TestInitialize()
         {
             cf = new ConditionFactory(new UIA3PropertyLibrary());
-            // Launch the application
-            string CurrentDirectory = "../../../../";
-            string executablePathFromSrc = "JIC-POS/bin/Release/net8.0-windows/PointOfSaleSystem.exe";
-            string RestaurantPosPath = Path.Combine(CurrentDirectory, executablePathFromSrc);
-            var app = FlaUI.Core.Application.Launch(RestaurantPosPath);
-            //app = FlaUI.Core.Application.Launch("C:\\Users\\carl.erikssonskogh\\Documents\\WpfApp1\\WpfApp1\\bin\\Release\\net8.0-windows\\WpfApp1.exe");
+            app = FlaUI.Core.Application.Launch("C:\\Users\\carl.erikssonskogh\\Documents\\GitHub\\JIC-P.O.S\\PointOfSaleSystem\\PointOfSaleSystem\\bin\\Release\\net8.0-windows\\PointOfSaleSystem.exe");
         }
 
         [TestCleanup]
@@ -40,28 +33,35 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
             float calculatePrice = 0;
-
-            FlaUI.Core.AutomationElements.Button coffeeButton = window.FindFirstDescendant(cf.ByName("CoffeeButton")).AsButton();
+            FlaUI.Core.AutomationElements.Button coffeeButton = window.FindFirstDescendant(cf.ByAutomationId("CoffeeButton")).AsButton();
             // Click the button twice
             for (int i = 2; i-- > 0;)
             {
-            //app = FlaUI.Core.Application.Launch("C:\\Users\\carl.erikssonskogh\\Documents\\WpfApp1\\WpfApp1\\bin\\Release\\net8.0-windows\\WpfApp1.exe");
                 coffeeButton.Click();
-                calculatePrice += 20;
+                calculatePrice += 25.99f;
             }
 
             // Check that the total price is correct
-            FlaUI.Core.AutomationElements.TextBox totalPrice = window.FindFirstDescendant(cf.ByName("totalPrice")).AsTextBox();
-            float totalPriceValue = float.Parse(totalPrice.Text);
+            FlaUI.Core.AutomationElements.TextBox totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+
+            // Extract the Name property, which contains the displayed text
+            string totalPriceText = totalPrice.Properties.Name.Value;
+
+            // Remove the "kr" and parse it to float
+            float totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
             Trace.Assert(totalPriceValue == calculatePrice, $"Expected {calculatePrice}, but got {totalPriceValue}");
 
             // Find the reset button and click it
-            FlaUI.Core.AutomationElements.Button resetTotalPriceButton = window.FindFirstDescendant(cf.ByName("resetTotalPriceButton")).AsButton();
+            FlaUI.Core.AutomationElements.Button resetTotalPriceButton = window.FindFirstDescendant(cf.ByAutomationId("ResetTotalPriceButton")).AsButton();
             resetTotalPriceButton.Click();
 
             // Check that the total price is 0
-            totalPrice = window.FindFirstDescendant(cf.ByName("totalPrice")).AsTextBox();
-            totalPriceValue = float.Parse(totalPrice.Text);
+            totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            // Extract the Name property, which contains the displayed text
+            totalPriceText = totalPrice.Properties.Name.Value;
+
+            // Remove the "kr" and parse it to float
+            totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
             Trace.Assert(totalPriceValue == 0, $"Expected {calculatePrice}, but got {totalPriceValue}");
         }
     }
