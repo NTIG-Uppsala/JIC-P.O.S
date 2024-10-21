@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="CoffeeButton" Content="Coffee" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Width="71" Click="CoffeeButton_Click" Background="#FFAB0808" FontSize="18"/>
 
     </Grid>
 </Window>

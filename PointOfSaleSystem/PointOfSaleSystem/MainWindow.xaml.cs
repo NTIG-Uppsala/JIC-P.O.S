@@ -20,5 +20,11 @@ namespace PointOfSaleSystem
         {
             InitializeComponent();
         }
+
+        private void CoffeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Coffee button pressed!");
+            
+        }
     }
 }
