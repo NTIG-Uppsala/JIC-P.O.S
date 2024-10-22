@@ -1,6 +1,6 @@
 # JIC-P.O.S
 A point of sale system for a restaurant.
-## Download and run the application
+## Download and Run the Application
 [Click here for download](https://github.com/NTIG-Uppsala/JIC-P.O.S/releases)
 - Click the .msi file
  in the latest release
