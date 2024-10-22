@@ -30,9 +30,11 @@ namespace TestSystem
         [TestMethod]
         public void CheckCoffee()
         {
+            // Creates a UIA3Automation instance and disposes it after use.
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
+            //Calls a helperfunction to click the CoffeeButton twice with the price 25.99 per coffee
             AddItems(window, "CoffeeButton", 2, 25.99f);
         }
 
@@ -62,6 +64,8 @@ namespace TestSystem
             float calculatePrice = 0;
             var itemButton = window.FindFirstDescendant(cf.ByAutomationId(buttonAutomationId)).AsButton();
 
+            // Clicks the specified button 'count' times to add items, 
+            // and updates the calculated total price by adding the pricePerItem.
             for (int i = 0; i < count; i++)
             {
                 itemButton.Click();
