@@ -1,7 +1,9 @@
 # JIC-P.O.S
 A point of sale system for a restaurant.
 ## Download and run the application
-- Click the Restaurant-POS.msi in the latest release
+[Click here for download](https://github.com/NTIG-Uppsala/JIC-P.O.S/releases)
+- Click the .msi file
+ in the latest release
 - If you have a previous version:
   - Go to add or remove programs on your computer and remove the Restaurant-POS program
 - Run the installer located in your Downloads folder
