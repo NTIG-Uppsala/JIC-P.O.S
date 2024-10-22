@@ -2,6 +2,7 @@ using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.UIA3;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TestSystem
 {
@@ -29,40 +30,50 @@ namespace TestSystem
         [TestMethod]
         public void CheckCoffee()
         {
-            // Create an automation object that is disposed when done
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
-            float calculatePrice = 0;
-            FlaUI.Core.AutomationElements.Button coffeeButton = window.FindFirstDescendant(cf.ByAutomationId("CoffeeButton")).AsButton();
-            // Click the button twice
-            for (int i = 2; i-- > 0;)
-            {
-                coffeeButton.Click();
-                calculatePrice += 25.99f;
-            }
 
-            // Check that the total price is correct
-            FlaUI.Core.AutomationElements.TextBox totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            AddItems(window, "CoffeeButton", 2, 25.99f);
+        }
 
-            // Extract the Name property, which contains the displayed text
-            string totalPriceText = totalPrice.Properties.Name.Value;
+        [TestMethod]
+        public void ResetTotalPrice()
+        {
+            using var automation = new UIA3Automation();
+            var window = app.GetMainWindow(automation);
 
-            // Remove the "kr" and parse it to float
-            float totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
-            Trace.Assert(totalPriceValue == calculatePrice, $"Expected {calculatePrice}, but got {totalPriceValue}");
+            // Add some items to set the total price
+            AddItems(window, "CoffeeButton", 5, 25.99f);
 
-            // Find the reset button and click it
-            FlaUI.Core.AutomationElements.Button resetTotalPriceButton = window.FindFirstDescendant(cf.ByAutomationId("ResetTotalPriceButton")).AsButton();
+            // Reset the total price
+            var resetTotalPriceButton = window.FindFirstDescendant(cf.ByAutomationId("ResetTotalPriceButton")).AsButton();
             resetTotalPriceButton.Click();
 
-            // Check that the total price is 0
-            totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
-            // Extract the Name property, which contains the displayed text
-            totalPriceText = totalPrice.Properties.Name.Value;
+            // Check that the total price is now zero
+            var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            string totalPriceText = totalPrice.Properties.Name.Value;
+            float totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
+            Trace.Assert(totalPriceValue == 0, $"Expected 0, but got {totalPriceValue}");
+        }
 
-            // Remove the "kr" and parse it to float
-            totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
-            Trace.Assert(totalPriceValue == 0, $"Expected {calculatePrice}, but got {totalPriceValue}");
+        // Helper method to add items and calculate total price
+        private void AddItems(FlaUI.Core.AutomationElements.Window window, string buttonAutomationId, int count, float pricePerItem)
+        {
+            float calculatePrice = 0;
+            var itemButton = window.FindFirstDescendant(cf.ByAutomationId(buttonAutomationId)).AsButton();
+
+            for (int i = 0; i < count; i++)
+            {
+                itemButton.Click();
+                calculatePrice += pricePerItem;
+            }
+
+            // Verify the total price after adding items
+            var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            string totalPriceText = totalPrice.Properties.Name.Value;
+            float totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
+            Trace.Assert(totalPriceValue == calculatePrice, $"Expected {calculatePrice}, but got {totalPriceValue}");
         }
     }
 }
+
