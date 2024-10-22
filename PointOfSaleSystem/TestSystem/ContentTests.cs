@@ -16,7 +16,7 @@ namespace TestSystem
         public void TestInitialize()
         {
             cf = new ConditionFactory(new UIA3PropertyLibrary());
-            app = FlaUI.Core.Application.Launch("C:\\Users\\carl.erikssonskogh\\Documents\\GitHub\\JIC-P.O.S\\PointOfSaleSystem\\PointOfSaleSystem\\bin\\Release\\net8.0-windows\\PointOfSaleSystem.exe");
+            app = FlaUI.Core.Application.Launch(@"..\..\..\..\PointOfSaleSystem\bin\Release\net8.0-windows\PointOfSaleSystem.exe");
         }
 
         [TestCleanup]
