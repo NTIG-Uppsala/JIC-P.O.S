@@ -2,7 +2,7 @@
 
 * Code and file names are written in english.
 * All comments are written in english.
-* File names are written in camelCase.
+* File names are written in PascalCase.
 * Class, struct and record names are written in PascalCase.
 * Function names are written in PascalCase.
 * Variable names are written in camelCase.
