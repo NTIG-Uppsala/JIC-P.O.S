@@ -48,10 +48,10 @@ namespace TestSystem
 
             int index = 0;
 
-            //loopa igenom listOfProducts istället och ta automationId och pris och klicka på alla dessa knappar
+            // Loop through listOfProducts from the MainWindow class to get the x:Name and price of each button and try clicking on them
             foreach (var item in MainWindow.listOfProducts)
             {
-                string buttonAutomationId = item.automationId;
+                string buttonAutomationId = item.nameId;
                 int productPrice = item.price;
     
                 if (productPrice > 0)

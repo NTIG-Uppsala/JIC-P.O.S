@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PointOfSaleSystem
 {
@@ -12,15 +14,75 @@ namespace PointOfSaleSystem
         public MainWindow()
         {
             InitializeComponent();
+            CreateProducts();
         }
 
-        private void CalculateTotalPrice(float productPrice)
+        // Struct representing a product to create buttons
+        public struct Product
         {
+            public Product(string productName, string productNameId, int productPrice)
+            {
+                name = productName;
+                nameId = productNameId;
+                price = productPrice;
+            }
+
+            public string name { get; init; }
+            public string nameId { get; init; }
+            public int price { get; init; }
+        }
+
+        // Create a list contaning products that are created with the Product struct
+        public static List<Product> listOfProducts = new List<Product>
+        {
+            new Product("Coffee", "CoffeeButton", 25), // product name, nameId, price
+            new Product("Sushi 12 pieces", "Sushi12Button", 150),
+            new Product("Pasta carbonara", "PastaCarbonaraButton", 170),
+            new Product("Chicken nuggets 9 pieces", "ChickenNuggets9Button", 70),
+            new Product("Meatballs with mashed potatoes", "MeatballsMashedPotatoesButton", 100)
+        };
+
+        private void CreateProducts()
+        {
+            foreach (var product in listOfProducts)
+            {
+                // Create a button for each product
+                Button button = new Button
+                {
+                    Name = product.nameId, // Used for x:Name value to create an id for the item
+                    Margin = new Thickness(10, 10, 0, 0),
+                    Background = new SolidColorBrush(Color.FromRgb(171, 8, 8)), // Red background color
+                    FontSize = 14,
+                    Height = 65,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Width = 91,
+                };
+
+                // Create a TextBlock that supports text wrapping for the Button content
+                TextBlock textBlock = new TextBlock
+                {
+                    Text = product.name,
+                    TextAlignment = TextAlignment.Center,
+                    TextWrapping = TextWrapping.Wrap,
+                    Foreground = Brushes.Black,
+                };
+
+                button.Content = textBlock;
+                button.Click += (sender, e) => CalculateTotalPrice(product.price); // Add the product price to the TotalPrice on button click
+
+                ProductsStackPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
+            }
+        }
+
+        private void CalculateTotalPrice(int productPrice)
+        {
+            // Get the current price as an integer from TotalPrice
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
-            float price = float.Parse(priceText);
+            int price = int.Parse(priceText);
 
             price += productPrice;
-            TotalPrice.Text = price.ToString("0.00") + " kr";
+            TotalPrice.Text = price.ToString() + " kr";
         }
 
         private void ResetTotalPrice()
@@ -28,13 +90,7 @@ namespace PointOfSaleSystem
             TotalPrice.Text = "0 kr";
         }
 
-        private void CoffeeButton_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Current Directory: " + Directory.GetCurrentDirectory());
-            CalculateTotalPrice(25.99f);
-        }
-
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
             ResetTotalPrice();
         }
