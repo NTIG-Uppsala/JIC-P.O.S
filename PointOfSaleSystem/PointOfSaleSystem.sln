@@ -5,7 +5,10 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOfSaleSystem", "PointOfSaleSystem\PointOfSaleSystem.csproj", "{441C6465-70B1-4B9A-874F-BDB320F64BA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem", "TestSystem\TestSystem.csproj", "{0D0043F6-9633-43CD-B122-FB43042CBE41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSystem", "TestSystem\TestSystem.csproj", "{0D0043F6-9633-43CD-B122-FB43042CBE41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{441C6465-70B1-4B9A-874F-BDB320F64BA4} = {441C6465-70B1-4B9A-874F-BDB320F64BA4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
