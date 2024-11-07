@@ -55,7 +55,7 @@ namespace TestSystem
         }
 
         [TestMethod]
-        public void CheckProjectWindow()
+        public void CheckProductWindow()
         {
             // Creates a UIA3Automation instance and disposes it after use.
             using var automation = new UIA3Automation();
@@ -86,6 +86,7 @@ namespace TestSystem
                     Trace.Assert(priceText == "50 kr", $"Expected '50 kr' but got {priceText}");
                     Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
                 }
+
                 else if (productNameText == "Pasta carbonara")
                 {
                     Trace.Assert(priceText == "340 kr", $"Expected '340 kr' but got {priceText}");

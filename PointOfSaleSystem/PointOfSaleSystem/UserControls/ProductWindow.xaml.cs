@@ -18,9 +18,9 @@ namespace PointOfSaleSystem.UserControls
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class ProjectWindow : UserControl
+    public partial class ProductWindow : UserControl
     {
-        public ProjectWindow()
+        public ProductWindow()
         {
             InitializeComponent();
         }
