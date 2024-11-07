@@ -42,24 +42,18 @@ namespace TestSystem
             // Creates a UIA3Automation instance and disposes it after use.
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
-            // Find all buttons within the StackPanel
 
-            var buttons = window.FindAllChildren(cf => cf.ByControlType(ControlType.Button));
+            //Adds two coffees
+            AddItems(window, "CoffeeButton", 2 ,25);
+            ResetTotalPrice();
 
-            int index = 0;
+            //Adds one Pasta Carbonara
+            AddItems(window, "PastaCarbonaraButton", 1, 170);
+            ResetTotalPrice();
 
-            // Loop through listOfProducts from the MainWindow class to get the x:Name and price of each button and try clicking on them
-            foreach (var item in MainWindow.listOfProducts)
-            {
-                string buttonAutomationId = item.nameId;
-                int productPrice = item.price;
-    
-                if (productPrice > 0)
-                {
-                    AddItems(window, buttonAutomationId, 1, productPrice);
-                    ResetTotalPrice();
-                }
-            }
+            //Adds three Meatballs and Mashed Potatoes
+            AddItems(window, "MeatballsMashedPotatoesButton", 3, 100);
+            ResetTotalPrice();
         }
 
         [TestMethod]
