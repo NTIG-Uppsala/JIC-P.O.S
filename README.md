@@ -5,7 +5,7 @@ A point of sale system for a restaurant.
 - Click the .msi file
  in the latest release
 - If you have a previous version:
-  - Go to add or remove programs on your computer and remove the Restaurant-POS program
+  - Go to add or remove programs on your computer and remove the "TE4 - Restaurant Point Of Sale"
 - Run the installer located in your Downloads folder
 - Follow steps in the installer
 - Run the point of sale system app and approve admin privileges
