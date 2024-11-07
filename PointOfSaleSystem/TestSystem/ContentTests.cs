@@ -56,8 +56,8 @@ namespace TestSystem
             ResetTotalPrice();
         }
 
-        [TestMethod]
-        public void ResetTotalPrice()
+        // Helper method to reset the total price
+        private void ResetTotalPrice()
         {
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
