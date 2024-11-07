@@ -75,8 +75,8 @@ namespace TestSystem
             // Check that the total price is now zero
             var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
             string totalPriceText = totalPrice.Properties.Name.Value;
-            float totalPriceValue = float.Parse(totalPriceText.Replace(" kr", ""));
-            Trace.Assert(totalPriceValue == 0, $"Expected 0, but got {totalPriceValue}");
+
+            Trace.Assert(totalPriceText == "0 kr", $"Expected 0, but got {totalPriceText}");
         }
 
         // Helper method to add items and calculate total price
