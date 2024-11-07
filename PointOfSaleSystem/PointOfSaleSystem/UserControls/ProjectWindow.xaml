@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="PointOfSaleSystem.UserControls.ProjectWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PointOfSaleSystem.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="180">
+    <Grid Height="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+
+            <RowDefinition Height="50"/>
+
+        </Grid.RowDefinitions>
+
+        <ListView>
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn Header="Product" Width="60" >
+
+                    </GridViewColumn>
+                    <GridViewColumn Header="Price" Width="60">
+
+                    </GridViewColumn>
+                    <GridViewColumn Header="Amount" Width="60">
+
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>
