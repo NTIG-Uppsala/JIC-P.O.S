@@ -51,7 +51,7 @@ namespace PointOfSaleSystem
                 {
                     Name = product.nameId, // Used for x:Name value to create an id for the item
                     Margin = new Thickness(10, 10, 0, 0),
-                    Background = new SolidColorBrush(Color.FromRgb(171, 8, 8)), // Red background color
+                    Background = Brushes.Orange,
                     FontSize = 14,
                     Height = 65,
                     VerticalAlignment = VerticalAlignment.Top,
