@@ -9,12 +9,9 @@
     <Grid Height="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="300"/>
-
             <RowDefinition Height="50"/>
-
         </Grid.RowDefinitions>
-
-        <ListView>
+        <ListView x:Name="ProductWindow">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -22,14 +19,26 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-                    <GridViewColumn Header="Product" Width="60" >
-
+                    <GridViewColumn Header="Product" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductName}" AutomationProperties.AutomationId="ProductNameText" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Price" Width="60">
-
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductPrice}" AutomationProperties.AutomationId="PriceText" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Amount" Width="60">
-
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductAmount}" AutomationProperties.AutomationId="AmountText" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
