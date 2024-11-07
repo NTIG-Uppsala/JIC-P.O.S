@@ -45,11 +45,9 @@ namespace TestSystem
 
             //Adds two coffees
             AddItems(window, "CoffeeButton", 2 ,25);
-            ResetTotalPrice();
 
             //Adds one Pasta Carbonara
             AddItems(window, "PastaCarbonaraButton", 1, 170);
-            ResetTotalPrice();
 
             //Adds three Meatballs and Mashed Potatoes
             AddItems(window, "MeatballsMashedPotatoesButton", 3, 100);
@@ -76,7 +74,12 @@ namespace TestSystem
         // Helper method to add items and calculate total price
         private void AddItems(FlaUI.Core.AutomationElements.Window window, string buttonAutomationId, int count, int pricePerItem)
         {
-            int calculatePrice = 0;
+            // Get the current total price
+            var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            string totalPriceText = totalPrice.Properties.Name.Value;
+            int totalPriceValue = int.Parse(totalPriceText.Replace(" kr", ""));
+
+            int calculatePrice = totalPriceValue;
             var itemButton = window.FindFirstDescendant(cf.ByAutomationId(buttonAutomationId)).AsButton();
 
             // Clicks the specified button 'count' times to add items, 
@@ -87,10 +90,10 @@ namespace TestSystem
                 calculatePrice += pricePerItem;
             }
 
-            // Verify the total price after adding items
-            var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
-            string totalPriceText = totalPrice.Properties.Name.Value;
-            int totalPriceValue = int.Parse(totalPriceText.Replace(" kr", ""));
+            //Gets the new total price
+            totalPriceText = totalPrice.Properties.Name.Value;
+            totalPriceValue = int.Parse(totalPriceText.Replace(" kr", ""));
+
             Trace.Assert(totalPriceValue == calculatePrice, $"Expected {calculatePrice}, but got {totalPriceValue}");
         }
     }
