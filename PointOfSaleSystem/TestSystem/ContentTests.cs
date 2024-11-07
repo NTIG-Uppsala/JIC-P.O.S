@@ -54,6 +54,46 @@ namespace TestSystem
             ResetTotalPrice();
         }
 
+        [TestMethod]
+        public void CheckProjectWindow()
+        {
+            // Creates a UIA3Automation instance and disposes it after use.
+            using var automation = new UIA3Automation();
+            var window = app.GetMainWindow(automation);
+
+            //Adds two coffees
+            AddItems(window, "CoffeeButton", 2, 25);
+            //Adds two Pasta Carbonara
+            AddItems(window, "PastaCarbonaraButton", 2, 170);
+
+            // Find all the elements that match the criteria (e.g., ListView rows)
+            var listViewItems = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem));
+
+            // Ensure that listViewItems contains elements
+            Trace.Assert(listViewItems.Length > 0, "Test failed: No items found in the product window.");
+
+            // Loop through each item (AutomationElement) in the array
+            foreach (var item in listViewItems)
+            {
+                // Access elements using AutomationId
+                var productNameText = item.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
+                var priceText = item.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
+                var amountText = item.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
+                
+                // Validate that two coffees and pasta carbonaras are present in the product window
+                if (productNameText == "Coffee")
+                {
+                    Trace.Assert(priceText == "50 kr", $"Expected '50 kr' but got {priceText}");
+                    Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
+                }
+                else if (productNameText == "Pasta carbonara")
+                {
+                    Trace.Assert(priceText == "340 kr", $"Expected '340 kr' but got {priceText}");
+                    Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
+                }
+            }
+        }
+
         // Helper method to reset the total price
         private void ResetTotalPrice()
         {
