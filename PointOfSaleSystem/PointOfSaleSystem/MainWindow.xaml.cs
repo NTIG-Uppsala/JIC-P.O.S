@@ -69,13 +69,13 @@ namespace PointOfSaleSystem
                 };
 
                 button.Content = textBlock;
-                button.Click += (sender, e) => CalculateTotalPrice(product.price); // Add the product price to the TotalPrice on button click
+                button.Click += (sender, e) => AddToTotalPrice(product.price); // Add the product price to the TotalPrice on button click
 
                 ProductsStackPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
             }
         }
 
-        private void CalculateTotalPrice(int productPrice)
+        private void AddToTotalPrice(int productPrice)
         {
             // Get the current price as an integer from TotalPrice
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
