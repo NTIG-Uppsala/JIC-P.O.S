@@ -8,7 +8,7 @@ A point of sale system for a restaurant.
   - Go to add or remove programs on your computer and remove the "TE4 - Restaurant Point Of Sale"
 - Run the installer located in your Downloads folder
 - Follow steps in the installer
-- Run the point of sale system app and approve admin privileges
+- Run the "PointOfSaleSystem.exe" file and approve admin privileges if needed.
 
 ## Documents
 * [Programming Languages](Documents/programmingLanguages.md)
