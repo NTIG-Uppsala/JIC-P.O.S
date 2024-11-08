@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PointOfSaleSystem.UserControls;
 
 namespace PointOfSaleSystem
 {
@@ -69,7 +70,11 @@ namespace PointOfSaleSystem
                 };
 
                 button.Content = textBlock;
-                button.Click += (sender, e) => AddToTotalPrice(product.price); // Add the product price to the TotalPrice on button click
+                button.Click += (sender, e) =>
+                {
+                    AddToTotalPrice(product.price);
+                    productWindow.AddProduct(product.name, product.price); // Call method in ProductWindow to add a product to the the product window
+                };
 
                 ProductsStackPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
             }
@@ -93,6 +98,7 @@ namespace PointOfSaleSystem
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
             ResetTotalPrice();
+            productWindow.ClearProducts();
         }
     }
 }

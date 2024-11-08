@@ -19,24 +19,24 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-                    <GridViewColumn Header="Product" Width="60">
+                    <GridViewColumn Header="Product" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductName}" AutomationProperties.AutomationId="ProductNameText" />
+                                <TextBlock Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="ProductNameText" TextWrapping="Wrap" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Price" Width="60">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductPrice}" AutomationProperties.AutomationId="PriceText" />
+                                <TextBlock Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="PriceText" TextWrapping="Wrap" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Amount" Width="60">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductAmount}" AutomationProperties.AutomationId="AmountText" />
+                                <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="AmountText" TextWrapping="Wrap" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
