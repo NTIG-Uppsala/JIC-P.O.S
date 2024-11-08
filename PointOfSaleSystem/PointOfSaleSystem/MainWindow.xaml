@@ -14,12 +14,12 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="620" />
-            <ColumnDefinition Width="180" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
 
-        <StackPanel Grid.Row="0" Grid.Column="0" x:Name="ProductsStackPanel" HorizontalAlignment="Left">
+        <StackPanel Grid.Column="0" x:Name="ProductsStackPanel" HorizontalAlignment="Left">
         </StackPanel>
 
         <Grid Grid.Column="1">
