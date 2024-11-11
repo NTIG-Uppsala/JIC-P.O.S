@@ -83,13 +83,13 @@ namespace TestSystem
                 // Validate that two coffees and pasta carbonaras are present in the product window
                 if (productNameText == "Coffee")
                 {
-                    Trace.Assert(priceText == "50 kr", $"Expected '50 kr' but got {priceText}");
+                    Trace.Assert(priceText == "50", $"Expected '50 kr' but got {priceText}");
                     Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
                 }
 
                 else if (productNameText == "Pasta carbonara")
                 {
-                    Trace.Assert(priceText == "340 kr", $"Expected '340 kr' but got {priceText}");
+                    Trace.Assert(priceText == "340", $"Expected '340 kr' but got {priceText}");
                     Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
                 }
             }
