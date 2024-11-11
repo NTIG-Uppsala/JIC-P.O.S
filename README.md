@@ -1,6 +1,8 @@
 # JIC-P.O.S
 A point of sale system for a restaurant.
 
+Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
+
 ## Download and Run the Application
 [Click here for download](https://github.com/NTIG-Uppsala/JIC-P.O.S/releases)
 - Click the .msi file in the latest release to download it
