@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSaleSystem.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="180">
+             d:DesignHeight="300" d:DesignWidth="210">
     <Grid Height="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="300"/>
@@ -26,7 +26,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Price" Width="60">
+                    <GridViewColumn Header="Price (SEK)" Width="70">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="PriceText" TextWrapping="Wrap" />
