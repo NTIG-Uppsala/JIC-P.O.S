@@ -53,7 +53,6 @@ namespace PointOfSaleSystem.UserControls
             set
             {
                 productName = value;
-                OnPropertyChanged();
             }
         }
 

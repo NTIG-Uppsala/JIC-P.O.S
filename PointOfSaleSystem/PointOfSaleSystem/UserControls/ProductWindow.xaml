@@ -22,7 +22,7 @@
                     <GridViewColumn Header="Product" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="ProductNameText" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding ProductName}" AutomationProperties.AutomationId="ProductNameText" TextWrapping="Wrap" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
