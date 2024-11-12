@@ -152,7 +152,7 @@ namespace TestSystem
             var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
             string totalPriceText = totalPrice.Properties.Name.Value;
 
-            Trace.Assert(totalPriceText == "0 kr", $"Expected 0, but got {totalPriceText}");
+            Trace.Assert(totalPriceText == "0 kr", $"Expected 0 kr, but got {totalPriceText}");
         }
 
         // Helper method to add items and calculate total price
