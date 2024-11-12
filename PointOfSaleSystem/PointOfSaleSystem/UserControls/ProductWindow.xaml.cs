@@ -55,7 +55,7 @@ namespace PointOfSaleSystem.UserControls
             }
         }
 
-        private void RemoveButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void RemoveButtonClick(object sender, System.Windows.RoutedEventArgs e)
         {
             var button = sender as Button;
             string productName = button?.Tag as string;

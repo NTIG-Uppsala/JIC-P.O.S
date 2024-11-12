@@ -38,7 +38,7 @@
                                             AutomationProperties.AutomationId="RemoveButton" 
                                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="1" FontSize="17"
                                             BorderBrush="Transparent" BorderThickness="0" Padding="0"
-                                        Click="RemoveButton_Click"/>
+                                            Click="RemoveButtonClick"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
