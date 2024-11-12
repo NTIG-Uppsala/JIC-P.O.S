@@ -13,7 +13,7 @@ namespace TestSystem
 {
 
     [TestClass]
-    public class CoffeeTest
+    public class ContentTests
     {
         private ConditionFactory? cf;
         private FlaUI.Core.Application? app; // Declare app at the class level
