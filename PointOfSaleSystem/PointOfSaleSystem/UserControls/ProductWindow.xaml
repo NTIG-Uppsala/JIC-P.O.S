@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSaleSystem.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="270">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid Height="500">
         <ListView x:Name="ProductListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.Resources>
@@ -30,14 +30,26 @@
 
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-
+                    <!--Remove button-->
+                    <GridViewColumn Header="" Width="30">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="20" Height="20" FontFamily="{StaticResource FontAwesome}" Background="Transparent" Content="&#xf1f8;" Foreground="Red" 
+                                            AutomationProperties.AutomationId="RemoveButton" 
+                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="1" FontSize="17"
+                                            BorderBrush="Transparent" BorderThickness="0" Padding="0"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Remove button ends here-->
+                    
                     <!--Name-->
                     <GridViewColumn Header="Product" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ProductName}" 
-                                           AutomationProperties.AutomationId="ProductNameText"
-                                           VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                            AutomationProperties.AutomationId="ProductNameText"
+                                            VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -48,7 +60,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"
-                                           AutomationProperties.AutomationId="PriceText"/>
+                                            AutomationProperties.AutomationId="PriceText"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -59,7 +71,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Width="90">
-                                    <Grid Width="70">
+                                    <Grid Width="80">
                                         <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
                                                 AutomationProperties.AutomationId="decreaseButton" Panel.ZIndex="1">
                                         </Button>
