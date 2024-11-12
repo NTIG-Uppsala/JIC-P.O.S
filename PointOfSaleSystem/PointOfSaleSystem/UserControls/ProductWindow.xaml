@@ -14,11 +14,24 @@
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 </Style>
+
+                <!-- Style for the Price header -->
+                <Style x:Key="CenterHeaderStyle" TargetType="GridViewColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <!-- Add any other custom properties for the header here -->
+                </Style>
+
+                <!-- Style to add a separator between rows -->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+
+                </Style>
             </ListView.Resources>
 
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-                    
+
                     <!--Name-->
                     <GridViewColumn Header="Product" Width="90">
                         <GridViewColumn.CellTemplate>
@@ -30,9 +43,9 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!--Name ends here-->
-                        
+
                     <!--Price-->
-                    <GridViewColumn Header="Price (SEK)" Width="90">
+                    <GridViewColumn Header="Price (SEK)" Width="90" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"
@@ -41,15 +54,15 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!--Price ends here-->
-                        
-                    <!--Amount-->
-                    <GridViewColumn Header="Amount" Width="90">
+
+                    <!--Ammount-->
+                    <GridViewColumn Header="Amount" Width="90" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Width="90">
                                     <Grid Width="70">
-                                    <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"></Button>
-                                    <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
+                                        <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"></Button>
+                                        <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
                                                AutomationProperties.AutomationId="AmountText" TextAlignment="Center"/>
                                         <Button Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalContentAlignment="Center">
                                         </Button>
@@ -58,8 +71,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--Amount ends here-->
-                    
+                    <!--Ammount ends here-->
+
                 </GridView>
             </ListView.View>
         </ListView>
