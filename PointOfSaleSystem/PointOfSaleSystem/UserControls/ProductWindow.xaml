@@ -5,41 +5,61 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSaleSystem.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="210">
-    <Grid Height="300">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
+             d:DesignHeight="500" d:DesignWidth="270">
+    <Grid Height="500">
         <ListView x:Name="ProductListView">
+
             <ListView.Resources>
+                <!-- Style for the GridViewColumnHeader -->
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 </Style>
             </ListView.Resources>
+
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-                    <GridViewColumn Header="Product" Width="80">
+                    
+                    <!--Name-->
+                    <GridViewColumn Header="Product" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductName}" AutomationProperties.AutomationId="ProductNameText" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding ProductName}" 
+                                           AutomationProperties.AutomationId="ProductNameText"
+                                           VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Price (SEK)" Width="70">
+                    <!--Name ends here-->
+                        
+                    <!--Price-->
+                    <GridViewColumn Header="Price (SEK)" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="PriceText" TextWrapping="Wrap" />
+                                <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"
+                                           AutomationProperties.AutomationId="PriceText"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Amount" Width="60">
+                    <!--Price ends here-->
+                        
+                    <!--Amount-->
+                    <GridViewColumn Header="Amount" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="AmountText" TextWrapping="Wrap" />
+                                <StackPanel Orientation="Horizontal" Width="90">
+                                    <Grid Width="70">
+                                    <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"></Button>
+                                    <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
+                                               AutomationProperties.AutomationId="AmountText" TextAlignment="Center"/>
+                                        <Button Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalContentAlignment="Center">
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <!--Amount ends here-->
+                    
                 </GridView>
             </ListView.View>
         </ListView>
