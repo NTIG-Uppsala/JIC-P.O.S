@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:PointOfSaleSystem"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <FontFamily x:Key="FontAwesome">pack://application:,,,/FontAwesome.WPF;component/#FontAwesome</FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
