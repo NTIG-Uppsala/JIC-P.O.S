@@ -1,7 +1,7 @@
 ### Coding Standard
 
-* Code and file names are written in english.
-* All comments are written in english.
+* Code and file names are written in English.
+* All comments are written in English.
 * File names are written in PascalCase.
 * Class, struct and record names are written in PascalCase.
 * Function names are written in PascalCase.
