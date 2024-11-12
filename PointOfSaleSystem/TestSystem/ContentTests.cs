@@ -96,25 +96,25 @@ namespace TestSystem
         }
 
         [TestMethod]
-        public void ChangeProductAmount()
+        public void AjdustAndVerifyProducts()
         {
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            //Adds one coffees
+            //Adds one coffee
             AddItems(window, "CoffeeButton", 1, 25);
             //Adds one Pasta Carbonara
             AddItems(window, "PastaCarbonaraButton", 1, 170);
 
             // Find all the elements that match the criteria (e.g., ListView rows)
             var listViewItems = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem));
-            // Copy the array to avoid a runtime error
+            // Make a copy of the array to loop through instead of the original to avoid a runtime error
             var listViewItemsCopy = listViewItems;
 
             // Ensure that listViewItems contains elements
             Trace.Assert(listViewItems.Length > 0, "Test failed: No items found in the product window.");
 
-            void CheckItemInListView(int productPrice, FlaUI.Core.AutomationElements.AutomationElement item)
+            void CheckItemButtonsInListView(int productPrice, FlaUI.Core.AutomationElements.AutomationElement item, int listViewItemsLengthBefore)
             {
                 // Access elements using AutomationId
                 var productNameText = item.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
@@ -139,24 +139,26 @@ namespace TestSystem
 
                 // Delete the product
                 removeButton.Click();
-                amountText = item.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
-                Trace.Assert(listViewItemsCopy.Length < listViewItems.Length);
+                // listViewItems length is decreased by one after item remove
+                Trace.Assert(listViewItemsLengthBefore == listViewItems.Length + 1);
             }
             // Loop through each item (AutomationElement) in the array
-            foreach (var item in listViewItems)
+            foreach (var item in listViewItemsCopy)
             {
-                // Access elements using AutomationId
+                // Get the length of listViewItems before item removal
+                int listViewItemsLengthBefore = listViewItems.Length;
+
                 var productNameText = item.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
 
-                // Validate that two coffees and pasta carbonaras are present in the product window
+                // Validate that the increase, decrease and remove buttons work for two products in the product window
                 if (productNameText == "Coffee")
                 {
-                    CheckItemInListView(25, item);
+                    CheckItemButtonsInListView(25, item, listViewItemsLengthBefore);
 
                 }
                 else if (productNameText == "Pasta carbonara")
                 {
-                    CheckItemInListView(170, item);
+                    CheckItemButtonsInListView(170, item, listViewItemsLengthBefore);
                 }
             }
         }
