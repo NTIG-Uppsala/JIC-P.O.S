@@ -60,7 +60,7 @@
                     <GridViewColumn Header="Price (SEK)" Width="90" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductTotalPrice, UpdateSourceTrigger=PropertyChanged}"
                                             AutomationProperties.AutomationId="PriceText"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -74,17 +74,19 @@
                                 <StackPanel Orientation="Horizontal" Width="90">
                                     <Grid Width="80">
                                         <!--Decrease button-->
-                                        <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
+                                        <Button Name="DecreaseButton" Tag="{Binding ProductName}" Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
                                                 AutomationProperties.AutomationId="decreaseButton" Panel.ZIndex="1"
-                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"/>
+                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
+                                                Click="DecreaseButtonClick"/>
 
                                         <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
                                                AutomationProperties.AutomationId="AmountText" TextAlignment="Center"/>
                                         
                                         <!--Increase button-->
-                                        <Button Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0"
+                                        <Button Name="IncreaseButton" Tag="{Binding ProductName}" Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0"
                                                 AutomationProperties.AutomationId="increaseButton"  Panel.ZIndex="1"
-                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"/>
+                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
+                                                Click="IncreaseButtonClick"/>
                                     </Grid>
                                 </StackPanel>
                             </DataTemplate>

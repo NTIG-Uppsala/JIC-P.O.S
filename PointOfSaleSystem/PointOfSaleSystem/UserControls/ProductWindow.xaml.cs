@@ -24,7 +24,7 @@ namespace PointOfSaleSystem.UserControls
             if (existingProduct != null) // Add to product price and amount if product of this name has already been added
             {
                 existingProduct.ProductAmount++;
-                existingProduct.ProductPrice += productPrice;
+                existingProduct.ProductTotalPrice += productPrice;
             }
             else
             {
@@ -32,7 +32,8 @@ namespace PointOfSaleSystem.UserControls
                 {
                     ProductName = productName,
                     ProductAmount = 1,
-                    ProductPrice = productPrice
+                    ProductPrice = productPrice,
+                    ProductTotalPrice = productPrice,
                 });
             }
         }
@@ -49,9 +50,34 @@ namespace PointOfSaleSystem.UserControls
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
-                    mainWindow.RemoveFromTotalPrice(product.ProductPrice);
+                    mainWindow.RemoveFromTotalPrice(product.ProductTotalPrice);
                 }
                 Products.Remove(product);
+            }
+        }
+
+        public void DecreaseOrIncreaseProductAmount(string productName, int amountAdjustment)
+        {
+            var product = Products.FirstOrDefault(p => p.ProductName == productName);
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (product != null && mainWindow != null)
+            {
+                // If it's not a decrease when the current amount is 1
+                if (!(product.ProductAmount == 1 && amountAdjustment == -1))
+                {
+                    product.ProductAmount += amountAdjustment;
+
+                    if (amountAdjustment > 0) // Increase
+                    {
+                        product.ProductTotalPrice += product.ProductPrice;
+                        mainWindow.AddToTotalPrice(product.ProductPrice);
+                    }
+                    else // Decrease
+                    {
+                        product.ProductTotalPrice -= product.ProductPrice;
+                        mainWindow.RemoveFromTotalPrice(product.ProductPrice);
+                    }
+                }
             }
         }
 
@@ -62,11 +88,28 @@ namespace PointOfSaleSystem.UserControls
 
             RemoveProduct(productName);
         }
+
+        private void IncreaseButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string productName = button?.Tag as string;
+
+            DecreaseOrIncreaseProductAmount(productName, 1);
+        }
+
+        private void DecreaseButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string productName = button?.Tag as string;
+
+            DecreaseOrIncreaseProductAmount(productName, -1);
+        }
     }
     public class ProductItem : INotifyPropertyChanged
     {
         private string productName;
         private int productAmount;
+        private int productTotalPrice;
         private int productPrice;
 
         // Create bindings used for each value in the columns of each row of products in the product window
@@ -89,13 +132,22 @@ namespace PointOfSaleSystem.UserControls
             }
         }
 
+        public int ProductTotalPrice
+        {
+            get => productTotalPrice;
+            set
+            {
+                productTotalPrice = value;
+                OnPropertyChanged();
+            }
+        }
+
         public int ProductPrice
         {
             get => productPrice;
             set
             {
                 productPrice = value;
-                OnPropertyChanged();
             }
         }
 

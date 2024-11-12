@@ -80,7 +80,7 @@ namespace PointOfSaleSystem
             }
         }
 
-        private void AddToTotalPrice(int productPrice)
+        public void AddToTotalPrice(int productPrice)
         {
             // Get the current price as an integer from TotalPrice
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
