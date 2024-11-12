@@ -34,10 +34,11 @@
                     <GridViewColumn Header="" Width="30">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Width="20" Height="20" FontFamily="{StaticResource FontAwesome}" Background="Transparent" Content="&#xf1f8;" Foreground="Red" 
+                                <Button Name="RemoveButton" Tag="{Binding ProductName}" Width="20" Height="20" FontFamily="{StaticResource FontAwesome}" Background="Transparent" Content="&#xf1f8;" Foreground="Red" 
                                             AutomationProperties.AutomationId="RemoveButton" 
                                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="1" FontSize="17"
-                                            BorderBrush="Transparent" BorderThickness="0" Padding="0"/>
+                                            BorderBrush="Transparent" BorderThickness="0" Padding="0"
+                                        Click="RemoveButton_Click"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

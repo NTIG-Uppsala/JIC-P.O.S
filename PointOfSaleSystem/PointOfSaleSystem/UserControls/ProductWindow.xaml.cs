@@ -39,6 +39,23 @@ namespace PointOfSaleSystem.UserControls
         {
             Products.Clear();
         }
+
+        public void RemoveProduct(string productName)
+        {
+            var product = Products.FirstOrDefault(p => p.ProductName == productName);
+            if (product != null)
+            {
+                Products.Remove(product);
+            }
+        }
+
+        private void RemoveButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string productName = button?.Tag as string;
+
+            RemoveProduct(productName);
+        }
     }
     public class ProductItem : INotifyPropertyChanged
     {
