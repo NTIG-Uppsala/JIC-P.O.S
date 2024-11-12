@@ -7,8 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="270">
     <Grid Height="500">
-        <ListView x:Name="ProductListView">
-
+        <ListView x:Name="ProductListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.Resources>
                 <!-- Style for the GridViewColumnHeader -->
                 <Style TargetType="GridViewColumnHeader">
@@ -61,10 +60,13 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Width="90">
                                     <Grid Width="70">
-                                        <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"></Button>
+                                        <Button Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
+                                                AutomationProperties.AutomationId="decreaseButton" Panel.ZIndex="1">
+                                        </Button>
                                         <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
                                                AutomationProperties.AutomationId="AmountText" TextAlignment="Center"/>
-                                        <Button Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalContentAlignment="Center">
+                                        <Button Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0"
+                                                AutomationProperties.AutomationId="increaseButton"  Panel.ZIndex="1">
                                         </Button>
                                     </Grid>
                                 </StackPanel>
