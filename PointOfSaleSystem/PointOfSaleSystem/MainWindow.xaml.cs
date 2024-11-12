@@ -90,6 +90,16 @@ namespace PointOfSaleSystem
             TotalPrice.Text = price.ToString() + " kr";
         }
 
+        public void RemoveFromTotalPrice(int productPrice)
+        {
+            // Get the current price as an integer from TotalPrice
+            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            int price = int.Parse(priceText);
+
+            price -= productPrice;
+            TotalPrice.Text = price.ToString() + " kr";
+        }
+
         private void ResetTotalPrice()
         {
             TotalPrice.Text = "0 kr";

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PointOfSaleSystem.UserControls
@@ -45,6 +46,11 @@ namespace PointOfSaleSystem.UserControls
             var product = Products.FirstOrDefault(p => p.ProductName == productName);
             if (product != null)
             {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                if (mainWindow != null)
+                {
+                    mainWindow.RemoveFromTotalPrice(product.ProductPrice);
+                }
                 Products.Remove(product);
             }
         }
