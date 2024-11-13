@@ -75,7 +75,7 @@
                                     <Grid Width="80">
                                         <!--Decrease button-->
                                         <Button Name="DecreaseButton" Tag="{Binding ProductName}" Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
-                                                AutomationProperties.AutomationId="decreaseButton" Panel.ZIndex="1"
+                                                AutomationProperties.AutomationId="DecreaseButton" Panel.ZIndex="1"
                                                 BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
                                                 Click="DecreaseButtonClick"/>
 
@@ -84,7 +84,7 @@
                                         
                                         <!--Increase button-->
                                         <Button Name="IncreaseButton" Tag="{Binding ProductName}" Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0"
-                                                AutomationProperties.AutomationId="increaseButton"  Panel.ZIndex="1"
+                                                AutomationProperties.AutomationId="IncreaseButton"  Panel.ZIndex="1"
                                                 BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
                                                 Click="IncreaseButtonClick"/>
                                     </Grid>

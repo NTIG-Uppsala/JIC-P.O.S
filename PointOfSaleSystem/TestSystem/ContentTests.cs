@@ -102,6 +102,7 @@ namespace TestSystem
 
                 // Increase the amount of the product by 1
                 increaseButton.Click();
+                priceText = item.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
                 amountText = item.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
                 Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
                 Trace.Assert(priceText == (productPrice * 2).ToString(), $"Expected {(productPrice * 2).ToString()} but got {priceText}");
@@ -110,11 +111,13 @@ namespace TestSystem
                 decreaseButton.Click();
                 amountText = item.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
                 Trace.Assert(amountText == "1", $"Expected '1' but got {amountText}");
+                priceText = item.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
                 Trace.Assert(priceText == (productPrice).ToString(), $"Expected {(productPrice).ToString()} but got {priceText}");
 
                 // Delete the product
                 removeButton.Click();
                 // listViewItems length is decreased by one after item remove
+                listViewItems = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem));
                 Trace.Assert(listViewItemsLengthBefore == listViewItems.Length + 1);
             }
             // Loop through each item (AutomationElement) in the array
