@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PointOfSaleSystem.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="360">
     <Grid Height="500">
         <ListView x:Name="ProductListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.Resources>
@@ -31,12 +31,12 @@
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <!--Remove button-->
-                    <GridViewColumn Header="" Width="30">
+                    <GridViewColumn Header="" Width="40">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="RemoveButton" Tag="{Binding ProductName}" Width="20" Height="20" FontFamily="{StaticResource FontAwesome}" Background="Transparent" Content="&#xf1f8;" Foreground="Red" 
+                                <Button Name="RemoveButton" Tag="{Binding ProductName}" Width="30" Height="30" FontFamily="{StaticResource FontAwesome}" Background="Transparent" Content="&#xf1f8;" Foreground="Red" 
                                             AutomationProperties.AutomationId="RemoveButton" 
-                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="1" FontSize="17"
+                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="1" FontSize="25"
                                             BorderBrush="Transparent" BorderThickness="0" Padding="0"
                                             Click="RemoveButtonClick"/>
                             </DataTemplate>
@@ -45,10 +45,10 @@
                     <!--Remove button ends here-->
                     
                     <!--Name-->
-                    <GridViewColumn Header="Product" Width="90">
+                    <GridViewColumn Header="Product" Width="105">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ProductName}" 
+                                <TextBlock Text="{Binding ProductName}" FontSize="15"
                                             AutomationProperties.AutomationId="ProductNameText"
                                             VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             </DataTemplate>
@@ -57,10 +57,10 @@
                     <!--Name ends here-->
 
                     <!--Price-->
-                    <GridViewColumn Header="Price (SEK)" Width="90" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
+                    <GridViewColumn Header="Price (SEK)" Width="105" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="90" TextAlignment="Center" Text="{Binding ProductTotalPrice, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBlock FontSize="15" Width="90" TextAlignment="Center" Text="{Binding ProductTotalPrice, UpdateSourceTrigger=PropertyChanged}"
                                             AutomationProperties.AutomationId="PriceText"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -68,25 +68,32 @@
                     <!--Price ends here-->
 
                     <!--Ammount-->
-                    <GridViewColumn Header="Amount" Width="90" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
+                    <GridViewColumn Header="Amount" Width="110" HeaderContainerStyle="{StaticResource CenterHeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Width="90">
-                                    <Grid Width="80">
+                                <StackPanel Orientation="Horizontal" Width="110">
+                                    <Grid Width="100">
                                         <!--Decrease button-->
-                                        <Button Name="DecreaseButton" Tag="{Binding ProductName}" Background="Red" Width="20" Height="20" Content="-" HorizontalAlignment="Left" Margin="5,0,0,0"
-                                                AutomationProperties.AutomationId="DecreaseButton" Panel.ZIndex="1"
-                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
-                                                Click="DecreaseButtonClick"/>
+                                        <Button Name="DecreaseButton" Tag="{Binding ProductName}" Background="Red" Width="30" Height="30" 
+                                        HorizontalAlignment="Left" Margin="3,0,0,0" 
+                                        AutomationProperties.AutomationId="DecreaseButton" Panel.ZIndex="1" FontSize="20"
+                                        BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
+                                        Click="DecreaseButtonClick" VerticalContentAlignment="Center">
+                                            <TextBlock Text="-" TextAlignment="Center" Width="30" Height="30"/>
+                                        </Button>
 
-                                        <TextBlock Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}"
-                                               AutomationProperties.AutomationId="AmountText" TextAlignment="Center"/>
+
+                                        <TextBlock Height="25" Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}" FontSize="15"
+                                               AutomationProperties.AutomationId="AmountText" TextAlignment="Center" VerticalAlignment="Center"/>
                                         
                                         <!--Increase button-->
-                                        <Button Name="IncreaseButton" Tag="{Binding ProductName}" Background="Green" Width="20" Height="20" Content="+" HorizontalAlignment="Right" Margin="0,0,5,0"
-                                                AutomationProperties.AutomationId="IncreaseButton"  Panel.ZIndex="1"
-                                                BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
-                                                Click="IncreaseButtonClick"/>
+                                        <Button Name="IncreaseButton" Tag="{Binding ProductName}" Background="Green" Width="30" Height="30" 
+                                        HorizontalAlignment="Right" Margin="0,0,3,0" 
+                                        AutomationProperties.AutomationId="IncreaseButton" Panel.ZIndex="1" FontSize="20"
+                                        BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
+                                        Click="IncreaseButtonClick" VerticalContentAlignment="Center">
+                                            <TextBlock Text="+" TextAlignment="Center" Width="30" Height="30"/>
+                                        </Button>
                                     </Grid>
                                 </StackPanel>
                             </DataTemplate>
