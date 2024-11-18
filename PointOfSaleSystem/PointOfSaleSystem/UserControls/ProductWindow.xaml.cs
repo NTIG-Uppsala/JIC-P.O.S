@@ -50,7 +50,7 @@ namespace PointOfSaleSystem.UserControls
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
-                    mainWindow.RemoveFromTotalPrice(product.ProductTotalPrice);
+                    mainWindow.ChangeTotalPrice(-product.ProductTotalPrice);
                 }
                 Products.Remove(product);
             }
@@ -70,12 +70,12 @@ namespace PointOfSaleSystem.UserControls
                     if (amountAdjustment > 0) // Increase
                     {
                         product.ProductTotalPrice += product.ProductPrice;
-                        mainWindow.AddToTotalPrice(product.ProductPrice);
+                        mainWindow.ChangeTotalPrice(product.ProductPrice);
                     }
                     else // Decrease
                     {
                         product.ProductTotalPrice -= product.ProductPrice;
-                        mainWindow.RemoveFromTotalPrice(product.ProductPrice);
+                        mainWindow.ChangeTotalPrice(-product.ProductPrice);
                     }
                 }
             }
