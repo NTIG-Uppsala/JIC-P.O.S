@@ -74,7 +74,7 @@ namespace TestSystem
         }
 
         [TestMethod]
-        public void AjdustAndVerifyProducts()
+        public void AdjustAndVerifyProducts()
         {
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
