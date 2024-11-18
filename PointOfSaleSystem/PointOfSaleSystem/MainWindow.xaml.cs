@@ -72,7 +72,7 @@ namespace PointOfSaleSystem
                 button.Content = textBlock;
                 button.Click += (sender, e) =>
                 {
-                    AddToTotalPrice(product.price);
+                    ChangeTotalPrice(product.price);
                     productWindow.AddProduct(product.name, product.price); // Call method in ProductWindow to add a product to the the product window
                 };
 
@@ -80,23 +80,13 @@ namespace PointOfSaleSystem
             }
         }
 
-        public void AddToTotalPrice(int productPrice)
+        public void ChangeTotalPrice(int productPrice)
         {
             // Get the current price as an integer from TotalPrice
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
             int price = int.Parse(priceText);
 
             price += productPrice;
-            TotalPrice.Text = price.ToString() + " kr";
-        }
-
-        public void RemoveFromTotalPrice(int productPrice)
-        {
-            // Get the current price as an integer from TotalPrice
-            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
-            int price = int.Parse(priceText);
-
-            price -= productPrice;
             TotalPrice.Text = price.ToString() + " kr";
         }
 
