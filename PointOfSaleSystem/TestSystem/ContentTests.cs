@@ -27,7 +27,7 @@ namespace TestSystem
 
             // Wait for the window to be fully loaded
             System.Threading.Thread.Sleep(1000); // Wait for 1 second (adjust as necessary)
-    }
+        }
 
         [TestCleanup]
         // Runs after each test
