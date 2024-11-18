@@ -16,4 +16,4 @@ Follow these instructions to run the tests:
 
 ---
 
-[Back to REAMDE](../README.md)
+[Back to README](../README.md)

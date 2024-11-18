@@ -7,4 +7,4 @@ To view the .editorconfig file we are using, simply click the link below:
 
 ---
 
-[Back to REAMDE](../README.md)
+[Back to README](../README.md)
