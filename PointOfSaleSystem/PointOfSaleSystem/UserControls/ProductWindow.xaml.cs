@@ -56,7 +56,7 @@ namespace PointOfSaleSystem.UserControls
             }
         }
 
-        public void DecreaseOrIncreaseProductAmount(string productName, int amountAdjustment)
+        public void ChangeProductAmount(string productName, int amountAdjustment)
         {
             var product = Products.FirstOrDefault(p => p.ProductName == productName);
             var mainWindow = Application.Current.MainWindow as MainWindow;
@@ -94,7 +94,7 @@ namespace PointOfSaleSystem.UserControls
             var button = sender as Button;
             string productName = button?.Tag as string;
 
-            DecreaseOrIncreaseProductAmount(productName, 1);
+            ChangeProductAmount(productName, 1);
         }
 
         private void DecreaseButtonClick(object sender, System.Windows.RoutedEventArgs e)
@@ -102,7 +102,7 @@ namespace PointOfSaleSystem.UserControls
             var button = sender as Button;
             string productName = button?.Tag as string;
 
-            DecreaseOrIncreaseProductAmount(productName, -1);
+            ChangeProductAmount(productName, -1);
         }
     }
     public class ProductItem : INotifyPropertyChanged
