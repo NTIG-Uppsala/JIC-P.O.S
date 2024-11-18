@@ -76,7 +76,7 @@ namespace PointOfSaleSystem
                     productWindow.AddProduct(product.name, product.price); // Call method in ProductWindow to add a product to the the product window
                 };
 
-                ProductsStackPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
+                ProductsWrapPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
             }
         }
 

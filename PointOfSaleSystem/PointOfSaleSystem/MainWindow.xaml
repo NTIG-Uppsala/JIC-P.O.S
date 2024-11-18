@@ -18,9 +18,9 @@
             <ColumnDefinition Width="365" />
         </Grid.ColumnDefinitions>
 
-
-        <StackPanel Grid.Column="0" x:Name="ProductsStackPanel" HorizontalAlignment="Left">
-        </StackPanel>
+        <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
+            <!-- Buttons or other UI elements can be added here -->
+        </WrapPanel>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

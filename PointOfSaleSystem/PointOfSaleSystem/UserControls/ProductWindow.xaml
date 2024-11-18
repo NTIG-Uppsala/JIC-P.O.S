@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="360">
     <Grid Height="500">
-        <ListView x:Name="ProductListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView x:Name="ProductListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <ListView.Resources>
                 <!-- Style for the GridViewColumnHeader -->
                 <Style TargetType="GridViewColumnHeader">
