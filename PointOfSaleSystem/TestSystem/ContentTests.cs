@@ -89,7 +89,7 @@ namespace TestSystem
             // Make a copy of the array to loop through instead of the original to avoid a runtime error
             var listViewItemsCopy = listViewItems;
 
-            void CheckItemButtonsInListView(int productPrice, FlaUI.Core.AutomationElements.AutomationElement item, int listViewItemsLengthBefore)
+            void CheckItemButtonsInListView(int productPrice, AutomationElement item, AutomationElement nextItem, int listViewItemsLengthBefore)
             {
                 // Access elements using AutomationId
                 var productNameText = item.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
@@ -100,12 +100,25 @@ namespace TestSystem
                 var decreaseButton = item.FindFirstDescendant(cf => cf.ByAutomationId("DecreaseButton")).AsButton();
                 var removeButton = item.FindFirstDescendant(cf => cf.ByAutomationId("RemoveButton")).AsButton();
 
+                string nextProductNameText = nextItem?.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
+                string nextPriceText = nextItem?.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
+                string nextAmountText = nextItem?.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
+
                 // Increase the amount of the product by 1
                 increaseButton.Click();
                 priceText = item.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
                 amountText = item.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name;
                 Trace.Assert(amountText == "2", $"Expected '2' but got {amountText}");
                 Trace.Assert(priceText == (productPrice * 2).ToString(), $"Expected {(productPrice * 2).ToString()} but got {priceText}");
+
+                // Check that the next product is unaltered
+                if (nextItem != null) // nextItem is null if no next item
+                {
+                    Trace.Assert(nextAmountText == nextItem.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name,
+                                 $"Expected next item amount to be unchanged but was altered for {nextProductNameText}");
+                    Trace.Assert(nextPriceText == nextItem.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name,
+                                 $"Expected next item amount to be unchanged but was altered for {nextProductNameText}");
+                }
 
                 // Decrease the amount of the product by 1
                 decreaseButton.Click();
@@ -114,15 +127,37 @@ namespace TestSystem
                 priceText = item.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name;
                 Trace.Assert(priceText == (productPrice).ToString(), $"Expected {(productPrice).ToString()} but got {priceText}");
 
+                if (nextItem != null)
+                {
+                    Trace.Assert(nextAmountText == nextItem.FindFirstDescendant(cf => cf.ByAutomationId("AmountText"))?.Name,
+                                 $"Expected next item amount to be unchanged but was altered for {nextProductNameText}");
+                    Trace.Assert(nextPriceText == nextItem.FindFirstDescendant(cf => cf.ByAutomationId("PriceText"))?.Name,
+                                 $"Expected next item amount to be unchanged but was altered for {nextProductNameText}");
+                }
+
                 // Delete the product
                 removeButton.Click();
                 // listViewItems length is decreased by one after item remove
                 listViewItems = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem));
                 Trace.Assert(listViewItemsLengthBefore == listViewItems.Length + 1);
             }
+
             // Loop through each item (AutomationElement) in the array
-            foreach (var item in listViewItemsCopy)
+            for (int i = 0; i < listViewItemsCopy.Length; i++)
             {
+                AutomationElement item = listViewItemsCopy[i];
+
+                // Get the next item in the list if exists
+                AutomationElement? nextItem;
+                if (i != listViewItemsCopy.Length - 1)
+                {
+                    nextItem = listViewItemsCopy[i+1];
+                }
+                else
+                {
+                    nextItem = null;
+                }
+
                 // Get the length of listViewItems before item removal
                 int listViewItemsLengthBefore = listViewItems.Length;
 
@@ -131,12 +166,11 @@ namespace TestSystem
                 // Validate that the increase, decrease and remove buttons work for two products in the product window
                 if (productNameText == "Coffee")
                 {
-                    CheckItemButtonsInListView(25, item, listViewItemsLengthBefore);
-
+                    CheckItemButtonsInListView(25, item, nextItem, listViewItemsLengthBefore);
                 }
                 else if (productNameText == "Pasta carbonara")
                 {
-                    CheckItemButtonsInListView(170, item, listViewItemsLengthBefore);
+                    CheckItemButtonsInListView(170, item, nextItem, listViewItemsLengthBefore);
                 }
             }
         }
