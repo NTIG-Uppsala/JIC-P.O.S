@@ -10,6 +10,7 @@
 * Everything has to be documented for the Sprint presentation.
 * No placeholders in production deployments.
 * All materials have to be accessible to all team members.
+* A release should be created for every new feature.
 
 
 ---
