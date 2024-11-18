@@ -21,4 +21,4 @@ Refer to the following guides for a more comprehensive C# coding standard:
 
 ---
 
-[Back to REAMDE](../README.md)
+[Back to README](../README.md)
