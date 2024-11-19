@@ -17,11 +17,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="365" />
         </Grid.ColumnDefinitions>
-
-        <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
-            <!-- Buttons or other UI elements can be added here -->
-        </WrapPanel>
-
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
+                <!-- Buttons or other UI elements can be added here -->
+            </WrapPanel>
+        </ScrollViewer>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="500"/>
