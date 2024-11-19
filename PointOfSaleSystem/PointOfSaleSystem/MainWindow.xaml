@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
-                <!-- Buttons or other UI elements can be added here -->
+                <!-- Buttons are be added here -->
             </WrapPanel>
         </ScrollViewer>
         <Grid Grid.Column="1">
