@@ -8,6 +8,7 @@ using System.Windows;
 using PointOfSaleSystem;
 using static PointOfSaleSystem.MainWindow;
 using System.Windows.Controls;
+using Microsoft.Data.Sqlite;
 
 namespace TestSystem
 {
@@ -174,7 +175,47 @@ namespace TestSystem
                 }
             }
         }
-   
+
+        [TestMethod]
+        public void VerifyPayment() 
+        {
+            using var automation = new UIA3Automation();
+            var window = app.GetMainWindow(automation);
+
+            // Retrieve the length of the database before clicking the pay button
+            string databaseFilePath = @"\database.db";
+            string tableName = "order_details";
+            var initialOrderTableLength = dataBaseHelper.ReadData(tableName).GetRows();
+
+            // Adds one coffee
+            AddItems(window, "CoffeeButton", 1, 25);
+            //Adds one Pasta Carbonara
+            AddItems(window, "PastaCarbonaraButton", 1, 170);
+
+            // Find the pay button and click it
+            var payButton = window.FindFirstDescendant(cf.ByAutomationId("PayButton")).AsButton();
+            payButton.Click();
+
+            //Check that the OrderConfirmation textblock is visible
+            var orderConfirmation = window.FindFirstDescendant(cf.ByAutomationId("OrderConfirmation")).AsTextBox();
+            Trace.Assert(orderConfirmation.Properties.IsOffscreen.Value == false, "Test failed: Order confirmation textblock is not visible.");
+
+            // Find the product window's ListView and get the list length
+            int listViewItemsLength = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem)).Length;
+
+            // Ensure that the ListView is empty
+            Trace.Assert(listViewItemsLength == 0, "Test failed: Items not found in the product window.");
+
+            // Ensure that the price is 0 kr
+            var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+            string totalPriceText = totalPrice.Properties.Name.Value;
+            Trace.Assert(totalPriceText == "0 kr", $"Expected 0 kr, but got {totalPriceText}");
+
+            //Check that the database has been updated
+            var updatedOrderTableLength = dataBaseHelper.ReadData(tableName).GetRows();
+            Trace.Assert(updatedOrderTableLength == initialOrderTableLength + 2, "Test failed: Order table was not updated.");
+        }
+
         // Helper method to reset the total price
         private void ResetTotalPrice()
         {
