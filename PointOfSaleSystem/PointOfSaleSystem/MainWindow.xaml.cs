@@ -74,6 +74,7 @@ namespace PointOfSaleSystem
                 {
                     ChangeTotalPrice(product.price);
                     productWindow.AddProduct(product.name, product.price); // Call method in ProductWindow to add a product to the the product window
+                    OrderConfirmation.Visibility = Visibility.Hidden;
                 };
 
                 ProductsWrapPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
@@ -95,10 +96,25 @@ namespace PointOfSaleSystem
             TotalPrice.Text = "0 kr";
         }
 
+        // Reset the total price and clear the product window
+        private void PayButtonClick(object sender, RoutedEventArgs e)
+        {
+            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            int price = int.Parse(priceText);
+
+            if (price > 0)
+            {
+                OrderConfirmation.Visibility = Visibility.Visible;
+                ResetTotalPrice();
+                productWindow.ClearProducts();
+            }
+        }
+
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
             ResetTotalPrice();
             productWindow.ClearProducts();
+            OrderConfirmation.Visibility = Visibility.Hidden;
         }
     }
 }
