@@ -17,6 +17,8 @@ namespace PointOfSaleSystem
         {
             InitializeComponent();
             InitializeProductsFromDatabase();
+            InitializeOrdersFromDatabase();
+            InitializeOrderDetailsFromDatabase();
         }
         private void InitializeProductsFromDatabase()
         {
@@ -48,6 +50,43 @@ namespace PointOfSaleSystem
                         {
                             CreateProducts(products); // Pass the retrieved products to CreateProducts
                         }
+                    }
+                }
+            }
+        }
+
+        // Initialize the orders table in the database
+        private void InitializeOrdersFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool ordersTableIsCreated = true;
+                    const string tableName = "orders";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        ordersTableIsCreated = DatabaseHelper.CreateOrdersTable(connection);
+                    }
+                }
+            }
+        }
+
+        private void InitializeOrderDetailsFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool orderDetailsTableIsCreated = true;
+                    const string tableName = "order_details";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        orderDetailsTableIsCreated = DatabaseHelper.CreateOrderDetailsTable(connection);
                     }
                 }
             }
