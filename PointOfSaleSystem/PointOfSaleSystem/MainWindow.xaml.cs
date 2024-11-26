@@ -110,7 +110,7 @@ namespace PointOfSaleSystem
                 foreach (var product in productWindow.Products)
                 {
                     productInfo += $"Product: {product.ProductName}, Price: {product.ProductPrice}, Amount: {product.ProductAmount}\n";
-                    
+
                 }
 
                 // Gets the current date and time
