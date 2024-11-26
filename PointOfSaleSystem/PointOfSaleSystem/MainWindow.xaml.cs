@@ -102,13 +102,26 @@ namespace PointOfSaleSystem
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
             int price = int.Parse(priceText);
 
+            // If there are products in the product window
             if (price > 0)
             {
-                OrderConfirmation.Visibility = Visibility.Visible;
+                // Gets the product names, price and amount
+                string productInfo = "";
+                foreach (var product in productWindow.Products)
+                {
+                    productInfo += $"Product: {product.ProductName}, Price: {product.ProductPrice}, Amount: {product.ProductAmount}\n";
+                    
+                }
+
+                // Gets the current date and time
+                DateTime currentDateAndTime = DateTime.Now;
+
+                // Reset the total price and clear the product window
                 ResetTotalPrice();
                 productWindow.ClearProducts();
             }
         }
+
 
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
