@@ -194,13 +194,15 @@ namespace TestSystem
             // Retrieve the length of the database before clicking the pay button
             string databaseFilePath = @"\database.db";
             string tableName = "order_details";
+
+            // Connect to the database (to get the count of rows)
             using (var connection = DatabaseHelper.CreateConnection())
             {
                 if (connection != null)
                 {
                     // Call the static method from DatabaseHelper to get the count of rows
                     int initialOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
-                    Debug.WriteLine($"Initial order details count: {initialOrderDetailsCount}");
+
                     AddItems(window, firstProductAuomationId, 1, firstProductPrice);
                     AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
@@ -225,7 +227,6 @@ namespace TestSystem
 
                     //Check that the database has been updated
                     var updatedOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
-                    Debug.WriteLine($"Updated order details count: {updatedOrderDetailsCount}");
                     Trace.Assert(updatedOrderDetailsCount == initialOrderDetailsCount + 2, "Test failed: Order table was not updated.");
                 }
             }
