@@ -117,7 +117,8 @@ namespace PointOfSaleSystem
                 // Gets the current date and time
                 DateTime currentDateAndTime = DateTime.Now;
 
-                // Reset the total price and clear the product window
+                // Reset the total price and displays the order confirmation
+                OrderConfirmation.Visibility = Visibility.Visible;
                 ResetTotalPrice();
             }
         }
