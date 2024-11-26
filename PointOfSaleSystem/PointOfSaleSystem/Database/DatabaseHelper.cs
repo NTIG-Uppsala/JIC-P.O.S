@@ -243,17 +243,17 @@ namespace PointOfSaleSystem.Database
             return true;
         }
 
-        public static bool InsertOrders(SQLiteConnection connection, string orderName, int orderPrice)
+        public static bool InsertOrders(SQLiteConnection connection, DateTime date, int total_price)
         {
             SQLiteCommand sqlite_cmd = connection.CreateCommand();
 
             try
             {
-                sqlite_cmd.CommandText = "INSERT INTO orders (id, date, total_price) VALUES (@order_name, @order_price);";
+                sqlite_cmd.CommandText = "INSERT INTO orders (date, total_price) VALUES (@date, @total_price);";
 
                 sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
-                sqlite_cmd.Parameters.AddWithValue("@order_name", orderName);
-                sqlite_cmd.Parameters.AddWithValue("@order_price", orderPrice);
+                sqlite_cmd.Parameters.AddWithValue("@order_name", date);
+                sqlite_cmd.Parameters.AddWithValue("@order_price", total_price);
 
                 sqlite_cmd.ExecuteNonQuery();
             }
