@@ -8,7 +8,7 @@ using System.Windows;
 using PointOfSaleSystem;
 using static PointOfSaleSystem.MainWindow;
 using System.Windows.Controls;
-using Microsoft.Data.Sqlite;
+using PointOfSaleSystem.Database;
 
 namespace TestSystem
 {
@@ -56,8 +56,8 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            //Adds two coffees
-            AddItems(window, "CoffeeButton", 2 ,25);
+            //Adds two of the same product
+            AddItems(window, firstProductAuomationId, 2, firstProductPrice);
 
             //Adds one product
             AddItems(window, secondProductAutomationId, 1, secondProductPrice);
@@ -195,10 +195,8 @@ namespace TestSystem
             string tableName = "order_details";
             var initialOrderTableLength = dataBaseHelper.ReadData(tableName).GetRows();
 
-            // Adds one coffee
-            AddItems(window, "CoffeeButton", 1, 25);
-            //Adds one Pasta Carbonara
-            AddItems(window, "PastaCarbonaraButton", 1, 170);
+            AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+            AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
             // Find the pay button and click it
             var payButton = window.FindFirstDescendant(cf.ByAutomationId("PayButton")).AsButton();
@@ -268,4 +266,6 @@ namespace TestSystem
         }
     }
 }
+
+
 
