@@ -16,6 +16,18 @@ namespace TestSystem
     [TestClass]
     public class ContentTests
     {
+        private string firstProductAuomationId = "coffee_button";
+        private string secondProductAutomationId = "mushroom_tartare_button";
+        private string thirdProductAutomationId = "glass_maison_sans_pareil_sauvignon_blanc_button";
+
+        private string firstProductName = "Coffee";
+        private string secondProductName = "Mushroom tartare";
+        private string thirdProductName = "Glass Maison Sans Pareil Sauvignon Blanc";
+
+        private int firstProductPrice = 32;
+        private int secondProductPrice = 135;
+        private int thirdProductPrice = 135;
+
         private ConditionFactory? cf;
         private FlaUI.Core.Application? app; // Declare app at the class level
 
@@ -45,13 +57,13 @@ namespace TestSystem
             var window = app.GetMainWindow(automation);
 
             //Adds two coffees
-            AddItems(window, "CoffeeButton", 2, 25);
+            AddItems(window, "CoffeeButton", 2 ,25);
 
-            //Adds one Pasta Carbonara
-            AddItems(window, "PastaCarbonaraButton", 1, 170);
+            //Adds one product
+            AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
-            //Adds three Meatballs and Mashed Potatoes
-            AddItems(window, "MeatballsMashedPotatoesButton", 3, 100);
+            //Adds three of the same product
+            AddItems(window, thirdProductAutomationId, 3, thirdProductPrice);
             ResetTotalPrice();
         }
 
@@ -62,10 +74,8 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            //Adds one coffee
-            AddItems(window, "CoffeeButton", 1, 25);
-            //Adds one pasta carbonara
-            AddItems(window, "PastaCarbonaraButton", 1, 170);
+            AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+            AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
             // Find the product window's ListView and get the list length
             int listViewItemsLength = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem)).Length;
@@ -80,10 +90,8 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            //Adds one coffee
-            AddItems(window, "CoffeeButton", 1, 25);
-            //Adds one Pasta Carbonara
-            AddItems(window, "PastaCarbonaraButton", 1, 170);
+            AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+            AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
             // Find all the elements that match the criteria (e.g., ListView rows)
             var listViewItems = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem));
@@ -165,13 +173,13 @@ namespace TestSystem
                 var productNameText = item.FindFirstDescendant(cf => cf.ByAutomationId("ProductNameText"))?.Name;
 
                 // Validate that the increase, decrease and remove buttons work for two products in the product window
-                if (productNameText == "Coffee")
+                if (productNameText == firstProductName)
                 {
-                    CheckItemButtonsInListView(25, item, nextItem, listViewItemsLengthBefore);
+                    CheckItemButtonsInListView(firstProductPrice, item, nextItem, listViewItemsLengthBefore);
                 }
-                else if (productNameText == "Pasta carbonara")
+                else if (productNameText == secondProductName)
                 {
-                    CheckItemButtonsInListView(170, item, nextItem, listViewItemsLengthBefore);
+                    CheckItemButtonsInListView(secondProductPrice, item, nextItem, listViewItemsLengthBefore);
                 }
             }
         }

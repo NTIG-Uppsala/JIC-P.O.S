@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PointOfSaleSystem.Database;
 using PointOfSaleSystem.UserControls;
 
 namespace PointOfSaleSystem
@@ -15,7 +16,80 @@ namespace PointOfSaleSystem
         public MainWindow()
         {
             InitializeComponent();
-            CreateProducts();
+            InitializeProductsFromDatabase();
+            InitializeOrdersFromDatabase();
+            InitializeOrderDetailsFromDatabase();
+        }
+        private void InitializeProductsFromDatabase()
+        {
+
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool haveInsertedProducts = true;
+                    bool productsTableIsCreated = true;
+                    const string tableName = "products";
+
+                    // Create table and insert data if the products table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        productsTableIsCreated = DatabaseHelper.CreateProductsTable(connection);
+
+                        if (productsTableIsCreated)
+                        {
+                            haveInsertedProducts = DatabaseHelper.InsertProductsData(connection);
+                        }
+                    }
+
+                    // Create product buttons if the table entries were created successfully or previously existed
+                    if (haveInsertedProducts)
+                    {
+                        var products = DatabaseHelper.ReadProductsTable(connection);
+                        if (products.Count > 0)
+                        {
+                            CreateProducts(products); // Pass the retrieved products to CreateProducts
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initialize the orders table in the database
+        private void InitializeOrdersFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool ordersTableIsCreated = true;
+                    const string tableName = "orders";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        ordersTableIsCreated = DatabaseHelper.CreateOrdersTable(connection);
+                    }
+                }
+            }
+        }
+
+        private void InitializeOrderDetailsFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool orderDetailsTableIsCreated = true;
+                    const string tableName = "order_details";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        orderDetailsTableIsCreated = DatabaseHelper.CreateOrderDetailsTable(connection);
+                    }
+                }
+            }
         }
 
         // Struct representing a product to create buttons
@@ -32,18 +106,7 @@ namespace PointOfSaleSystem
             public string nameId { get; init; }
             public int price { get; init; }
         }
-
-        // Create a list contaning products that are created with the Product struct
-        public static List<Product> listOfProducts = new List<Product>
-        {
-            new Product("Coffee", "CoffeeButton", 25), // product name, nameId, price
-            new Product("Sushi 12 pieces", "Sushi12Button", 150),
-            new Product("Pasta carbonara", "PastaCarbonaraButton", 170),
-            new Product("Chicken nuggets 9 pieces", "ChickenNuggets9Button", 70),
-            new Product("Meatballs with mashed potatoes", "MeatballsMashedPotatoesButton", 100)
-        };
-
-        private void CreateProducts()
+        public void CreateProducts(List<Product> listOfProducts)
         {
             foreach (var product in listOfProducts)
             {

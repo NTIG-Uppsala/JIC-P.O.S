@@ -1,0 +1,67 @@
+﻿1
+Mushroom tartare,135
+Blue Salmon Sashimi,145
+Scallops,170
+
+2
+Shrimp salad,120
+Swedish husmanskost,125
+Fish and chips,125
+Grilled tuna salad,190
+Steak tartare,185
+
+3
+Shrimp 200 g,120
+Smoked shrimp 200 g,120
+Sea crayfish,38
+Half crab,140
+Half lobster,235
+
+4
+Capricciosa,90
+Calzone,90
+Margarita,90
+Hawaii,90
+Vesuvio,90
+
+5
+Crème brûlée,90
+Raspberry pavlova,110
+Passion fruit sorbet,50
+
+6
+Bearnaise,10
+Lemon mayonnaise,10
+Chimichurri,10
+
+7
+Glass Maison Sans Pareil Sauvignon Blanc,135
+Bottle Maison Sans Pareil Sauvignon Blanc,495
+Paolo Leo Calaluna Fiano,405
+Glass Friedrich-Wilhelm-Gymnasium Riesling Trocken,125
+Bottle Friedrich-Wilhelm-Gymnasium Riesling Trocken,455
+Glass Jean-Claude Boisset Pinot Noir,135
+Bottle Jean-Claude Boisset Pinot Noir,495
+I Castei Ripasso,520
+
+8
+Bistro Lager,65
+Wisby Pils,69
+Sleepy Bulldog Pale Ale,75
+
+9
+Grängesberg,30
+Cruzcampo,65
+Janne Shuffle,59
+
+10
+Boulard Cidre De Normandie,74
+
+11
+Coffee,32
+Espresso,32
+Double espresso,36
+Macchiato,34
+Double macchiato,42
+Cappuccino,44
+Tea,34
