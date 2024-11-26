@@ -94,6 +94,7 @@ namespace PointOfSaleSystem
         private void ResetTotalPrice()
         {
             TotalPrice.Text = "0 kr";
+            productWindow.ClearProducts();
         }
 
         // Reset the total price and clear the product window
@@ -118,7 +119,6 @@ namespace PointOfSaleSystem
 
                 // Reset the total price and clear the product window
                 ResetTotalPrice();
-                productWindow.ClearProducts();
             }
         }
 
@@ -126,7 +126,6 @@ namespace PointOfSaleSystem
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
             ResetTotalPrice();
-            productWindow.ClearProducts();
             OrderConfirmation.Visibility = Visibility.Hidden;
         }
     }
