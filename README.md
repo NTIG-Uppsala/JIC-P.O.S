@@ -17,20 +17,33 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 - Install the "Advanced Installer" extension:
   - Download "Advanced Installer" in the extensions tab for Visual Studio
   - After pressing install you will be prompted to exit Visual Studio
-  - After exiting Visual Studio, it will install the extension automatically
+  - After exiting Visual Studio, it will install the extension and the app automatically
   - Follow the prompts in the installer
-- Create an Advanced Installer project in Visual Studio:
-  - Navigate to File->New->Project
-  - Select "Advanced Installer Project"
-  - In the solution field, select "Add to solution"
-  - Choose a name for the installer project in the name field
-- After having created the project, a pop-up should appear to install the Advanced Installer program to your computer. When installed, it should launch automatically.
-- When launched, choose "Visual Studio Application" and follow the setup wizard
-- When prompted to select a solution, choose the main project solution for the application
-- In the "Detected files" part of the setup wizard, choose the necessary files for the WPF app, namely the .exe file and other files created from building the solution
-- Once having completed the setup wizard, enter the information for the app in the "Product Details" section of the Advanced Installer interface
-- While remaining in the "Product Details" section, build the installer by selecting "Build" in the upper left
-- After the installer is built, a link appears in the output at the bottom of the window that leads to the .msi file installer
+- Start the Advanced Installer app
+- Double click Visual Studio Application
+- Specify product name and organization (If there is one)
+- Check MSI setup file and click next
+- Click next again
+- Select the Visual Studio solution you wish to import and click next
+- Select release and click next
+- Select the files needed for your installation
+  - To find what files to include open your Visual Studio release folder
+- After selecting all the necessary files click next and then finish
+- Now you should have the Advanced Installer open
+- Under the product details tab you can change your desired
+  - Product name
+  - Product version
+  - Organization / Company (If there is one)
+- Then navigate to the files and folders tab
+- Select the Application Folder
+- Now go back to your Visual Studio release folder
+- Drag and drop the runtimes folder into the Application Folder in Advanced Installer
+- Then build the msi file by either
+  - Clicking f7
+  - Clicking the second icon in the top left corner
+- When the build is complete click the file path located in the terminal at the bottom of the window.
+  - This takes you directly to your newly generated msi file
+
 
 ## Documents
 * [Programming Languages](Documents/programmingLanguages.md)
