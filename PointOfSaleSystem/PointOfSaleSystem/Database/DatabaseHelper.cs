@@ -264,6 +264,31 @@ namespace PointOfSaleSystem.Database
             }
             return true;
         }
+
+        public static bool InsertOrderDetails(SQLiteConnection connection, int product_id, int order_id, int quantity, int unit_price)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            try
+            {
+                sqlite_cmd.CommandText = "INSERT INTO order_details (product_id, order_id, quantity, unit_price) " +
+                                         "VALUES (@product_id, @order_id, @quantity, @unit_price);";
+
+                sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
+                sqlite_cmd.Parameters.AddWithValue("@product_id", product_id);
+                sqlite_cmd.Parameters.AddWithValue("@order_id", order_id);
+                sqlite_cmd.Parameters.AddWithValue("@quantity", quantity);
+                sqlite_cmd.Parameters.AddWithValue("@unit_price", unit_price);
+
+                sqlite_cmd.ExecuteNonQuery(); // Execute the SQL command
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database entries in table \"order_details\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
     }
 }
 
