@@ -45,7 +45,7 @@ namespace TestSystem
             var window = app.GetMainWindow(automation);
 
             //Adds two coffees
-            AddItems(window, "CoffeeButton", 2 ,25);
+            AddItems(window, "CoffeeButton", 2, 25);
 
             //Adds one Pasta Carbonara
             AddItems(window, "PastaCarbonaraButton", 1, 170);
@@ -152,7 +152,7 @@ namespace TestSystem
                 AutomationElement? nextItem;
                 if (i != listViewItemsCopy.Length - 1)
                 {
-                    nextItem = listViewItemsCopy[i+1];
+                    nextItem = listViewItemsCopy[i + 1];
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace TestSystem
         }
 
         [TestMethod]
-        public void VerifyPayment() 
+        public void VerifyPayment()
         {
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
