@@ -89,6 +89,22 @@ namespace PointOfSaleSystem.Database
             }
         }
 
+        public static int GetProductID(SQLiteConnection connection, string productName)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+            sqlite_cmd.CommandText = "SELECT id FROM products WHERE product_name = @productName";
+            sqlite_cmd.Parameters.AddWithValue("@productName", productName); // Add parameter safely
+
+            using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
+            {
+                if (sqlite_datareader.Read())
+                {
+                    return sqlite_datareader.GetInt32(0); // Return the product ID
+                }
+            }
+            return -1;
+        }
+
         private static string CreateNameId(string productName)
         {
             string nameId = productName.ToLower().Replace(" ", "_")
@@ -252,8 +268,8 @@ namespace PointOfSaleSystem.Database
                 sqlite_cmd.CommandText = "INSERT INTO orders (date, total_price) VALUES (@date, @total_price);";
 
                 sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
-                sqlite_cmd.Parameters.AddWithValue("@order_name", date);
-                sqlite_cmd.Parameters.AddWithValue("@order_price", total_price);
+                sqlite_cmd.Parameters.AddWithValue("@date", date);
+                sqlite_cmd.Parameters.AddWithValue("@total_price", total_price);
 
                 sqlite_cmd.ExecuteNonQuery();
             }
