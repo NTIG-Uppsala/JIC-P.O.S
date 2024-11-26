@@ -89,6 +89,7 @@ namespace PointOfSaleSystem.Database
             }
         }
 
+        // Get the product ID from the products table (used for inserting order details)
         public static int GetProductID(SQLiteConnection connection, string productName)
         {
             SQLiteCommand sqlite_cmd = connection.CreateCommand();
@@ -212,6 +213,27 @@ namespace PointOfSaleSystem.Database
 
 
         // order tables
+        public static int GetOrderDetailsCount(SQLiteConnection connection)
+        {
+            int count = 0;
+
+            try
+            {
+                SQLiteCommand sqlite_cmd = connection.CreateCommand();
+                // Use COUNT(*) to get the total number of rows in the order_details table
+                sqlite_cmd.CommandText = "SELECT COUNT(*) FROM order_details";
+
+                // Execute the query and get the result
+                count = Convert.ToInt32(sqlite_cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while counting the rows in the order_details table: {ex.Message}");
+            }
+
+            return count;
+        }
+
         public static bool CreateOrdersTable(SQLiteConnection connection)
         {
             string createsql = "CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -233,7 +255,6 @@ namespace PointOfSaleSystem.Database
             return true;
         }
 
-        // order tables
         public static bool CreateOrderDetailsTable(SQLiteConnection connection)
         {
             string createsql = "CREATE TABLE order_details (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
