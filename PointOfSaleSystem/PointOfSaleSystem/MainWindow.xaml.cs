@@ -161,7 +161,6 @@ namespace PointOfSaleSystem
             productWindow.ClearProducts();
         }
 
-        // Reset the total price and clear the product window
         private void PayButtonClick(object sender, RoutedEventArgs e)
         {
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
