@@ -39,3 +39,4 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 * [Development Environement](Documents/developmentEnvironment.md)
 * [Definition of Done](Documents/definitionOfDone.md)
 * [Testing System](Documents/testingSystem.md)
+* [Viewing the database](Documents/database.md)
