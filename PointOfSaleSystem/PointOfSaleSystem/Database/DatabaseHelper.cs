@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Data.SQLite;
+using System.Security.Permissions;
 
 namespace PointOfSaleSystem.Database
 {
@@ -192,5 +193,79 @@ namespace PointOfSaleSystem.Database
             }
             return productsList;
         }
+
+
+        // order tables
+        public static bool CreateOrdersTable(SQLiteConnection connection)
+        {
+            string createsql = "CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                               "date DATE, " +
+                               "total_price SMALLINT);"; 
+
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            sqlite_cmd.CommandText = createsql;
+            try
+            {
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database table \"orders\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        // order tables
+        public static bool CreateOrderDetailsTable(SQLiteConnection connection)
+        {
+            string createsql = "CREATE TABLE order_details (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                               "product_id INTEGER, " +  // Foreign key to 'products'
+                               "order_id INTEGER, " +    // Foreign key to 'orders'
+                               "quantity SMALLINT, " +
+                               "unit_price SMALLINT, " +
+                               "FOREIGN KEY (product_id) REFERENCES products(id), " +  // Linking to products table
+                               "FOREIGN KEY (order_id) REFERENCES orders(id));";  // Linking to orders table
+
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            sqlite_cmd.CommandText = createsql;
+            try
+            {
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database table \"order_details\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool InsertOrders(SQLiteConnection connection, string orderName, int orderPrice)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            try
+            {
+                sqlite_cmd.CommandText = "INSERT INTO orders (id, date, total_price) VALUES (@order_name, @order_price);";
+
+                sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
+                sqlite_cmd.Parameters.AddWithValue("@order_name", orderName);
+                sqlite_cmd.Parameters.AddWithValue("@order_price", orderPrice);
+
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database entries in table \"orders\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
     }
 }
+
+
+
