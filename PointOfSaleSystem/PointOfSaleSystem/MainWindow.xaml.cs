@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -164,23 +165,40 @@ namespace PointOfSaleSystem
         private void PayButtonClick(object sender, RoutedEventArgs e)
         {
             string priceText = TotalPrice.Text.Replace("kr", "").Trim();
-            int price = int.Parse(priceText);
+            int totalPrice = int.Parse(priceText);
 
-            // If there are products in the product window
-            if (price > 0)
+            if (totalPrice > 0)
             {
-                // Gets the product names, price and amount
-                string productInfo = "";
-                foreach (var product in productWindow.Products)
-                {
-                    productInfo += $"Product: {product.ProductName}, Price: {product.ProductPrice}, Amount: {product.ProductAmount}\n";
-
-                }
-
                 // Gets the current date and time
                 DateTime currentDateAndTime = DateTime.Now;
 
-                // Reset the total price and displays the order confirmation
+                // Establish a database connection
+                using (var connection = DatabaseHelper.CreateConnection())
+                {
+                    // Insert the order
+                    bool orderInserted = DatabaseHelper.InsertOrders(connection, currentDateAndTime, totalPrice);
+
+                    if (orderInserted)
+                    {
+                        // Retrieves last inserted row ID
+                        int orderId = (int)connection.LastInsertRowId;
+                        int productid;
+                        // Insert the order details
+                        foreach (var product in productWindow.Products)
+                        {
+                            productid = DatabaseHelper.GetProductID(connection, product.ProductName); // Get the product ID from the database
+                            DatabaseHelper.InsertOrderDetails(
+                                connection,
+                                productid,    
+                                orderId,              
+                                product.ProductAmount,
+                                product.ProductPrice   
+                            );
+                        }
+                    }
+                }
+
+                // Reset the total price and display the order confirmation
                 OrderConfirmation.Visibility = Visibility.Visible;
                 ResetTotalPrice();
             }
