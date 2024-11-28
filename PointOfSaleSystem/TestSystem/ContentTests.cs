@@ -197,7 +197,7 @@ namespace TestSystem
             var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
             string totalPriceText = totalPrice.Properties.Name.Value;
 
-            Trace.Assert(totalPriceText == "0 kr", $"Expected 0 kr, but got {totalPriceText}");
+            Trace.Assert(totalPriceText == "0 SEK", $"Expected 0 SEK, but got {totalPriceText}");
         }
 
         // Helper method to add items and calculate total price
@@ -206,7 +206,7 @@ namespace TestSystem
             // Get the current total price
             var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
             string totalPriceText = totalPrice.Properties.Name.Value;
-            int totalPriceValue = int.Parse(totalPriceText.Replace(" kr", ""));
+            int totalPriceValue = int.Parse(totalPriceText.Replace(" SEK", ""));
 
             int calculatePrice = totalPriceValue;
             var itemButton = window.FindFirstDescendant(cf.ByAutomationId(buttonAutomationId)).AsButton();
@@ -221,7 +221,7 @@ namespace TestSystem
 
             //Gets the new total price
             totalPriceText = totalPrice.Properties.Name.Value;
-            totalPriceValue = int.Parse(totalPriceText.Replace(" kr", ""));
+            totalPriceValue = int.Parse(totalPriceText.Replace(" SEK", ""));
 
             Trace.Assert(totalPriceValue == calculatePrice, $"Expected {calculatePrice}, but got {totalPriceValue}");
         }
