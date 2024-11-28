@@ -42,7 +42,7 @@ namespace PointOfSaleSystem.Database
         public static bool CreateProductsTable(SQLiteConnection connection)
         {
             string createsql = "CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "product_name VARCHAR(20), " +
+                "product_name VARCHAR(255), " +
                 "identifier_name VARCHAR(255), " +
                 "price VARCHAR(255), " +
                 "category_id INT" +
@@ -74,7 +74,7 @@ namespace PointOfSaleSystem.Database
 
         private static string[] ReadProductsFile()
         {
-            const string filename = "Products.txt";
+            const string filename = "InitialProductsData.txt";
 
             try
             {
@@ -126,7 +126,8 @@ namespace PointOfSaleSystem.Database
                 if (isspace)
                 {
                     // Next line after a blank line will be the next category ID
-                    current_category = int.Parse(fileLines[++i]);
+                    i++;
+                    current_category = int.Parse(fileLines[i]);
                     continue;
                 }
 
