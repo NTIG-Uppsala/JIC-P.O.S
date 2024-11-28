@@ -43,7 +43,7 @@ namespace PointOfSaleSystem.Database
         {
             string createsql = "CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "product_name VARCHAR(255), " +
-                "identifier_name VARCHAR(255), " +
+                "product_automation_id VARCHAR(255), " +
                 "price VARCHAR(255), " +
                 "category_id INT" +
             ");";
@@ -90,11 +90,11 @@ namespace PointOfSaleSystem.Database
 
         private static string CreateNameId(string productName)
         {
-            string nameId = productName.ToLower().Replace(" ", "_")
+            string AutomationId = productName.ToLower().Replace(" ", "_")
                                                  .Replace("\'", "_")
                                                  .Replace("-", "_");
 
-            return $"{nameId}_button";
+            return $"{AutomationId}_button";
         }
 
         public static bool InsertProductsData(SQLiteConnection connection)
@@ -138,11 +138,11 @@ namespace PointOfSaleSystem.Database
 
                 try
                 {
-                    sqlite_cmd.CommandText = "INSERT INTO products (product_name, identifier_name, price, category_id) VALUES (@product_name, @identifier_name, @price, @category_id);";
+                    sqlite_cmd.CommandText = "INSERT INTO products (product_name, product_automation_id, price, category_id) VALUES (@product_name, @product_automation_id, @price, @category_id);";
 
                     sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
                     sqlite_cmd.Parameters.AddWithValue("@product_name", productName);
-                    sqlite_cmd.Parameters.AddWithValue("@identifier_name", productAutomationId);
+                    sqlite_cmd.Parameters.AddWithValue("@product_automation_id", productAutomationId);
                     sqlite_cmd.Parameters.AddWithValue("@price", productPrice);
                     sqlite_cmd.Parameters.AddWithValue("@category_id", current_category);
 
@@ -175,7 +175,7 @@ namespace PointOfSaleSystem.Database
 
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd = connection.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT product_name, identifier_name, price FROM products";
+                sqlite_cmd.CommandText = "SELECT product_name, product_automation_id, price FROM products";
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
 
                 while (sqlite_datareader.Read())
