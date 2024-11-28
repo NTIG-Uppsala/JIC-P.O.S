@@ -42,7 +42,7 @@ namespace PointOfSaleSystem.Database
         public static bool CreateProductsTable(SQLiteConnection connection)
         {
             string createsql = "CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "product_name VARCHAR(20), " +
+                "product_name VARCHAR(255), " +
                 "identifier_name VARCHAR(255), " +
                 "price VARCHAR(255), " +
                 "category_id INT" +
