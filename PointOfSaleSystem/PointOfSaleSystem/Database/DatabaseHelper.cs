@@ -44,7 +44,7 @@ namespace PointOfSaleSystem.Database
             string createsql = "CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "product_name VARCHAR(255), " +
                 "product_automation_id VARCHAR(255), " +
-                "price VARCHAR(255), " +
+                "price INT, " +
                 "category_id INT" +
             ");";
 
@@ -134,7 +134,7 @@ namespace PointOfSaleSystem.Database
                 lineSplit = currentLine.Split(',');
                 string productName = lineSplit[0];
                 string productAutomationId = CreateNameId(productName); // Generate unique product name ID for UI automation
-                string productPrice = lineSplit[1];
+                int productPrice = int.Parse(lineSplit[1]);
 
                 try
                 {
@@ -182,7 +182,7 @@ namespace PointOfSaleSystem.Database
                 {
                     string productName = sqlite_datareader.GetString(0);
                     string productAutomationId = sqlite_datareader.GetString(1);
-                    int productPrice = int.Parse(sqlite_datareader.GetString(2));
+                    int productPrice = sqlite_datareader.GetInt32(2);
 
                     productsList.Add(new MainWindow.Product(productName, productAutomationId, productPrice));
                 }
