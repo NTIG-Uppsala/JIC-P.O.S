@@ -74,7 +74,7 @@ namespace PointOfSaleSystem.Database
 
         private static string[] ReadProductsFile()
         {
-            const string filename = "Products.txt";
+            const string filename = "InitialProductsData.txt";
 
             try
             {
