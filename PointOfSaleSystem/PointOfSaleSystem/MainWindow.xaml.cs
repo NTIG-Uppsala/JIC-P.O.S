@@ -107,16 +107,16 @@ namespace PointOfSaleSystem
         public void ChangeTotalPrice(int productPrice)
         {
             // Get the current price as an integer from TotalPrice
-            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            string priceText = TotalPrice.Text.Replace("SEK", "").Trim();
             int price = int.Parse(priceText);
 
             price += productPrice;
-            TotalPrice.Text = price.ToString() + " kr";
+            TotalPrice.Text = price.ToString() + " SEK";
         }
 
         private void ResetTotalPrice()
         {
-            TotalPrice.Text = "0 kr";
+            TotalPrice.Text = "0 SEK";
         }
 
         private void ResetButtonClick(object sender, RoutedEventArgs e)
