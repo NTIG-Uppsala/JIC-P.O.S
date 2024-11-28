@@ -126,7 +126,8 @@ namespace PointOfSaleSystem.Database
                 if (isspace)
                 {
                     // Next line after a blank line will be the next category ID
-                    current_category = int.Parse(fileLines[++i]);
+                    i++;
+                    current_category = int.Parse(fileLines[i]);
                     continue;
                 }
 
