@@ -43,7 +43,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!--Remove button ends here-->
-                    
+
                     <!--Name-->
                     <GridViewColumn Header="Product" Width="105">
                         <GridViewColumn.CellTemplate>
@@ -80,12 +80,22 @@
                                         BorderBrush="Transparent" BorderThickness="0" Padding="0" Foreground="White"
                                         Click="DecreaseButtonClick" VerticalContentAlignment="Center">
                                             <TextBlock Text="-" TextAlignment="Center" Width="30" Height="30"/>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ProductAmount}" Value="1">
+                                                            <Setter Property="Background" Value="Gray"/>
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
 
 
                                         <TextBlock Height="25" Text="{Binding ProductAmount, UpdateSourceTrigger=PropertyChanged}" FontSize="15"
                                                AutomationProperties.AutomationId="AmountText" TextAlignment="Center" VerticalAlignment="Center"/>
-                                        
+
                                         <!--Increase button-->
                                         <Button Name="IncreaseButton" Tag="{Binding ProductName}" Background="Green" Width="30" Height="30" 
                                         HorizontalAlignment="Right" Margin="0,0,3,0" 

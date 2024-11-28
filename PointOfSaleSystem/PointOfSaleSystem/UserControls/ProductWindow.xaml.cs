@@ -23,8 +23,7 @@ namespace PointOfSaleSystem.UserControls
             var existingProduct = Products.FirstOrDefault(p => p.ProductName == productName);
             if (existingProduct != null) // Add to product price and amount if product of this name has already been added
             {
-                existingProduct.ProductAmount++;
-                existingProduct.ProductTotalPrice += productPrice;
+                ChangeProductAmount(productName, 1);
             }
             else
             {
