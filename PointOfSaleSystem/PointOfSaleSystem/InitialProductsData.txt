@@ -1,4 +1,9 @@
-﻿1
+# This file contains the data entries used to initially create the database table "products".
+# Each data entry is placed under its respective category id, which are placed on a separate line.
+# Entries are typed in the format of <Product name>,<Product price>.
+# Empty lines or lines starting with "#" are ignored.
+
+1
 Mushroom tartare,135
 Blue Salmon Sashimi,145
 Scallops,170
