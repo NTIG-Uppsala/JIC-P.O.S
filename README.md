@@ -46,7 +46,7 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 
 ## Technical Documentation
 * [Testing System](Documents/testingSystem.md)
-* [Adding new products](Documents/AddingNewProducts.md)
+* [Database System](Documents/databaseSystem.md)
 
 ## Development Guidelines
 * [Programming Languages](Documents/programmingLanguages.md)
