@@ -4,7 +4,7 @@ This program uses an SQLite-based database solution.
 ### Database Initialization
 When the program is started for the first time, it creates the ``database.db`` file in the user's ``AppData\Local\Restaurant Point Of Sale System`` directory.
 
-### Menu items
+### Menu Items
 The database table "products" contains information about the menu items.
 It initially gets created from [this](../PointOfSaleSystem/PointOfSaleSystem/InitialProductsData.txt) ``.txt`` file if the table does not yet exist (i.e. when [the program is first run](#database-initialization)).
 
