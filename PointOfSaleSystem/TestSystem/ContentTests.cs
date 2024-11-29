@@ -8,6 +8,8 @@ using System.Windows;
 using PointOfSaleSystem;
 using static PointOfSaleSystem.MainWindow;
 using System.Windows.Controls;
+using PointOfSaleSystem.Database;
+using PointOfSaleSystem.Database;
 
 namespace TestSystem
 {
@@ -56,7 +58,7 @@ namespace TestSystem
             var window = app.GetMainWindow(automation);
 
             //Adds two of the same product
-            AddItems(window, firstProductAuomationId, 2 , firstProductPrice);
+            AddItems(window, firstProductAuomationId, 2, firstProductPrice);
 
             //Adds one product
             AddItems(window, secondProductAutomationId, 1, secondProductPrice);
@@ -159,7 +161,7 @@ namespace TestSystem
                 AutomationElement? nextItem;
                 if (i != listViewItemsCopy.Length - 1)
                 {
-                    nextItem = listViewItemsCopy[i+1];
+                    nextItem = listViewItemsCopy[i + 1];
                 }
                 else
                 {
@@ -182,7 +184,54 @@ namespace TestSystem
                 }
             }
         }
-   
+
+        [TestMethod]
+        public void VerifyPayment()
+        {
+            using var automation = new UIA3Automation();
+            var window = app.GetMainWindow(automation);
+
+            // Retrieve the length of the database before clicking the pay button
+            string databaseFilePath = @"\database.db";
+            string tableName = "order_details";
+
+            // Connect to the database (to get the count of rows)
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    // Call the static method from DatabaseHelper to get the count of rows
+                    int initialOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
+
+                    AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+                    AddItems(window, secondProductAutomationId, 1, secondProductPrice);
+
+                    // Find the pay button and click it
+                    var payButton = window.FindFirstDescendant(cf.ByAutomationId("PayButton")).AsButton();
+                    payButton.Click();
+
+                    //Check that the OrderConfirmation textblock is visible
+                    var orderConfirmation = window.FindFirstDescendant(cf.ByAutomationId("OrderConfirmation")).AsTextBox();
+                    Trace.Assert(orderConfirmation.Properties.IsOffscreen.Value == false, "Test failed: Order confirmation textblock is not visible.");
+
+                    // Find the product window's ListView and get the list length
+                    int listViewItemsLength = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem)).Length;
+
+                    // Ensure that the ListView is empty
+                    Trace.Assert(listViewItemsLength == 0, "Test failed: Items not found in the product window.");
+
+                    // Ensure that the price is 0 kr
+                    var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
+                    string totalPriceText = totalPrice.Properties.Name.Value;
+                    Trace.Assert(totalPriceText == "0 kr", $"Expected 0 kr, but got {totalPriceText}");
+
+                    //Check that the database has been updated
+                    var updatedOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
+                    Trace.Assert(updatedOrderDetailsCount == initialOrderDetailsCount + 2, "Test failed: Order table was not updated.");
+                }
+            }
+        }
+
         // Helper method to reset the total price
         private void ResetTotalPrice()
         {
@@ -227,4 +276,6 @@ namespace TestSystem
         }
     }
 }
+
+
 

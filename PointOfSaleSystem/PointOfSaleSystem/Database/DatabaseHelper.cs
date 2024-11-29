@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Data.SQLite;
+using System.Security.Permissions;
 
 namespace PointOfSaleSystem.Database
 {
@@ -86,6 +87,23 @@ namespace PointOfSaleSystem.Database
                 MessageBox.Show("The file could not be read:\n" + ex.Message);
                 return Array.Empty<string>();
             }
+        }
+
+        // Get the product ID from the products table (used for inserting order details)
+        public static int GetProductID(SQLiteConnection connection, string productName)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+            sqlite_cmd.CommandText = "SELECT id FROM products WHERE product_name = @productName";
+            sqlite_cmd.Parameters.AddWithValue("@productName", productName); // Add parameter safely
+
+            using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
+            {
+                if (sqlite_datareader.Read())
+                {
+                    return sqlite_datareader.GetInt32(0); // Return the product ID
+                }
+            }
+            return -1;
         }
 
         private static string CreateNameId(string productName)
@@ -209,5 +227,124 @@ namespace PointOfSaleSystem.Database
             }
             return productsList;
         }
+
+
+        // order tables
+        public static int GetOrderDetailsCount(SQLiteConnection connection)
+        {
+            int count = 0;
+
+            try
+            {
+                SQLiteCommand sqlite_cmd = connection.CreateCommand();
+                // Use COUNT(*) to get the total number of rows in the order_details table
+                sqlite_cmd.CommandText = "SELECT COUNT(*) FROM order_details";
+
+                // Execute the query and get the result
+                count = Convert.ToInt32(sqlite_cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while counting the rows in the order_details table: {ex.Message}");
+            }
+
+            return count;
+        }
+
+        public static bool CreateOrdersTable(SQLiteConnection connection)
+        {
+            string createsql = "CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                               "date DATE, " +
+                               "total_price SMALLINT);"; 
+
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            sqlite_cmd.CommandText = createsql;
+            try
+            {
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database table \"orders\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool CreateOrderDetailsTable(SQLiteConnection connection)
+        {
+            string createsql = "CREATE TABLE order_details (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                               "product_id INTEGER, " +  // Foreign key to 'products'
+                               "order_id INTEGER, " +    // Foreign key to 'orders'
+                               "quantity SMALLINT, " +
+                               "unit_price SMALLINT, " +
+                               "FOREIGN KEY (product_id) REFERENCES products(id), " +  // Linking to products table
+                               "FOREIGN KEY (order_id) REFERENCES orders(id));";  // Linking to orders table
+
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            sqlite_cmd.CommandText = createsql;
+            try
+            {
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database table \"order_details\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool InsertOrders(SQLiteConnection connection, DateTime date, int total_price)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            try
+            {
+                sqlite_cmd.CommandText = "INSERT INTO orders (date, total_price) VALUES (@date, @total_price);";
+
+                sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
+                sqlite_cmd.Parameters.AddWithValue("@date", date);
+                sqlite_cmd.Parameters.AddWithValue("@total_price", total_price);
+
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database entries in table \"orders\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool InsertOrderDetails(SQLiteConnection connection, int product_id, int order_id, int quantity, int unit_price)
+        {
+            SQLiteCommand sqlite_cmd = connection.CreateCommand();
+
+            try
+            {
+                sqlite_cmd.CommandText = "INSERT INTO order_details (product_id, order_id, quantity, unit_price) " +
+                                         "VALUES (@product_id, @order_id, @quantity, @unit_price);";
+
+                sqlite_cmd.Parameters.Clear(); // Clear parameters before adding new ones
+                sqlite_cmd.Parameters.AddWithValue("@product_id", product_id);
+                sqlite_cmd.Parameters.AddWithValue("@order_id", order_id);
+                sqlite_cmd.Parameters.AddWithValue("@quantity", quantity);
+                sqlite_cmd.Parameters.AddWithValue("@unit_price", unit_price);
+
+                sqlite_cmd.ExecuteNonQuery(); // Execute the SQL command
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to create database entries in table \"order_details\": {ex.Message}");
+                return false;
+            }
+            return true;
+        }
     }
 }
+
+
+

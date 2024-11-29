@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,8 @@ namespace PointOfSaleSystem
         {
             InitializeComponent();
             InitializeProductsFromDatabase();
+            InitializeOrdersFromDatabase();
+            InitializeOrderDetailsFromDatabase();
         }
         private void InitializeProductsFromDatabase()
         {
@@ -48,6 +51,43 @@ namespace PointOfSaleSystem
                         {
                             CreateProducts(products); // Pass the retrieved products to CreateProducts
                         }
+                    }
+                }
+            }
+        }
+
+        // Initialize the orders table in the database
+        private void InitializeOrdersFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool ordersTableIsCreated = true;
+                    const string tableName = "orders";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        ordersTableIsCreated = DatabaseHelper.CreateOrdersTable(connection);
+                    }
+                }
+            }
+        }
+
+        private void InitializeOrderDetailsFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool orderDetailsTableIsCreated = true;
+                    const string tableName = "order_details";
+
+                    // Create table if the orders table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        orderDetailsTableIsCreated = DatabaseHelper.CreateOrderDetailsTable(connection);
                     }
                 }
             }
@@ -98,6 +138,7 @@ namespace PointOfSaleSystem
                 {
                     ChangeTotalPrice(product.price);
                     productWindow.AddProduct(product.name, product.price); // Call method in ProductWindow to add a product to the the product window
+                    OrderConfirmation.Visibility = Visibility.Hidden;
                 };
 
                 ProductsWrapPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
@@ -116,13 +157,57 @@ namespace PointOfSaleSystem
 
         private void ResetTotalPrice()
         {
-            TotalPrice.Text = "0 SEK";
+            TotalPrice.Text = "0 kr";
+            productWindow.ClearProducts();
         }
+
+        private void PayButtonClick(object sender, RoutedEventArgs e)
+        {
+            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            int totalPrice = int.Parse(priceText);
+
+            if (totalPrice > 0)
+            {
+                // Gets the current date and time
+                DateTime currentDateAndTime = DateTime.Now;
+
+                // Establish a database connection
+                using (var connection = DatabaseHelper.CreateConnection())
+                {
+                    // Insert the order
+                    bool orderInserted = DatabaseHelper.InsertOrders(connection, currentDateAndTime, totalPrice);
+
+                    if (orderInserted)
+                    {
+                        // Retrieves last inserted row ID
+                        int orderId = (int)connection.LastInsertRowId;
+                        int productid;
+                        // Insert the order details
+                        foreach (var product in productWindow.Products)
+                        {
+                            productid = DatabaseHelper.GetProductID(connection, product.ProductName); // Get the product ID from the database
+                            DatabaseHelper.InsertOrderDetails(
+                                connection,
+                                productid,    
+                                orderId,              
+                                product.ProductAmount,
+                                product.ProductPrice   
+                            );
+                        }
+                    }
+                }
+
+                // Reset the total price and display the order confirmation
+                OrderConfirmation.Visibility = Visibility.Visible;
+                ResetTotalPrice();
+            }
+        }
+
 
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
             ResetTotalPrice();
-            productWindow.ClearProducts();
+            OrderConfirmation.Visibility = Visibility.Hidden;
         }
     }
 }
