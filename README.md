@@ -1,5 +1,5 @@
 # JIC-P.O.S
-A point of sale system for a restaurant.
+A Point of Sale System for a restaurant.
 
 Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 
