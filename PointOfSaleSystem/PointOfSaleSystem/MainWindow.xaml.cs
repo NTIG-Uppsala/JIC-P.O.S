@@ -157,13 +157,13 @@ namespace PointOfSaleSystem
 
         private void ResetTotalPrice()
         {
-            TotalPrice.Text = "0 kr";
+            TotalPrice.Text = "0 SEK";
             productWindow.ClearProducts();
         }
 
         private void PayButtonClick(object sender, RoutedEventArgs e)
         {
-            string priceText = TotalPrice.Text.Replace("kr", "").Trim();
+            string priceText = TotalPrice.Text.Replace("SEK", "").Trim();
             int totalPrice = int.Parse(priceText);
 
             if (totalPrice > 0)
