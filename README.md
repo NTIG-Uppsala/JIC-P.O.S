@@ -44,12 +44,13 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 - When the build is complete click the file path located in the terminal at the bottom of the window.
   - This takes you directly to your newly generated msi file
 
+## Technical Documentation
+* [Testing System](Documents/testingSystem.md)
+* [Adding new products](Documents/AddingNewProducts.md)
 
-## Documents
+## Development Guidelines
 * [Programming Languages](Documents/programmingLanguages.md)
 * [Coding Standard](Documents/codingStandard.md)
 * [Code Analysis](Documents/codeAnalysis.md)
 * [Development Environement](Documents/developmentEnvironment.md)
 * [Definition of Done](Documents/definitionOfDone.md)
-* [Testing System](Documents/testingSystem.md)
-* [Adding new products](Documents/AddingNewProducts.md)
