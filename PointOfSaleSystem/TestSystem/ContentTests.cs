@@ -231,6 +231,30 @@ namespace TestSystem
             }
         }
 
+        [TestMethod]
+        public void CheckCategory()
+        {
+            using var automation = new UIA3Automation();
+            var window = app.GetMainWindow(automation);
+
+            //find the drinks category button
+            var WarmDrinks = window.FindFirstDescendant(cf.ByAutomationId("WarmDrinksCategoryButton")).AsButton();
+            WarmDrinks.Click();
+
+            var MushroomTartare = window.FindFirstDescendant(cf.ByAutomationId(secondProductAutomationId)).AsButton();
+            var Coffee = window.FindFirstDescendant(cf.ByAutomationId(firstProductAuomationId)).AsButton();
+
+            Trace.Assert(MushroomTartare == null, "Test failed: MushroomTartare was found.");
+            Trace.Assert(Coffee != null, "Test failed: Coffee was not found.");
+
+            //find the starters category button
+            var startersCategoryButton = window.FindFirstDescendant(cf.ByAutomationId("StartersCategoryButton")).AsButton();
+            startersCategoryButton.Click();
+
+            Trace.Assert(MushroomTartare != null, "Test failed: MushroomTartare was not found.");
+            Trace.Assert(Coffee == null, "Test failed: Coffee was found.");
+        }
+
         // Helper method to reset the total price
         private void ResetTotalPrice()
         {
