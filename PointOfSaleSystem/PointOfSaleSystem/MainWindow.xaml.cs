@@ -35,18 +35,18 @@ namespace PointOfSaleSystem
                     // Create table and insert data if the products table did not yet exist
                     if (!DatabaseHelper.DoesTableExist(connection, tableName))
                     {
-                        productsTableIsCreated = DatabaseHelper.CreateProductsTable(connection);
+                        productsTableIsCreated = ProductsTable.CreateProductsTable(connection);
 
                         if (productsTableIsCreated)
                         {
-                            haveInsertedProducts = DatabaseHelper.InsertProductsData(connection);
+                            haveInsertedProducts = ProductsTable.InsertProductsData(connection);
                         }
                     }
 
                     // Create product buttons if the table entries were created successfully or previously existed
                     if (haveInsertedProducts)
                     {
-                        var products = DatabaseHelper.ReadProductsTable(connection);
+                        var products = ProductsTable.ReadProductsTable(connection);
                         if (products.Count > 0)
                         {
                             CreateProducts(products); // Pass the retrieved products to CreateProducts
@@ -69,7 +69,7 @@ namespace PointOfSaleSystem
                     // Create table if the orders table did not yet exist
                     if (!DatabaseHelper.DoesTableExist(connection, tableName))
                     {
-                        ordersTableIsCreated = DatabaseHelper.CreateOrdersTable(connection);
+                        ordersTableIsCreated = OrdersTable.CreateOrdersTable(connection);
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace PointOfSaleSystem
                     // Create table if the orders table did not yet exist
                     if (!DatabaseHelper.DoesTableExist(connection, tableName))
                     {
-                        orderDetailsTableIsCreated = DatabaseHelper.CreateOrderDetailsTable(connection);
+                        orderDetailsTableIsCreated = OrderDetailsTable.CreateOrderDetailsTable(connection);
                     }
                 }
             }
@@ -175,7 +175,7 @@ namespace PointOfSaleSystem
                 using (var connection = DatabaseHelper.CreateConnection())
                 {
                     // Insert the order
-                    bool orderInserted = DatabaseHelper.InsertOrders(connection, currentDateAndTime, totalPrice);
+                    bool orderInserted = OrderDetailsTable.InsertOrders(connection, currentDateAndTime, totalPrice);
 
                     if (orderInserted)
                     {
@@ -185,8 +185,8 @@ namespace PointOfSaleSystem
                         // Insert the order details
                         foreach (var product in productWindow.Products)
                         {
-                            productid = DatabaseHelper.GetProductID(connection, product.ProductName); // Get the product ID from the database
-                            DatabaseHelper.InsertOrderDetails(
+                            productid = ProductsTable.GetProductID(connection, product.ProductName); // Get the product ID from the database
+                            OrderDetailsTable.InsertOrderDetails(
                                 connection,
                                 productid,    
                                 orderId,              

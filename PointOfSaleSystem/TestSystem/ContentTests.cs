@@ -9,7 +9,6 @@ using PointOfSaleSystem;
 using static PointOfSaleSystem.MainWindow;
 using System.Windows.Controls;
 using PointOfSaleSystem.Database;
-using PointOfSaleSystem.Database;
 
 namespace TestSystem
 {
@@ -201,7 +200,7 @@ namespace TestSystem
                 if (connection != null)
                 {
                     // Call the static method from DatabaseHelper to get the count of rows
-                    int initialOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
+                    int initialOrderDetailsCount = OrderDetailsTable.GetOrderDetailsCount(connection);
 
                     AddItems(window, firstProductAuomationId, 1, firstProductPrice);
                     AddItems(window, secondProductAutomationId, 1, secondProductPrice);
@@ -226,7 +225,7 @@ namespace TestSystem
                     Trace.Assert(totalPriceText == "0 SEK", $"Expected 0 SEK, but got {totalPriceText}");
 
                     //Check that the database has been updated
-                    var updatedOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
+                    var updatedOrderDetailsCount = OrderDetailsTable.GetOrderDetailsCount(connection);
                     Trace.Assert(updatedOrderDetailsCount == initialOrderDetailsCount + 2, "Test failed: Order table was not updated.");
                 }
             }
