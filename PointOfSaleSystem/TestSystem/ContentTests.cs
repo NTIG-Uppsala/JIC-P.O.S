@@ -218,12 +218,12 @@ namespace TestSystem
                     int listViewItemsLength = window.FindAllDescendants(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.DataItem)).Length;
 
                     // Ensure that the ListView is empty
-                    Trace.Assert(listViewItemsLength == 0, "Test failed: Items not found in the product window.");
+                    Trace.Assert(listViewItemsLength == 0, "Test failed: Items found in the product window after payment.");
 
-                    // Ensure that the price is 0 kr
+                    // Ensure that the price is 0 SEK
                     var totalPrice = window.FindFirstDescendant(cf.ByAutomationId("TotalPrice")).AsTextBox();
                     string totalPriceText = totalPrice.Properties.Name.Value;
-                    Trace.Assert(totalPriceText == "0 kr", $"Expected 0 kr, but got {totalPriceText}");
+                    Trace.Assert(totalPriceText == "0 SEK", $"Expected 0 SEK, but got {totalPriceText}");
 
                     //Check that the database has been updated
                     var updatedOrderDetailsCount = DatabaseHelper.GetOrderDetailsCount(connection);
