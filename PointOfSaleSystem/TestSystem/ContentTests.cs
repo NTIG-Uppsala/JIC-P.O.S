@@ -9,7 +9,6 @@ using PointOfSaleSystem;
 using static PointOfSaleSystem.MainWindow;
 using System.Windows.Controls;
 using PointOfSaleSystem.Database;
-using PointOfSaleSystem.Database;
 
 namespace TestSystem
 {
