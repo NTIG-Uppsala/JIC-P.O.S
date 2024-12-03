@@ -15,6 +15,8 @@ namespace PointOfSaleSystem.Database
                 "product_automation_id VARCHAR(255), " +
                 "price INT, " +
                 "category_id INT" +
+                "FOREIGN KEY (category_id) REFERENCES categories(id));" +  // Linking to orders table
+
             ");";
 
             SQLiteCommand sqlite_cmd = connection.CreateCommand();
