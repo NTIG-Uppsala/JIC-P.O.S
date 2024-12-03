@@ -11,7 +11,7 @@ namespace PointOfSaleSystem.Database
         {
             string dbLocation = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                 "Restaurant Point Of Sale System"
+                 "Restaurant Point of Sale System"
             );
 
             CreateDatabaseFolder(dbLocation);

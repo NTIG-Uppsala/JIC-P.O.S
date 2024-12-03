@@ -2,7 +2,7 @@
 This program uses an SQLite-based database solution.
 
 ### Database Initialization
-When the program is started for the first time, it creates a `database.db` file in the user's `C\:Users\<username>\AppData\Local\Restaurant Point Of Sale System` directory.
+When the program is started for the first time, it creates a `database.db` file in the user's `C\:Users\<username>\AppData\Local\Restaurant Point of Sale System` directory.
 
 ### Menu Items
 The database table `products` contains information about the menu items.

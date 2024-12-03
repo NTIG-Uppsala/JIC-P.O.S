@@ -7,7 +7,7 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 [Click here for download](https://github.com/NTIG-Uppsala/JIC-P.O.S/releases)
 - Click the .msi file in the latest release to download it
 - If you have a previous version:
-  - Go to "Add or remove programs" in the settings app on your computer and remove "Restaurant Point Of Sale System"
+  - Go to "Add or remove programs" in the settings app on your computer and remove "Restaurant Point of Sale System"
 - Run the installer from where it was downloaded
 - Follow the steps in the installer
 - Once having completed the installer the program should open automatically. Otherwise launch the "PointOfSaleSystem.exe" app.
