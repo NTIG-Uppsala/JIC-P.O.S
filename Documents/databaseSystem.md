@@ -60,6 +60,15 @@ Download and install [DB Browser for SQLite](https://sqlitebrowser.org/dl/), a G
 #### Deleting a Table
 To delete a table in the database, while in the **Database Structure** tab, right click on the table name in the tree structure and select **Delete Table** and then click on **Write Changes**.
 
+#### Exporting Table Data
+* Go to the **Browse Data** tab
+
+* Select the table you want to export in the dropdown on the left side of the toolbar
+
+* Find and click on the icon located in around the middle of the toolbar that displays "Save table as currently displayed" when hovered over
+
+* Choose which format you want to export to (CSV, JSON)
+
 ---
 
 [Back to README](../README.md)

@@ -12,6 +12,13 @@ Group members: Carl Eriksson Skogh, Ivar Bjerling, Joel Jansson
 - Follow the steps in the installer
 - Once having completed the installer the program should open automatically. Otherwise launch the "PointOfSaleSystem.exe" app.
 
+### Fixing Possible Errors when Running the Program
+#### Problems with the Database
+If products are not displayed correctly or you get an SQL error or similar, it is probably caused by having an older database version after new database features have been added.
+
+- To reset the database, try deleting the database folder: `C\:Users\<username>\AppData\Local\Restaurant Point of Sale System`
+- **WARNING:** Be aware that this will delete all the data present in the database. For viewing the contents of the database tables and exporting table data if needed, read the [database system documentation](Documents/databaseSystem.md).
+
 ## Technical Documentation
 * [Testing System](Documents/testingSystem.md)
 * [Creating a New Installer](Documents/creatingInstaller.md)
