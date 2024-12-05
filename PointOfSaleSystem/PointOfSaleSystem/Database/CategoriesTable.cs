@@ -12,7 +12,7 @@ namespace PointOfSaleSystem.Database
     {
         public static bool CreateCategoriesTable(SQLiteConnection connection)
         {
-            string createsql = "CREATE TABLE categories (id INTEGER FOREIGN KEY AUTOINCREMENT, " +
+            string createsql = "CREATE TABLE categories (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "category_name VARCHAR(255), " +
                 "rgb_color VARCHAR(11)" +
             ");";
