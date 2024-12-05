@@ -10,7 +10,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -22,9 +23,13 @@
                 <!-- Buttons are be added here -->
             </WrapPanel>
         </ScrollViewer>
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock VerticalAlignment="top" Background="Black" Height="1"/>
+        </DockPanel>
+        
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="500"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
