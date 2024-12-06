@@ -21,9 +21,9 @@ namespace PointOfSaleSystem
             InitializeOrdersFromDatabase();
             InitializeOrderDetailsFromDatabase();
         }
+
         private void InitializeProductsFromDatabase()
         {
-
             using (var connection = DatabaseHelper.CreateConnection())
             {
                 if (connection != null)
@@ -107,6 +107,7 @@ namespace PointOfSaleSystem
             public string nameId { get; init; }
             public int price { get; init; }
         }
+
         public void CreateProducts(List<Product> listOfProducts)
         {
             foreach (var product in listOfProducts)
@@ -202,7 +203,6 @@ namespace PointOfSaleSystem
                 ResetTotalPrice();
             }
         }
-
 
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
