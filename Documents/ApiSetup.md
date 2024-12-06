@@ -1,75 +1,135 @@
-# How to Set Up the API and Database
+# How to Deploy the API
 
-This document guides you through setting up the API and its database structure.
+This guide outlines how to deploy and configure the API via the commandline. For this setup, we used [DigitalOcean](https://www.digitalocean.com/) droplets to create a simple VPS for hosting the API.
 
 ---
 
-## API Setup
+## Deploying the API on a Server
 
-To set up the API:
-1. Ensure you have all dependencies installed by running:
+### Steps to Set Up the API
+> **Note:** This assumes that you already have a working database with the correct structure. For details, see the [API Database Setup](/Documents/ApiDatabaseSetup.md).
+
+1. **Clone the Repository**  
+   Start by cloning the entire repository onto your server:
    ```bash
+   git clone <repository_url>
+   ```
+
+2. **Install Node.js**  
+   If Node.js is not already installed on your server, you need to install it first. Use the following commands to install Node.js and npm (Node.js package manager) on Ubuntu-based systems:
+   ```bash
+   sudo apt update
+   sudo apt install -y nodejs npm
+   ```
+
+   You can check if Node.js and npm are installed correctly by running:
+   ```bash
+   node -v
+   npm -v
+   ```
+
+3. **Install Dependencies**  
+   Navigate to the project directory and install all necessary dependencies using npm:
+   ```bash
+   cd <project_directory>
    npm install
    ```
-2. Configure your environment variables in a `.env` file. See the [`.env.example`](../API/.env.example) for reference.
 
-3. Start the API by running the following command in your terminal:
+4. **Create a `.env` File**  
+
+   The API requires specific environment variables to run correctly. You can find the required structure in the [`.env.example`](../API/.env.example) file.
+
+   In the root directory of the project (where `app.js` is located), create a `.env` file and add the necessary variables.
+
+   You can create and set up the `.env` file via the command line with the following steps:
+
+   1. Navigate to the root directory of the project:
+      ```bash
+      cd <project_directory>
+      ```
+
+   2. Copy the `.env.example` file to `.env`:
+      ```bash
+      cp .env.example .env
+      ```
+
+   3. Open the `.env` file in your preferred text editor (e.g., nano):
+      ```bash
+      nano .env
+      ```
+
+   4. Modify the values as needed and save the changes.
+
+5. **Start the API**  
+   Run the following command to start the server:
    ```bash
    node app.js
    ```
-   This will launch the API and make it accessible on the configured ip and port. To see al. the endpoint [ApiEndpoints](/Documents/ApiEndpoints.md) see.
+   The API should now be accessible on the configured IP and port. For a list of endpoints, refer to the [API Endpoints documentation](/Documents/ApiEndpoints.md).
 
 ---
 
-## Database Setup
 
-### Database Structure
+## Configuring the API to Run Continuously
 
-The API uses two tables: `products` and `sales`. Below is the database schema:
+To ensure the API remains active even after you close the console, you can configure it to run as a systemd service.
 
-![Database Schema](images/ApiDB.png)
+### Steps to Configure a systemd Service
 
-### Creating the Tables
+1. **Create a Systemd Service File**  
+   Add a systemd service file at `/etc/systemd/system/API.service` with the following content:
+   ```ini
+   [Unit]
+   Description=Node.js API Service
+   After=network.target
 
-To set up the database with the required structure, copy and paste the SQL code below into your preferred database editor:
+   [Service]
+   Group=www-data
+   WorkingDirectory=/var/www/JIC-P.O.S/API
+   ExecStart=/usr/bin/node /var/www/JIC-P.O.S/API/app.js
+   Restart=always
 
-#### Create `products` Table
-```sql
-CREATE TABLE `products` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) NOT NULL,
-  `price` smallint NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-);
-```
+   [Install]
+   WantedBy=multi-user.target
+   ```
 
-#### Create `sales` Table
-```sql
-CREATE TABLE `sales` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `restaurant_name` varchar(255) NOT NULL,
-  `product_id` int unsigned NOT NULL,
-  `quantity` smallint NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sales_product_id_foreign` (`product_id`),
-  CONSTRAINT `sales_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-);
-```
+   > **Note:** Update the file paths (`/var/www/JIC-P.O.S/API`) to match the actual location of your API files. It's recommended to place your application in `/var/www` (create this directory if it does not exist).
 
----
+2. **Enable and Start the Service**  
+   Use the following commands to enable and start the service:
+   ```bash
+   sudo systemctl enable API.service
+   sudo systemctl start API.service
+   ```
 
-## Setting Up the `.env` File
-
-To correctly configure the `.env` file used by the API:
-1. Follow the structure provided in the [`.env.example`](../API/.env.example).
-2. Ensure all variables such as database credentials and API-specific configurations are set.
+3. **Verify the Service**  
+   Check the status of the service to ensure it is running:
+   ```bash
+   sudo systemctl status API.service
+   ```
 
 ---
 
-## Notes
-- The `createdAt` and `updatedAt` fields are managed automatically using MySQL’s timestamp functionality.
-- Double-check your database connection details in the `.env` file before running the API.
+## Useful Commands for Managing the API Service
+
+- **Restart the Service**  
+  To restart the API service after making changes:
+  ```bash
+  sudo systemctl restart API.service
+  ```
+
+- **Stop the Service**  
+  To stop the API service:
+  ```bash
+  sudo systemctl stop API.service
+  ```
+
+- **View Logs**  
+  To view logs generated by the service:
+  ```bash
+  journalctl -u API.service
+  ```
+
+---
+
+With these steps completed, your API should be deployed and running continuously on the server.
