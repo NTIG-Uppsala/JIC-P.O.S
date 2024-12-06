@@ -142,3 +142,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 ### **Notes**
 - Ensure the database connection details and environment variables are correctly configured in the `.env` file.  
 - The POST endpoint is password-protected to prevent unauthorized access. 
+
+---
+
+[Back to README](../README.md)
