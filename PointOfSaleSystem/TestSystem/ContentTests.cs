@@ -16,7 +16,7 @@ namespace TestSystem
     [TestClass]
     public class ContentTests
     {
-        private string firstProductAuomationId = "coffee_button";
+        private string firstProductAutomationId = "coffee_button";
         private string secondProductAutomationId = "mushroom_tartare_button";
         private string thirdProductAutomationId = "glass_maison_sans_pareil_sauvignon_blanc_button";
 
@@ -57,7 +57,7 @@ namespace TestSystem
             var window = app.GetMainWindow(automation);
 
             //Adds two of the same product
-            AddItems(window, firstProductAuomationId, 2, firstProductPrice);
+            AddItems(window, firstProductAutomationId, 2, firstProductPrice);
 
             //Adds one product
             AddItems(window, secondProductAutomationId, 1, secondProductPrice);
@@ -74,7 +74,7 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+            AddItems(window, firstProductAutomationId, 1, firstProductPrice);
             AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
             // Find the product window's ListView and get the list length
@@ -90,7 +90,7 @@ namespace TestSystem
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+            AddItems(window, firstProductAutomationId, 1, firstProductPrice);
             AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
             // Find all the elements that match the criteria (e.g., ListView rows)
@@ -202,7 +202,7 @@ namespace TestSystem
                     // Call the static method from DatabaseHelper to get the count of rows
                     int initialOrderDetailsCount = OrderDetailsTable.GetOrderDetailsCount(connection);
 
-                    AddItems(window, firstProductAuomationId, 1, firstProductPrice);
+                    AddItems(window, firstProductAutomationId, 1, firstProductPrice);
                     AddItems(window, secondProductAutomationId, 1, secondProductPrice);
 
                     // Find the pay button and click it
