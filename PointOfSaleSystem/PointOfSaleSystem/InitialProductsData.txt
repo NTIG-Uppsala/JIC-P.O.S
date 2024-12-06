@@ -1,72 +1,62 @@
 # This file contains the data entries used to initially create the database table "products".
-# Each data entry is placed under its respective category id, which are placed on a separate line.
-# Entries are typed in the format of <Product name>,<Product price>.
+# Line starting with FORMAT: describes the format used when parsing the file lines (see below).
 # Empty lines or lines starting with "#" are ignored.
 
-1
-Mushroom tartare,135
-Blue Salmon Sashimi,145
-Scallops,170
+FORMAT:name,price,category_id
 
-2
-Shrimp salad,120
-Swedish husmanskost,125
-Fish and chips,125
-Grilled tuna salad,190
-Steak tartare,185
+Mushroom tartare,135,1
+Blue Salmon Sashimi,145,1
+Scallops,170,1
 
-3
-Shrimp 200 g,120
-Smoked shrimp 200 g,120
-Sea crayfish,38
-Half crab,140
-Half lobster,235
+Shrimp salad,120,2
+Swedish husmanskost,125,2
+Fish and chips,125,2
+Grilled tuna salad,190,2
+Steak tartare,185,2
 
-4
-Capricciosa,90
-Calzone,90
-Margarita,90
-Hawaii,90
-Vesuvio,90
+Shrimp 200 g,120,3
+Smoked shrimp 200 g,120,3
+Sea crayfish,38,3
+Half crab,140,3
+Half lobster,235,3
 
-5
-Crème brûlée,90
-Raspberry pavlova,110
-Passion fruit sorbet,50
+Capricciosa,90,4
+Calzone,90,4
+Margarita,90,4
+Hawaii,90,4
+Vesuvio,90,4
 
-6
-Bearnaise,10
-Lemon mayonnaise,10
-Chimichurri,10
+Crème brûlée,90,5
+Raspberry pavlova,110,5
+Passion fruit sorbet,50,5
 
-7
-Glass Maison Sans Pareil Sauvignon Blanc,135
-Bottle Maison Sans Pareil Sauvignon Blanc,495
-Paolo Leo Calaluna Fiano,405
-Glass Friedrich-Wilhelm-Gymnasium Riesling Trocken,125
-Bottle Friedrich-Wilhelm-Gymnasium Riesling Trocken,455
-Glass Jean-Claude Boisset Pinot Noir,135
-Bottle Jean-Claude Boisset Pinot Noir,495
-I Castei Ripasso,520
+Bearnaise,10,6
+Lemon mayonnaise,10,6
+Chimichurri,10,6
 
-8
-Bistro Lager,65
-Wisby Pils,69
-Sleepy Bulldog Pale Ale,75
+Glass Maison Sans Pareil Sauvignon Blanc,135,7
+Bottle Maison Sans Pareil Sauvignon Blanc,495,7
+Paolo Leo Calaluna Fiano,405,7
+Glass Friedrich-Wilhelm-Gymnasium Riesling Trocken,125,7
+Bottle Friedrich-Wilhelm-Gymnasium Riesling Trocken,455,7
+Glass Jean-Claude Boisset Pinot Noir,135,7
+Bottle Jean-Claude Boisset Pinot Noir,495,7
+I Castei Ripasso,520,7
 
-9
-Grängesberg,30
-Cruzcampo,65
-Janne Shuffle,59
+Bistro Lager,65,8
+Wisby Pils,69,8
+Sleepy Bulldog Pale Ale,75,8
 
-10
-Boulard Cidre De Normandie,74
+Grängesberg,30,9
+Cruzcampo,65,9
+Janne Shuffle,59,9
 
-11
-Coffee,32
-Espresso,32
-Double espresso,36
-Macchiato,34
-Double macchiato,42
-Cappuccino,44
-Tea,34
+Boulard Cidre De Normandie,74,10
+
+Coffee,32,11
+Espresso,32,11
+Double espresso,36,11
+Macchiato,34,11
+Double macchiato,42,11
+Cappuccino,44,11
+Tea,34,11
