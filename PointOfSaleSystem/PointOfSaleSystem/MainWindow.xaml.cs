@@ -50,7 +50,7 @@ namespace PointOfSaleSystem
                         var products = ProductsTable.ReadProductsTable(connection);
                         if (products.Count > 0)
                         {
-                            CreateProducts(products); // Pass the retrieved products to CreateProducts
+                            CreateProductButtons(products); // Pass the retrieved products to CreateProductButtons
                         }
                     }
                 }
@@ -131,7 +131,7 @@ namespace PointOfSaleSystem
             public int price { get; init; }
         }
 
-        public void CreateProducts(List<Product> listOfProducts)
+        public void CreateProductButtons(List<Product> listOfProducts)
         {
             foreach (var product in listOfProducts)
             {
