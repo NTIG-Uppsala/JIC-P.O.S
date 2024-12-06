@@ -32,5 +32,12 @@ namespace PointOfSaleSystem.Database
             }
             return true;
         }
+
+        public static bool InsertCategoriesData(SQLiteConnection connection)
+        {
+            bool returnValue;
+            returnValue = DatabaseHelper.InsertTableDataFromTxt(connection, "InitialCategoriesData.txt", "categories", "name");
+            return returnValue;
+        }
     }
 }

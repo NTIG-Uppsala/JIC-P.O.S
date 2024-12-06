@@ -18,6 +18,7 @@ namespace PointOfSaleSystem
         {
             InitializeComponent();
             InitializeProductsFromDatabase();
+            InitializeCategoriesFromDatabase();
             InitializeOrdersFromDatabase();
             InitializeOrderDetailsFromDatabase();
         }
@@ -50,6 +51,28 @@ namespace PointOfSaleSystem
                         if (products.Count > 0)
                         {
                             CreateProducts(products); // Pass the retrieved products to CreateProducts
+                        }
+                    }
+                }
+            }
+        }
+        private void InitializeCategoriesFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool categoriesTableIsCreated = true;
+                    bool haveInsertedCategories = true;
+                    const string tableName = "categories";
+
+                    // Create table and insert data if the products table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        categoriesTableIsCreated = CategoriesTable.CreateCategoriesTable(connection);
+                        if (categoriesTableIsCreated)
+                        {
+                            haveInsertedCategories = CategoriesTable.InsertCategoriesData(connection);
                         }
                     }
                 }
