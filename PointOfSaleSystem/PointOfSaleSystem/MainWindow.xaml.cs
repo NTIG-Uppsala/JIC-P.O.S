@@ -119,15 +119,15 @@ namespace PointOfSaleSystem
         // Struct representing a product to create buttons
         public struct Product
         {
-            public Product(string productName, string productNameId, int productPrice)
+            public Product(string productName, string productAutomationId, int productPrice)
             {
                 name = productName;
-                nameId = productNameId;
+                automationId = productAutomationId;
                 price = productPrice;
             }
 
             public string name { get; init; }
-            public string nameId { get; init; }
+            public string automationId { get; init; }
             public int price { get; init; }
         }
 
@@ -138,7 +138,7 @@ namespace PointOfSaleSystem
                 // Create a button for each product
                 Button button = new Button
                 {
-                    Name = product.nameId, // Used for x:Name value to create an id for the item
+                    Name = product.automationId, // Used for x:Name value to create an id for the item
                     Margin = new Thickness(10, 10, 0, 0),
                     Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffa500")),
                     FontSize = 14,
