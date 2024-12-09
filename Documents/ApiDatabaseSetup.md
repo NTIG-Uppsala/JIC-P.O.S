@@ -1,6 +1,6 @@
 # How to Set Up the API Database
 
-This document guides you through setting up the Database for the API.
+This document guides you through setting up the Database for the API. This guide assumes that you have MySQL installed on your system.
 
 ---
 
@@ -15,7 +15,7 @@ The API uses two tables: `products` and `sales`. Below is the database schema:
 
 ### Creating the Tables
 
-To set up the database with the required structure, copy and paste the SQL code below into your preferred database editor or commandline:
+To set up the database with the required structure, copy and paste the SQL code below into your preferred database editor or commandline. You need to create the products table before the sales table.t
 
 #### Create `products` Table
 ```sql
