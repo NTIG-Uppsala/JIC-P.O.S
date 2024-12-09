@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PointOfSaleSystem.Database;
 using PointOfSaleSystem.UserControls;
+using PointOfSaleSystem.ApiPost;
 
 namespace PointOfSaleSystem
 {
@@ -194,6 +195,7 @@ namespace PointOfSaleSystem
                                 product.ProductPrice   
                             );
                         }
+                        SendData.SendDataToDatabase();
                     }
                 }
 
