@@ -10,6 +10,7 @@ using PointOfSaleSystem.Database;
 using System.IO;
 using System.Windows;
 
+// Description: This class sends data to the API:s post route.
 namespace PointOfSaleSystem.ApiPost
 {
     public class SendData
@@ -18,15 +19,18 @@ namespace PointOfSaleSystem.ApiPost
         {
             var data = new List<object>();
 
+            // Create a connection to the database
             using (var connection = DatabaseHelper.CreateConnection())
             {
+                // Get the order details after a specified date from the database
                 var orderDetails = GetOrderDetails(connection);
 
                 foreach (var orderDetail in orderDetails)
                 {
+                    // Get the product name from the products table
                     var product = ProductsTable.GetProductNameById(connection, orderDetail.ProductId);
-                    Debug.WriteLine($"ProductName: {product} ProductId: {orderDetail.ProductId}, Quantity: {orderDetail.Quantity}, UnitPrice: {orderDetail.UnitPrice}");
 
+                    // Add all the order information to the data list
                     data.Add(new
                     {
                         restaurant_name = "Downtown Bistro",
@@ -37,12 +41,14 @@ namespace PointOfSaleSystem.ApiPost
                 }
             }
 
+            // Serialize the data list to JSON
             var json = JsonSerializer.Serialize(data);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync("http://localhost:3000/api/sales/chingchong", content);
+                // Send the JSON data to the API
+                var response = await client.PostAsync("http://localhost:3000/api/sales/password123", content);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Data sent successfully.");
@@ -53,13 +59,16 @@ namespace PointOfSaleSystem.ApiPost
                 }
             }
         }
+
         public static List<OrderDetail> GetOrderDetails(SQLiteConnection connection)
         {
             var orderDetails = new List<OrderDetail>();
+            // Read the last date from the date.txt file
             DateTime lastDate = ReadDateFile();
-            Debug.WriteLine($"Last date: {lastDate}");
+
             try
             {
+                // Get the order IDs after the last date
                 List<int> orderId = OrdersTable.GetOrderIdsAfterDate(connection, lastDate);
 
                 SQLiteCommand sqlite_cmd = connection.CreateCommand();
@@ -76,10 +85,10 @@ namespace PointOfSaleSystem.ApiPost
                     sqlite_cmd.Parameters.AddWithValue($"@id{i}", orderId[i]);
                 }
 
-
+                // Read the data from the order_details table and add them to the orderDetails list
                 using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
                 {
-                
+
                     while (sqlite_datareader.Read())
                     {
                         orderDetails.Add(new OrderDetail
@@ -99,6 +108,7 @@ namespace PointOfSaleSystem.ApiPost
             return orderDetails;
         }
 
+        // Read the date from the date.txt file
         private static DateTime ReadDateFile()
         {
             const string filename = "date.txt";
@@ -122,6 +132,7 @@ namespace PointOfSaleSystem.ApiPost
         }
     }
 
+    // Class to hold the order details
     public class OrderDetail
     {
         public int order_id { get; set; }
