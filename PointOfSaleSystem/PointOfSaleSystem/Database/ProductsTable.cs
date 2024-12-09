@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Data.SQLite;
 using System.Security.Permissions;
+using static PointOfSaleSystem.MainWindow;
 
 namespace PointOfSaleSystem.Database
 {
@@ -189,6 +190,32 @@ namespace PointOfSaleSystem.Database
                 MessageBox.Show($"An error occurred while reading from products table: {ex.Message}");
             }
             return productsList;
+        }
+
+        public static string GetProductNameById(SQLiteConnection connection, int productId)
+        {
+            string product = null; // Declare it outside the using block to make it accessible later
+
+            try
+            {
+                SQLiteCommand sqlite_cmd = connection.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT product_name FROM products WHERE id = @productId";
+                sqlite_cmd.Parameters.AddWithValue("@productId", productId);
+
+                using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
+                {
+                    if (sqlite_datareader.Read())
+                    {
+                        product = sqlite_datareader.GetString(0); // Assign value to product
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while reading from products table: {ex.Message}");
+            }
+
+            return product; // Return the product name
         }
     }
 }
