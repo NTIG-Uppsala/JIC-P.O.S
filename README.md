@@ -28,6 +28,7 @@ If products are not displayed correctly or you get an SQL error or similar, it i
 * [API Database Setup](Documents/ApiDatabaseSetup.md)
 * [API Setup](Documents/ApiSetup.md)
 * [API Endpoints](Documents/ApiEndpoints.md)
+* [Frontend Post Request Workflow](Documents/FrontendPostRequestWorkflow.md)
 
 ## Development Guidelines
 * [Programming Languages](Documents/programmingLanguages.md)
