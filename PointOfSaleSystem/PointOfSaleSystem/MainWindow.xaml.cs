@@ -225,11 +225,6 @@ namespace PointOfSaleSystem
             {
                 SendData.SendDataToDatabase();
                 SendData.WriteDateToFile(DateTime.Now);
-                Debug.WriteLine("Data sent to API");
-            }
-            else
-            {
-                Debug.WriteLine("Data already sent today");
             }
         }
     }

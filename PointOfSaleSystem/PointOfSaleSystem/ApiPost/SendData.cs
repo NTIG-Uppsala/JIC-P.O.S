@@ -49,7 +49,7 @@ namespace PointOfSaleSystem.ApiPost
             using (var client = new HttpClient())
             {
                 // Send the JSON data to the API
-                var response = await client.PostAsync("http://localhost:3000/api/sales/hej123", content);
+                var response = await client.PostAsync("http://161.35.193.219:3000/api/sales/JICPOS123", content);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Data sent successfully.");
