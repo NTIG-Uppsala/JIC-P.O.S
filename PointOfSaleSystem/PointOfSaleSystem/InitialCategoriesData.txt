@@ -16,8 +16,8 @@ Shellfish,#99ccff
 # Pizza (darker red color)
 Pizza,#e91a1a
 
-# Deserts (light pink color)
-Deserts,#ff99cc
+# Desserts (light pink color)
+Desserts,#ff99cc
 
 # Sauces (beige color)
 Sauces,#ffe5cc

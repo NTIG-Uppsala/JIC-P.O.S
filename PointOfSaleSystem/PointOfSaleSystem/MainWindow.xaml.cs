@@ -396,17 +396,17 @@ namespace PointOfSaleSystem
                     {
                         // Retrieves last inserted row ID
                         int orderId = (int)connection.LastInsertRowId;
-                        int productid;
+                        int productId;
                         // Insert the order details
                         foreach (var product in productWindow.Products)
                         {
-                            productid = ProductsTable.GetProductID(connection, product.ProductName); // Get the product ID from the database
+                            productId = ProductsTable.GetProductId(connection, product.ProductName); // Get the product ID from the database
                             OrderDetailsTable.InsertOrderDetails(
                                 connection,
-                                productid,    
-                                orderId,              
+                                productId,
+                                orderId,
                                 product.ProductAmount,
-                                product.ProductPrice   
+                                product.ProductPrice
                             );
                         }
                     }
