@@ -9,7 +9,7 @@ The application sends sales data to the backend API automatically when the app i
 - **Trigger**: The `InitializeSendData` method runs each time the application is launched.
 - **Process**:
   - It checks the last order date stored in the `date.txt` file.
-  - If the stored date is different from today's date, the application sends sales data to the backend API through the post route. For full documentation on all the API routes see [API endpoints](/Documents/ApiEndpoints.md).
+  - If the stored date is earlier than today's date (in the format yyyy-mm-dd), the application will send the new sales data to the backend API via the POST route. For detailed documentation on all API routes, refer to the [API endpoints](/Documents/ApiEndpoints.md).
   - After sending the data, the current date is written to the `date.txt` file to track the last data submission.
  
 ## Date File Location
