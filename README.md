@@ -19,10 +19,15 @@ If products are not displayed correctly or you get an SQL error or similar, it i
 - To reset the database, try deleting the database folder: `C\:Users\<username>\AppData\Local\Restaurant Point of Sale System`
 - **WARNING:** Be aware that this will delete all the data present in the database. For viewing the contents of the database tables and exporting table data if needed, read the [database system documentation](Documents/databaseSystem.md).
 
-## Technical Documentation
+### Point Of Sale System
 * [Testing System](Documents/testingSystem.md)
 * [Creating a New Installer](Documents/creatingInstaller.md)
 * [Database System](Documents/databaseSystem.md)
+
+### API Documentation
+* [API Database Setup](Documents/ApiDatabaseSetup.md)
+* [API Setup](Documents/ApiSetup.md)
+* [API Endpoints](Documents/ApiEndpoints.md)
 
 ## Development Guidelines
 * [Programming Languages](Documents/programmingLanguages.md)
