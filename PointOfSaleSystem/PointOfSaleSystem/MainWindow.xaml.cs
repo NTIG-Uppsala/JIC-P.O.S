@@ -7,6 +7,8 @@ using System.Windows.Media;
 using PointOfSaleSystem.Database;
 using PointOfSaleSystem.UserControls;
 using PointOfSaleSystem.ApiPost;
+using System.Runtime.CompilerServices;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace PointOfSaleSystem
 {
@@ -21,6 +23,7 @@ namespace PointOfSaleSystem
             InitializeProductsFromDatabase();
             InitializeOrdersFromDatabase();
             InitializeOrderDetailsFromDatabase();
+            InitializeSendData();
         }
         private void InitializeProductsFromDatabase()
         {
@@ -189,13 +192,12 @@ namespace PointOfSaleSystem
                             productid = ProductsTable.GetProductID(connection, product.ProductName); // Get the product ID from the database
                             OrderDetailsTable.InsertOrderDetails(
                                 connection,
-                                productid,    
-                                orderId,              
+                                productid,
+                                orderId,
                                 product.ProductAmount,
-                                product.ProductPrice   
+                                product.ProductPrice
                             );
                         }
-                        SendData.SendDataToDatabase();
                     }
                 }
 
@@ -210,6 +212,25 @@ namespace PointOfSaleSystem
         {
             ResetTotalPrice();
             OrderConfirmation.Visibility = Visibility.Hidden;
+        }
+
+        private void InitializeSendData()
+        {
+            // Ensure the date file exists
+            SendData.EnsureDateFileExists();
+            DateTime lastOrderDate = SendData.ReadDateFile();
+
+            // Check if the last order date is not today
+            if (lastOrderDate.Date < DateTime.Now.Date)
+            {
+                SendData.SendDataToDatabase();
+                SendData.WriteDateToFile(DateTime.Now);
+                Debug.WriteLine("Data sent to API");
+            }
+            else
+            {
+                Debug.WriteLine("Data already sent today");
+            }
         }
     }
 }

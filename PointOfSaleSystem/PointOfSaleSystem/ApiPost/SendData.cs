@@ -65,20 +65,13 @@ namespace PointOfSaleSystem.ApiPost
         {
             var orderDetails = new List<OrderDetail>();
 
-            // Ensure the date file exists
-            EnsureDateFileExists();
-
             // Read the current date from the date file
-            DateTime currentDate = ReadDateFile();
-
-            // Update the date to the current time
-            DateTime newDate = DateTime.Now;
-            WriteDateToFile(newDate);
+            DateTime lastInsertedDate = ReadDateFile();
 
             try
             {
                 // Get the order IDs after the last date
-                List<int> orderId = OrdersTable.GetOrderIdsAfterDate(connection, newDate);
+                List<int> orderId = OrdersTable.GetOrderIdsAfterDate(connection, lastInsertedDate);
 
                 SQLiteCommand sqlite_cmd = connection.CreateCommand();
 
@@ -128,7 +121,7 @@ namespace PointOfSaleSystem.ApiPost
 
 
         // Define the path to the "Restaurant Point of Sale System" folder in AppData
-        private static readonly string appDataLocation = Path.Combine(
+        public static readonly string appDataLocation = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Restaurant Point of Sale System"
         );
@@ -150,7 +143,7 @@ namespace PointOfSaleSystem.ApiPost
         }
 
         // Read the date from the date.txt file
-        private static DateTime ReadDateFile()
+        public static DateTime ReadDateFile()
         {
             try
             {
@@ -170,7 +163,7 @@ namespace PointOfSaleSystem.ApiPost
         }
 
         // Write a new date to the date.txt file
-        private static void WriteDateToFile(DateTime newDate)
+        public static void WriteDateToFile(DateTime newDate)
         {
             try
             {
