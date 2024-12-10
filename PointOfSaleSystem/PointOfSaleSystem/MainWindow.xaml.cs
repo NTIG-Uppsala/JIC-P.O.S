@@ -1,11 +1,7 @@
-﻿using System.Data.SQLite;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PointOfSaleSystem.Database;
-using PointOfSaleSystem.UserControls;
 
 namespace PointOfSaleSystem
 {
