@@ -14,7 +14,7 @@ Main courses,#ffa500
 Shellfish,#99ccff
 
 # Pizza (darker red color)
-Pizza,#cc0000
+Pizza,#e91a1a
 
 # Deserts (light pink color)
 Deserts,#ff99cc
@@ -23,7 +23,7 @@ Deserts,#ff99cc
 Sauces,#ffe5cc
 
 # Wine (purple color)
-Wine,#9933ff
+Wine,#d333ff
 
 # Draught beer (light yellow color)
 Draught beer,#ffff33
