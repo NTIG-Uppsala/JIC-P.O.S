@@ -10,8 +10,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.7*"/>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="0.4*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -19,17 +20,21 @@
             <ColumnDefinition Width="365" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
+        <ScrollViewer Grid.Row="0" Grid.Column="0" x:Name="ProductsScrollViewer" VerticalScrollBarVisibility="Hidden">
+            <WrapPanel Grid.Row="0" Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0 0 0 10">
                 <!-- Buttons are added here -->
             </WrapPanel>
         </ScrollViewer>
 
-        <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CategoriesWrapPanel">
-            <!--Buttons are added here-->
-        </WrapPanel>
+        <Border Grid.Row="1" Grid.Column="0" Height="1" Background="Black"/>
 
-        <Grid Grid.Column="1">
+        <ScrollViewer Grid.Row="2" Grid.Column="0" x:Name="CategoriesScrollViewer" VerticalScrollBarVisibility="Hidden">
+            <WrapPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CategoriesWrapPanel">
+                <!-- Buttons are added here -->
+            </WrapPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Column="1" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
