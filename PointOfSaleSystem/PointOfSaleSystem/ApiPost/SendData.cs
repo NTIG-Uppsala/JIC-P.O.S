@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using PointOfSaleSystem.Database;
 using System.IO;
 using System.Windows;
+using System.Xml;
 
 // Description: This class sends data to the API:s post route.
 namespace PointOfSaleSystem.ApiPost
@@ -48,7 +49,7 @@ namespace PointOfSaleSystem.ApiPost
             using (var client = new HttpClient())
             {
                 // Send the JSON data to the API
-                var response = await client.PostAsync("http://localhost:3000/api/sales/password123", content);
+                var response = await client.PostAsync("http://localhost:3000/api/sales/hej123", content);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Data sent successfully.");
@@ -63,13 +64,21 @@ namespace PointOfSaleSystem.ApiPost
         public static List<OrderDetail> GetOrderDetails(SQLiteConnection connection)
         {
             var orderDetails = new List<OrderDetail>();
-            // Read the last date from the date.txt file
-            DateTime lastDate = ReadDateFile();
+
+            // Ensure the date file exists
+            EnsureDateFileExists();
+
+            // Read the current date from the date file
+            DateTime currentDate = ReadDateFile();
+
+            // Update the date to the current time
+            DateTime newDate = DateTime.Now;
+            WriteDateToFile(newDate);
 
             try
             {
                 // Get the order IDs after the last date
-                List<int> orderId = OrdersTable.GetOrderIdsAfterDate(connection, lastDate);
+                List<int> orderId = OrdersTable.GetOrderIdsAfterDate(connection, newDate);
 
                 SQLiteCommand sqlite_cmd = connection.CreateCommand();
 
@@ -108,12 +117,41 @@ namespace PointOfSaleSystem.ApiPost
             return orderDetails;
         }
 
+        // Class to hold the order details
+        public class OrderDetail
+        {
+            public int order_id { get; set; }
+            public int ProductId { get; set; }
+            public int Quantity { get; set; }
+            public int UnitPrice { get; set; }
+        }
+
+
+        // Define the path to the "Restaurant Point of Sale System" folder in AppData
+        private static readonly string appDataLocation = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Restaurant Point of Sale System"
+        );
+
+        // Define the file path for the date.txt file in that folder
+        private static readonly string filePath = Path.Combine(appDataLocation, "date.txt");
+
+        // Ensure the date file exists
+        public static void EnsureDateFileExists()
+        {
+            // Create the directory for the file if it doesn't exist
+            Directory.CreateDirectory(appDataLocation);
+
+            // Create the file with a default date if it doesn't exist
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
+        }
+
         // Read the date from the date.txt file
         private static DateTime ReadDateFile()
         {
-            const string filename = "date.txt";
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
-
             try
             {
                 string[] fileLines = File.ReadAllLines(filePath);
@@ -130,14 +168,18 @@ namespace PointOfSaleSystem.ApiPost
                 return DateTime.MinValue;
             }
         }
-    }
 
-    // Class to hold the order details
-    public class OrderDetail
-    {
-        public int order_id { get; set; }
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public int UnitPrice { get; set; }
+        // Write a new date to the date.txt file
+        private static void WriteDateToFile(DateTime newDate)
+        {
+            try
+            {
+                File.WriteAllText(filePath, newDate.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("The file could not be written:\n" + ex.Message);
+            }
+        }
     }
 }
