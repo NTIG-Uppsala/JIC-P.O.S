@@ -10,23 +10,25 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.8*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="365" />
         </Grid.ColumnDefinitions>
+
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <WrapPanel Grid.Column="0" x:Name="ProductsWrapPanel" HorizontalAlignment="Left" Orientation="Horizontal">
-                <!-- Buttons are be added here -->
+                <!-- Buttons are added here -->
             </WrapPanel>
         </ScrollViewer>
-        <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock VerticalAlignment="top" Background="Black" Height="1"/>
-        </DockPanel>
-        
+
+        <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CategoriesWrapPanel">
+            <!--Buttons are added here-->
+        </WrapPanel>
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

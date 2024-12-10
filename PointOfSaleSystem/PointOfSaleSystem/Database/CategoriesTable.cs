@@ -27,7 +27,7 @@ namespace PointOfSaleSystem.Database
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to create database table \"products\": {ex.Message}");
+                MessageBox.Show($"Failed to create database table \"categories\": {ex.Message}");
                 return false;
             }
             return true;
@@ -38,6 +38,34 @@ namespace PointOfSaleSystem.Database
             bool returnValue;
             returnValue = DatabaseHelper.InsertTableDataFromTxt(connection, "InitialCategoriesData.txt", "categories", "name");
             return returnValue;
+        }
+
+        public static List<MainWindow.Category> ReadCategoriesTable(SQLiteConnection connection)
+        {
+            var categoriesList = new List<MainWindow.Category>(); // List containing categories created with the Category struct
+
+            try
+            {
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd = connection.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT id, name, automation_id, hex_color FROM categories";
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+                while (sqlite_datareader.Read())
+                {
+                    int categoryId = sqlite_datareader.GetInt32(0);
+                    string categoryName = sqlite_datareader.GetString(1);
+                    string categoryAutomationId = sqlite_datareader.GetString(2);
+                    string categoryHexColor = sqlite_datareader.GetString(3);
+
+                    categoriesList.Add(new MainWindow.Category(categoryId, categoryName, categoryAutomationId, categoryHexColor));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while reading from table \"categories\": {ex.Message}");
+            }
+            return categoriesList;
         }
     }
 }

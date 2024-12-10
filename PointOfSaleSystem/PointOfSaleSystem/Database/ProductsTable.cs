@@ -7,7 +7,6 @@ namespace PointOfSaleSystem.Database
 {
     public class ProductsTable
     {
-
         public static bool CreateProductsTable(SQLiteConnection connection)
         {
             string createsql = "CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -32,8 +31,6 @@ namespace PointOfSaleSystem.Database
             }
             return true;
         }
-
-
 
         private static string[] ReadProductsFile()
         {
@@ -81,10 +78,15 @@ namespace PointOfSaleSystem.Database
 
             try
             {
-
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd = connection.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT name, automation_id, price FROM products";
+
+                // Select entries from the products table and utilize category_id to retrieve the hex_color entry from the categories table
+                sqlite_cmd.CommandText = @"
+                    SELECT product.name, product.automation_id, product.price, product.category_id, category.hex_color
+                    FROM products product
+                    LEFT JOIN categories category ON product.category_id = category.id";
+
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
 
                 while (sqlite_datareader.Read())
@@ -92,8 +94,10 @@ namespace PointOfSaleSystem.Database
                     string productName = sqlite_datareader.GetString(0);
                     string productAutomationId = sqlite_datareader.GetString(1);
                     int productPrice = sqlite_datareader.GetInt32(2);
+                    int foreignCategoryId = sqlite_datareader.GetInt32(3);
+                    string foreignCategoryHexColor = sqlite_datareader.GetString(4);
 
-                    productsList.Add(new MainWindow.Product(productName, productAutomationId, productPrice));
+                    productsList.Add(new MainWindow.Product(productName, productAutomationId, productPrice, foreignCategoryId, foreignCategoryHexColor));
                 }
             }
             catch (Exception ex)
