@@ -21,40 +21,6 @@ namespace PointOfSaleSystem
             InitializeOrderDetailsFromDatabase();
         }
 
-        private void InitializeProductsFromDatabase()
-        {
-            using (var connection = DatabaseHelper.CreateConnection())
-            {
-                if (connection != null)
-                {
-                    bool haveInsertedProducts = true;
-                    bool productsTableIsCreated = true;
-                    const string tableName = "products";
-
-                    // Create table and insert data if the products table did not yet exist
-                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
-                    {
-                        productsTableIsCreated = ProductsTable.CreateProductsTable(connection);
-
-                        if (productsTableIsCreated)
-                        {
-                            haveInsertedProducts = ProductsTable.InsertProductsData(connection);
-                        }
-                    }
-
-                    // Create product buttons if the table entries were created successfully or previously existed
-                    if (haveInsertedProducts)
-                    {
-                        var products = ProductsTable.ReadProductsTable(connection);
-                        if (products.Count > 0)
-                        {
-                            CreateProductButtons(products); // Pass the retrieved products to CreateProductButtons
-                        }
-                    }
-                }
-            }
-        }
-
         private void InitializeCategoriesFromDatabase()
         {
             using (var connection = DatabaseHelper.CreateConnection())
@@ -82,6 +48,42 @@ namespace PointOfSaleSystem
                         if (categories.Count > 0)
                         {
                             CreateCategoryButtons(categories); // Pass the retrieved categories to CreateCategoryButtons
+                        }
+                    }
+                }
+            }
+        }
+
+        public List<Product> products;
+
+        private void InitializeProductsFromDatabase()
+        {
+            using (var connection = DatabaseHelper.CreateConnection())
+            {
+                if (connection != null)
+                {
+                    bool haveInsertedProducts = true;
+                    bool productsTableIsCreated = true;
+                    const string tableName = "products";
+
+                    // Create table and insert data if the products table did not yet exist
+                    if (!DatabaseHelper.DoesTableExist(connection, tableName))
+                    {
+                        productsTableIsCreated = ProductsTable.CreateProductsTable(connection);
+
+                        if (productsTableIsCreated)
+                        {
+                            haveInsertedProducts = ProductsTable.InsertProductsData(connection);
+                        }
+                    }
+
+                    // Create product buttons if the table entries were created successfully or previously existed
+                    if (haveInsertedProducts)
+                    {
+                        products = ProductsTable.ReadProductsTable(connection);
+                        if (products.Count > 0)
+                        {
+                            CreateProductButtons(products); // Pass the retrieved products to CreateProductButtons
                         }
                     }
                 }
@@ -128,13 +130,14 @@ namespace PointOfSaleSystem
         // Struct representing a product to create buttons from
         public struct Product
         {
-            public Product(string productName, string productAutomationId, int productPrice, int foreignCategoryId, string foreignCategoryHexColor)
+            public Product(string productName, string productAutomationId, int productPrice, int foreignCategoryId, string foreignCategoryHexColor, bool productIsCommon)
             {
                 name = productName;
                 automationId = productAutomationId;
                 price = productPrice;
                 categoryId = foreignCategoryId;
                 hexColor = foreignCategoryHexColor;
+                isCommon = productIsCommon;
             }
 
             public string name { get; init; }
@@ -142,6 +145,7 @@ namespace PointOfSaleSystem
             public int price { get; init; }
             public int categoryId { get; init; }
             public string hexColor { get; init; }
+            public bool isCommon { get; init; }
         }
 
         // Struct representing a category to create buttons from
@@ -198,6 +202,12 @@ namespace PointOfSaleSystem
                     OrderConfirmation.Visibility = Visibility.Hidden;
                 };
 
+                // Hide button by default if the product is not common
+                if (!product.isCommon)
+                {
+                    button.Visibility = Visibility.Collapsed;
+                }
+
                 ProductsWrapPanel.Children.Add(button); // Add each button as a child to ProductsStackPanel
             }
         }
@@ -227,12 +237,22 @@ namespace PointOfSaleSystem
             returnButton.Content = returnTextBlock;
             returnButton.Click += (sender, e) =>
             {
-                // Make all the products from every category visible when pressing the return button
+                // Make all common products from every category visible when pressing the return button
                 foreach (UIElement item in ProductsWrapPanel.Children)
                 {
-                    if (item.Visibility == Visibility.Collapsed)
+                    if (item is FrameworkElement frameworkElement)
                     {
-                        item.Visibility = Visibility.Visible;
+                        string itemName = frameworkElement.Name;
+                        Product matchingProduct = products.Find(p => p.automationId == itemName);
+
+                        if (matchingProduct.isCommon)
+                        {
+                            item.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            item.Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
 

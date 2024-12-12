@@ -2,61 +2,61 @@
 # Line starting with FORMAT: describes the format used when parsing the file lines (see below).
 # Empty lines or lines starting with "#" are ignored.
 
-FORMAT:name,price,category_id
+FORMAT:name,price,category_id,is_common
 
-Mushroom tartare,135,1
-Blue Salmon Sashimi,145,1
-Scallops,170,1
+Mushroom tartare,135,1,0
+Blue Salmon Sashimi,145,1,1
+Scallops,170,1,1
 
-Shrimp salad,120,2
-Swedish husmanskost,125,2
-Fish and chips,125,2
-Grilled tuna salad,190,2
-Steak tartare,185,2
+Shrimp salad,120,2,1
+Swedish husmanskost,125,2,1
+Fish and chips,125,2,1
+Grilled tuna salad,190,2,0
+Steak tartare,185,2,0
 
-Shrimp 200 g,120,3
-Smoked shrimp 200 g,120,3
-Sea crayfish,38,3
-Half crab,140,3
-Half lobster,235,3
+Shrimp 200 g,120,3,1
+Smoked shrimp 200 g,120,3,1
+Sea crayfish,38,3,0
+Half crab,140,3,0
+Half lobster,235,3,1
 
-Capricciosa,90,4
-Calzone,90,4
-Margarita,90,4
-Hawaii,90,4
-Vesuvio,90,4
+Capricciosa,90,4,1
+Calzone,90,4,1
+Margarita,90,4,1
+Hawaii,90,4,0
+Vesuvio,90,4,0
 
-Crème brûlée,90,5
-Raspberry pavlova,110,5
-Passion fruit sorbet,50,5
+Crème brûlée,90,5,1
+Raspberry pavlova,110,5,0
+Passion fruit sorbet,50,5,1
 
-Bearnaise,10,6
-Lemon mayonnaise,10,6
-Chimichurri,10,6
+Bearnaise,10,6,1
+Lemon mayonnaise,10,6,1
+Chimichurri,10,6,0
 
-Glass Maison Sans Pareil Sauvignon Blanc,135,7
-Bottle Maison Sans Pareil Sauvignon Blanc,495,7
-Paolo Leo Calaluna Fiano,405,7
-Glass Friedrich-Wilhelm-Gymnasium Riesling Trocken,125,7
-Bottle Friedrich-Wilhelm-Gymnasium Riesling Trocken,455,7
-Glass Jean-Claude Boisset Pinot Noir,135,7
-Bottle Jean-Claude Boisset Pinot Noir,495,7
-I Castei Ripasso,520,7
+Glass Maison Sans Pareil Sauvignon Blanc,135,7,1
+Bottle Maison Sans Pareil Sauvignon Blanc,495,7,0
+Paolo Leo Calaluna Fiano,405,7,0
+Glass Friedrich-Wilhelm-Gymnasium Riesling Trocken,125,7,1
+Bottle Friedrich-Wilhelm-Gymnasium Riesling Trocken,455,7,0
+Glass Jean-Claude Boisset Pinot Noir,135,7,1
+Bottle Jean-Claude Boisset Pinot Noir,495,7,1
+I Castei Ripasso,520,7,0
 
-Bistro Lager,65,8
-Wisby Pils,69,8
-Sleepy Bulldog Pale Ale,75,8
+Bistro Lager,65,8,1
+Wisby Pils,69,8,1
+Sleepy Bulldog Pale Ale,75,8,0
 
-Grängesberg,30,9
-Cruzcampo,65,9
-Janne Shuffle,59,9
+Grängesberg,30,9,1
+Cruzcampo,65,9,0
+Janne Shuffle,59,9,0
 
-Boulard Cidre De Normandie,74,10
+Boulard Cidre De Normandie,74,10,1
 
-Coffee,32,11
-Espresso,32,11
-Double espresso,36,11
-Macchiato,34,11
-Double macchiato,42,11
-Cappuccino,44,11
-Tea,34,11
+Coffee,32,11,1
+Espresso,32,11,1
+Double espresso,36,11,1
+Macchiato,34,11,0
+Double macchiato,42,11,0
+Cappuccino,44,11,1
+Tea,34,11,1

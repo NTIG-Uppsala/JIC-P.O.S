@@ -14,6 +14,7 @@ namespace PointOfSaleSystem.Database
                 "automation_id VARCHAR(255), " +
                 "price INT, " +
                 "category_id INT, " +
+                "is_common INT, " +
                 "FOREIGN KEY (category_id) REFERENCES categories(id)" +  // Linking to categories table
             ");";
 
@@ -83,7 +84,7 @@ namespace PointOfSaleSystem.Database
 
                 // Select entries from the products table and utilize category_id to retrieve the hex_color entry from the categories table
                 sqlite_cmd.CommandText = @"
-                    SELECT product.name, product.automation_id, product.price, product.category_id, category.hex_color
+                    SELECT product.name, product.automation_id, product.price, product.category_id, category.hex_color, product.is_common
                     FROM products product
                     LEFT JOIN categories category ON product.category_id = category.id";
 
@@ -96,8 +97,11 @@ namespace PointOfSaleSystem.Database
                     int productPrice = sqlite_datareader.GetInt32(2);
                     int foreignCategoryId = sqlite_datareader.GetInt32(3);
                     string foreignCategoryHexColor = sqlite_datareader.GetString(4);
+                    int isCommonInt = sqlite_datareader.GetInt32(5);
 
-                    productsList.Add(new MainWindow.Product(productName, productAutomationId, productPrice, foreignCategoryId, foreignCategoryHexColor));
+                    bool isCommon = isCommonInt == 1; // Turn the int to a boolean
+
+                    productsList.Add(new MainWindow.Product(productName, productAutomationId, productPrice, foreignCategoryId, foreignCategoryHexColor, isCommon));
                 }
             }
             catch (Exception ex)
