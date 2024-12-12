@@ -4,7 +4,6 @@ This document guides you through setting up the Database for the API. This guide
 
 ---
 
-
 ## Database Setup
 
 ### Database Structure
@@ -15,7 +14,7 @@ The API uses two tables: `products` and `sales`. Below is the database schema:
 
 ### Creating the Tables
 
-To set up the database with the required structure, copy and paste the SQL code below into your preferred database editor or commandline. You need to create the products table before the sales table.t
+To set up the database with the necessary structure, copy and paste the SQL code below into your preferred SQL database management tool. Ensure that you create the `products` table before creating the `sales` table.
 
 #### Create `products` Table
 ```sql
