@@ -1,0 +1,38 @@
+# This file contains the data entries used to initially create the database table "categories".
+# The line starting with FORMAT: describes the format for parsing, see below
+# Empty lines or lines starting with "#" are ignored.
+
+FORMAT:name,hex_color
+
+# Starters (green color)
+Starters,#66cc00
+
+# Main courses (orange color)
+Main courses,#ffa500
+
+# Shellfish (light blue color)
+Shellfish,#99ccff
+
+# Pizza (darker red color)
+Pizza,#e91a1a
+
+# Desserts (light pink color)
+Desserts,#ff99cc
+
+# Sauces (beige color)
+Sauces,#ffe5cc
+
+# Wine (purple color)
+Wine,#d333ff
+
+# Draught beer (light yellow color)
+Draught beer,#ffff33
+ 
+# Bottled beer (darker yellow color)
+Bottled beer,#ecec27
+
+# Cider (light green color)
+Cider,#b2ff66
+
+# Warm drinks (brown color)
+Warm drinks,#cc6600

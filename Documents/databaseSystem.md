@@ -22,7 +22,7 @@ Each entry in the file is placed under one of the following categories:
 10. Cider
 11. Coffee
 
-Each item is added to the table with its corresponding category.
+> **Note:**  Each item is added to the table with its corresponding category. The order of categories in the text file determines the priority, with items from categories listed earlier in the file having higher priority. For example, Starters will always have higher priority than Pizza or Desserts because they appear earlier in the file. Items with higher priority are displayed before those with lower priority in the UI.
 
 To add a new default menu item, add the name of the product and price under desired category in this format:
 

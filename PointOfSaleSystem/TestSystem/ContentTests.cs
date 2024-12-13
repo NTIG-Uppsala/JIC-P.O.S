@@ -16,16 +16,20 @@ namespace TestSystem
     [TestClass]
     public class ContentTests
     {
-        private string firstProductAutomationId = "coffee_button";
-        private string secondProductAutomationId = "mushroom_tartare_button";
-        private string thirdProductAutomationId = "glass_maison_sans_pareil_sauvignon_blanc_button";
+        private string firstProductAutomationId = "coffee";
+        private string secondProductAutomationId = "scallops";
+        private string thirdProductAutomationId = "glass_maison_sans_pareil_sauvignon_blanc";
+
+        private string firstCategoryButtonAutomationId = "starters";
+        private string secondCategoryButtonAutomationId = "sauces";
+        private string thirdCategoryButtonAutomationId = "warm_drinks";
 
         private string firstProductName = "Coffee";
-        private string secondProductName = "Mushroom tartare";
+        private string secondProductName = "Scallops";
         private string thirdProductName = "Glass Maison Sans Pareil Sauvignon Blanc";
 
         private int firstProductPrice = 32;
-        private int secondProductPrice = 135;
+        private int secondProductPrice = 170;
         private int thirdProductPrice = 135;
 
         private ConditionFactory? cf;
@@ -232,28 +236,33 @@ namespace TestSystem
         }
 
         [TestMethod]
-        public void CheckCategory()
+        public void VerifyCategoryProductVisibility()
         {
             using var automation = new UIA3Automation();
             var window = app.GetMainWindow(automation);
 
-            //find the drinks category button
-            var WarmDrinks = window.FindFirstDescendant(cf.ByAutomationId("WarmDrinksCategoryButton")).AsButton();
-            WarmDrinks.Click();
+            // Find and click on the warm drinks category button
+            var warmDrinksCategoryButton = window.FindFirstDescendant(cf.ByAutomationId(thirdCategoryButtonAutomationId )).AsButton();
+            warmDrinksCategoryButton.Click();
 
-            var MushroomTartare = window.FindFirstDescendant(cf.ByAutomationId(secondProductAutomationId)).AsButton();
-            var Coffee = window.FindFirstDescendant(cf.ByAutomationId(firstProductAuomationId)).AsButton();
+            // Try to find two product buttons, where one of them is and one of them is not supposed to be visible
+            var secondProduct = window.FindFirstDescendant(cf.ByAutomationId(secondProductAutomationId)).AsButton();
+            var firstProduct = window.FindFirstDescendant(cf.ByAutomationId(firstProductAutomationId)).AsButton();
 
-            Trace.Assert(MushroomTartare == null, "Test failed: MushroomTartare was found.");
-            Trace.Assert(Coffee != null, "Test failed: Coffee was not found.");
+            Trace.Assert(secondProduct == null, $"Test failed: {secondProductName} was found.");
+            Trace.Assert(firstProduct != null, $"Test failed: {firstProductName} was not found.");
 
-            //find the starters category button
-            var startersCategoryButton = window.FindFirstDescendant(cf.ByAutomationId("StartersCategoryButton")).AsButton();
+            // Find and click on the starters category button
+            var startersCategoryButton = window.FindFirstDescendant(cf.ByAutomationId(firstCategoryButtonAutomationId)).AsButton();
             startersCategoryButton.Click();
 
-            Trace.Assert(MushroomTartare != null, "Test failed: MushroomTartare was not found.");
-            Trace.Assert(Coffee == null, "Test failed: Coffee was found.");
+            secondProduct = window.FindFirstDescendant(cf.ByAutomationId(secondProductAutomationId)).AsButton();
+            firstProduct = window.FindFirstDescendant(cf.ByAutomationId(firstProductAutomationId)).AsButton();
+
+            Trace.Assert(secondProduct != null, $"Test failed: {secondProductName} was not found.");
+            Trace.Assert(firstProduct == null, $"Test failed: {firstProductName} was found.");
         }
+
 
         // Helper method to reset the total price
         private void ResetTotalPrice()
@@ -299,6 +308,3 @@ namespace TestSystem
         }
     }
 }
-
-
-
