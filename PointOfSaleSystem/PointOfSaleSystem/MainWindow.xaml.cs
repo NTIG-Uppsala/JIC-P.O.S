@@ -2,10 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using PointOfSaleSystem.Database;
-using PointOfSaleSystem.UserControls;
 using PointOfSaleSystem.ApiPost;
-using System.Runtime.CompilerServices;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace PointOfSaleSystem
 {
