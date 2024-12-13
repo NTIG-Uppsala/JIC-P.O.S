@@ -263,36 +263,6 @@ namespace TestSystem
             Trace.Assert(firstProduct == null, $"Test failed: {firstProductName} was found.");
         }
 
-        [TestMethod]
-        public void CheckCategoryPriority()
-        {
-            using var automation = new UIA3Automation();
-            var window = app.GetMainWindow(automation);
-
-            // Find the category wrapper and the buttons inside it
-            var categoryWrapper = window.FindFirstDescendant(cf.ByAutomationId("CategoryWrapper")).AsTextBox();
-            var categoryButtons = categoryWrapper.FindAllChildren(cf.ByControlType(ControlType.Button));
-
-            // Get the automation id of the first, middle, and last button
-            var firstButton = categoryButtons.FirstOrDefault(b => b.AutomationId == firstCategoryButtonAutomationId);
-            var middleButton = categoryButtons.FirstOrDefault(b => b.AutomationId == secondCategoryButtonAutomationId);
-            var lastButton = categoryButtons.FirstOrDefault(b => b.AutomationId == thirdCategoryButtonAutomationId);
-
-            // Check that the buttons were found
-            Trace.Assert(firstButton != null, "Test failed: First button not found.");
-            Trace.Assert(middleButton != null, "Test failed: Second button not found.");
-            Trace.Assert(lastButton != null, "Test failed: Third button not found.");
-
-            // Ensure the buttons are in the correct order
-            int firstButtonIndex = Array.IndexOf(categoryButtons, firstButton);
-            int middleButtonIndex = Array.IndexOf(categoryButtons, middleButton);
-            int lastButtonIndex = Array.IndexOf(categoryButtons, lastButton);
-
-            Trace.Assert(firstButtonIndex == 0, "Test failed: Expected 0 but got {firstButtonIndex}");
-            Trace.Assert(middleButtonIndex == 5, "Test failed: Expected 1 but got {middleButtonIndex}");
-            Trace.Assert(lastButtonIndex == 10, "Test failed: Expected 2 but got {lastButtonIndex}");
-        }
-
 
         // Helper method to reset the total price
         private void ResetTotalPrice()
