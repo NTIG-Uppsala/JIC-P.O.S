@@ -17,8 +17,22 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     port: process.env.DB_PORT,
 });
 
-// Defined product model
-let product = sequelize.define('product', {
+// Define Sales model
+let sale = sequelize.define('sales', {
+    restaurant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    total_amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    }
+}, {
+    timestamps: true,
+});
+
+// Define Products model
+let product = sequelize.define('products', {
     product_name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -31,15 +45,23 @@ let product = sequelize.define('product', {
     timestamps: false,
 });
 
-// Defined sale model
-let sale = sequelize.define('sale', {
-    restaurant_name: {
-        type: DataTypes.STRING,
+// Define Sale_Products junction table
+let sale_product = sequelize.define('sale_products', {
+    sale_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: sale,
+            key: 'id',
+        },
     },
     product_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: product,
+            key: 'id',
+        },
     },
     quantity: {
         type: DataTypes.SMALLINT,
@@ -49,9 +71,35 @@ let sale = sequelize.define('sale', {
     timestamps: false,
 });
 
-// Define the association between Product and Sales
-product.hasMany(sale, { foreignKey: 'product_id' }); // A product can have many sales
-sale.belongsTo(product, { foreignKey: 'product_id' }); // A sale belongs to a product
+let restaurant = sequelize.define('restaurants', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    total_sales: {
+        type: DataTypes.INTEGER,
+    }
+}, {
+    timestamps: false,
+});
+
+
+// Sale <-> Product (Many-to-Many through SaleProduct)
+sale.belongsToMany(product, { through: sale_product, foreignKey: 'sale_id' });
+product.belongsToMany(sale, { through: sale_product, foreignKey: 'product_id' });
+
+// Define the association between Sale and Restaurant
+restaurant.hasMany(sale, { foreignKey: 'restaurant_id' });  // A restaurant has many sales
+sale.belongsTo(restaurant, { foreignKey: 'restaurant_id' });  // A sale belongs to a restaurant
+
 
 (async () => {
     try {
@@ -60,6 +108,17 @@ sale.belongsTo(product, { foreignKey: 'product_id' }); // A sale belongs to a pr
     } catch (error) {
         console.error('Unable to connect to the database:', error);
         process.exit(1);  // Exit if database connection fails
+    }
+})();
+
+// Sync the models with the database
+(async () => {
+    try {
+        await sequelize.sync();
+        console.log('Models synced successfully.');
+    } catch (error) {
+        console.error('Unable to sync models with the database:', error);
+        process.exit(1);  // Exit if model sync fails
     }
 })();
 
