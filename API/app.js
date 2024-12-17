@@ -23,7 +23,7 @@ let sale = sequelize.define('sales', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    total_amount: {
+    total_price: {
         type: DataTypes.INTEGER,
         allowNull: false,
     }
@@ -71,6 +71,7 @@ let sale_product = sequelize.define('sale_products', {
     timestamps: false,
 });
 
+// Define Restaurants model
 let restaurant = sequelize.define('restaurants', {
     name: {
         type: DataTypes.STRING,
@@ -139,57 +140,46 @@ app.get('/api/products', async (req, res) => {
 // GET request to get all sales data
 app.get('/api/sales', async (req, res) => {
     try {
-        // Fetch all sales from the database
-        const sales = await sale.findAll();
+        // Fetch all the sales with product_name and quantity
+        const sales = await sale_product.findAll({
+            include: {
+                model: product,
+                attributes: ['product_name'],  // Include product_name from the product model
+            },
+            attributes: ['sale_id', 'quantity'],  // Attributes from sale_product
+        });
 
-        // Return the sales as JSON
-        res.json(sales);
+        // Transform the data to replace product_id with product_name
+        const salesWithProductName = sales.map(saleEntry => ({
+            sale_id: saleEntry.sale_id,
+            product_name: saleEntry.product.product_name,  // Access the product_name from the included product
+            quantity: saleEntry.quantity,
+        }));
+
+        // Return the sales data as JSON
+        res.status(200).json(salesWithProductName);
     } catch (error) {
         console.error('Error fetching sales:', error);
         res.status(500).send('Unable to fetch sales');
     }
 });
 
-// GET request to get sales data for a specific product
-app.get('/api/sales/:product_id', async (req, res) => {
-    try {
-        // Fetch the sale with the given ID
-        const product_id = req.params.product_id;
-        const sales = await sale.findAll({
-            where: { product_id: product_id },
-            attributes: ['restaurant_name', 'quantity'],
-        });
-
-        // Fetch the product with the given ID
-        const products = await product.findByPk(product_id, {
-            attributes: ['product_name', 'price'],
-        });
-
-        // Return the product and sale as JSON
-        res.status(200).json({ products, sales });
-    } catch (error) {
-        console.error('Error fetching sale:', error);
-        res.status(500).send('Unable to fetch sale');
-    }
-});
-
 // GET request to get the total sales data
-app.get('/api/total_sales', async (req, res) => {
+app.get('/api/sales/income', async (req, res) => {
     try {
         // Fetch all sales from the database
-        const sales = await sale.findAll();
-        const products = await product.findAll();
+        const income = await sale.findAll({
+            attributes: ['total_price'],
+        });
 
-        // Calculate the total sales and total income
-        let totalSales = 0;
+        // Calculate the total income
         let totalIncome = 0;
-        sales.forEach(sale => {
-            totalSales += sale.quantity;
-            totalIncome += sale.quantity * products.find(product => product.id === sale.product_id).price;
+        income.forEach(sale => {
+            totalIncome += sale.total_price;
         });
 
         // Return the total sales as JSON
-        res.json({ total_sales: totalSales, total_income: totalIncome });
+        res.json({ total_income: totalIncome });
     } catch (error) {
         console.error('Error fetching total sales:', error);
         res.status(500).send('Unable to fetch total sales');
@@ -197,28 +187,56 @@ app.get('/api/total_sales', async (req, res) => {
 });
 
 // GET request to get the sales data for a specific restaurant
-app.get('/api/total_sales/:restaurant_name', async (req, res) => {
+app.get('/api/sales/income/:restaurant_id', async (req, res) => {
     try {
-        const restaurant_name = req.params.restaurant_name;
-        const products = await product.findAll();
-
-        const sales = await sale.findAll({
-            where: { restaurant_name: restaurant_name },
+        const restaurant_id = req.params.restaurant_id;
+        const restaurant = await restaurant.findByPk(restaurant_id);
+        // Fetch all sales from the database
+        const income = await sale.findAll({
+            where: { restaurant_id: restaurant_id },
+            attributes: ['total_price'],
         });
 
-        // Calculate the total sales for the restaurant
-        let totalSales = 0;
-        let totalIncome = 0;
-        sales.forEach(sale => {
-            totalSales += sale.quantity;
-            totalIncome += sale.quantity * products.find(product => product.id === sale.product_id).price;
+        // Calculate the total income
+        income.forEach(sale => {
+            totalIncome += sale.total_price;
         });
 
-        res.json({ total_sales: totalSales, total_income: totalIncome });
-    }
-    catch (error) {
+        // Return the total sales as JSON
+        res.json({ total_income: totalIncome + 'SEK for restaurant ' + restaurant.name });
+    } catch (error) {
         console.error('Error fetching total sales:', error);
-        res.status(500).send('Unable to fetch total sales for {restaurant_name}');
+        res.status(500).send('Unable to fetch total sales');
+    }
+});
+
+// GET request to get sales data for a specific product
+app.get('/api/sales/:product_id', async (req, res) => {
+    try {
+        // Fetch all the sales for the product with the given ID
+        const product_id = req.params.product_id;
+        // Fetch all the sales with product_name and quantity
+        const sales = await sale_product.findAll({
+            where: { product_id: product_id },
+            include: {
+                model: product,
+                attributes: ['product_name'],  // Include product_name from the product model
+            },
+            attributes: ['sale_id', 'quantity'],  // Attributes from sale_product
+        });
+
+        // Transform the data to replace product_id with product_name
+        const salesWithProductName = sales.map(saleEntry => ({
+            sale_id: saleEntry.sale_id,
+            product_name: saleEntry.product.product_name,  // Access the product_name from the included product
+            quantity: saleEntry.quantity,
+        }));
+
+        // Return the product and sale as JSON
+        res.status(200).json({ salesWithProductName });
+    } catch (error) {
+        console.error('Error fetching sale:', error);
+        res.status(500).send('Unable to fetch sale');
     }
 });
 
