@@ -123,6 +123,19 @@ sale.belongsTo(restaurant, { foreignKey: 'restaurant_id' });  // A sale belongs 
     }
 })();
 
+// GET request to list all restaurants
+app.get('/api/restaurants', async (req, res) => {
+    try {
+        // Fetch all restaurants from the database
+        const restaurants = await restaurant.findAll();
+
+        res.json(restaurants);
+    } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        res.status(500).send('Unable to fetch restaurants');
+    }
+});
+
 // GET request to get all products data
 app.get('/api/products', async (req, res) => {
     try {
