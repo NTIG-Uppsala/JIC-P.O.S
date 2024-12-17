@@ -7,8 +7,32 @@ const path = require('path');
 const app = express();
 require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 app.use(express.json());
+
+const PORT = process.env.PORT || 3000;
+
+// Swagger definition
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0', // Specify the version of the OpenAPI Specification
+        info: {
+            title: 'Point of Sale System API', // Title of the API
+            description: 'API documentation for the Sales application', // Description of the API
+            servers: [
+                {
+                    url: `http://localhost:${PORT}`, // Server URL
+                },
+            ],
+        },
+    },
+    apis: ['./app.js'], // Path to the API doc
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
@@ -125,6 +149,17 @@ sale.belongsTo(restaurant, { foreignKey: 'restaurant_id' });  // A sale belongs 
 })();
 
 // GET request to list all restaurants
+/**
+ * @swagger
+ * /api/restaurants:
+ *   get:
+ *     summary: Retrieve a list of all restaurants
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch restaurants
+ */
 app.get('/api/restaurants', async (req, res) => {
     try {
         // Fetch all restaurants from the database
@@ -138,6 +173,17 @@ app.get('/api/restaurants', async (req, res) => {
 });
 
 // GET request to get all products data
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Retrieve a list of all products
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch products
+ */
 app.get('/api/products', async (req, res) => {
     try {
         // Fetch all products from the database
@@ -152,6 +198,17 @@ app.get('/api/products', async (req, res) => {
 });
 
 // GET request to get all sales data
+/**
+ * @swagger
+ * /api/sales:
+ *   get:
+ *     summary: Retrieve a list of all sales
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch sales
+ */
 app.get('/api/sales', async (req, res) => {
     try {
         // Fetch all the sales with product_name and quantity
@@ -179,6 +236,17 @@ app.get('/api/sales', async (req, res) => {
 });
 
 // GET request to get the total sales data
+/**
+ * @swagger
+ * /api/sales/income:
+ *   get:
+ *     summary: Retrieve total combined income from all the sales for every restaurant
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch total sales
+ */
 app.get('/api/sales/income', async (req, res) => {
     try {
         // Fetch all sales from the database
@@ -201,6 +269,24 @@ app.get('/api/sales/income', async (req, res) => {
 });
 
 // GET request to get the sales data for a specific restaurant
+/**
+ * @swagger
+ * /api/sales/income/{restaurant_id}:
+ *   get:
+ *     summary: Retrieve the income generated from the sales for a specific restaurant
+ *     parameters:
+ *       - name: restaurant_id
+ *         in: path
+ *         required: true
+ *         description: The ID of the restaurant to retrieve income data from
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch total sales
+ */
 app.get('/api/sales/income/:restaurant_id', async (req, res) => {
     try {
         const restaurant_id = req.params.restaurant_id;
@@ -226,6 +312,24 @@ app.get('/api/sales/income/:restaurant_id', async (req, res) => {
 });
 
 // GET request to get sales data for a specific product
+/**
+ * @swagger
+ * /api/sales/{product_id}:
+ *   get:
+ *     summary: Retrieve the sales data for a specific product
+ *     parameters:
+ *       - name: product_id
+ *         in: path
+ *         required: true
+ *         description: The ID of the product to retrieve sales data for
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Unable to fetch sale
+ */
 app.get('/api/sales/:product_id', async (req, res) => {
     try {
         // Fetch all the sales for the product with the given ID
@@ -256,6 +360,55 @@ app.get('/api/sales/:product_id', async (req, res) => {
 });
 
 // Post request to add restaurant sales data (restaurant will send restaurant_name, address, email, product_name, price, and quantity)
+/**
+ * @swagger
+ * /api/post/sales/{password}:
+ *   post:
+ *     summary: Add restaurant sales data
+ *     parameters:
+ *       - name: password
+ *         in: path
+ *         required: true
+ *         description: The password required to authenticate the request
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 restaurant_name:
+ *                   type: string
+ *                   description: The name of the restaurant
+ *                 address:
+ *                   type: string
+ *                   description: The address of the restaurant
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                   description: The contact email of the restaurant
+ *                 product_name:
+ *                   type: string
+ *                   description: The name of the product sold
+ *                 price:
+ *                   type: number
+ *                   format: float
+ *                   description: The price of the product
+ *                 quantity:
+ *                   type: integer
+ *                   description: The quantity of the product sold
+ *     responses:
+ *       200:
+ *         description: Sales data processed successfully!
+ *       403:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 app.post('/api/post/sales/:password', async (req, res) => {
     try {
         // Check if the password is correct
@@ -336,7 +489,6 @@ async function findOrCreateRestaurant(saleData) {
     return restaurantData;
 }
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
