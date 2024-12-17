@@ -92,10 +92,11 @@ let restaurant = sequelize.define('restaurants', {
     timestamps: false,
 });
 
-
-// Sale <-> Product (Many-to-Many through SaleProduct)
-sale.belongsToMany(product, { through: sale_product, foreignKey: 'sale_id' });
-product.belongsToMany(sale, { through: sale_product, foreignKey: 'product_id' });
+// Explicit associations for sale_product
+sale_product.belongsTo(product, { foreignKey: 'product_id' });
+sale_product.belongsTo(sale, { foreignKey: 'sale_id' });
+product.hasMany(sale_product, { foreignKey: 'product_id' });
+sale.hasMany(sale_product, { foreignKey: 'sale_id' });
 
 // Define the association between Sale and Restaurant
 restaurant.hasMany(sale, { foreignKey: 'restaurant_id' });  // A restaurant has many sales
