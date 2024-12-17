@@ -254,7 +254,7 @@ app.get('/api/sales/:product_id', async (req, res) => {
 });
 
 // Post request to add restaurant sales data (restaurant will send restaurant_name, address, email, product_name, price, and quantity)
-app.post('/api/sales/:password', async (req, res) => {
+app.post('/api/post/sales/:password', async (req, res) => {
     try {
         // Check if the password is correct
         if (req.params.password !== process.env.POST_PASSWORD) {
