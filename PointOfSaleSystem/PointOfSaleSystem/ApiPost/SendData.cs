@@ -29,15 +29,17 @@ namespace PointOfSaleSystem.ApiPost
                 foreach (var orderDetail in orderDetails)
                 {
                     // Get the product name from the products table
-                    var product = ProductsTable.GetProductNameById(connection, orderDetail.ProductId);
+                    var product = ProductsTable.GetProductNameById(connection, orderDetail.productId);
 
                     // Add all the order information to the data list
                     data.Add(new
                     {
                         restaurant_name = "Downtown Bistro",
+                        address = "Lägerhyddsvägen 2",
+                        email = "Downtown@bistro.JICpos",
                         product_name = product,
-                        price = orderDetail.UnitPrice,
-                        quantity = orderDetail.Quantity
+                        price = orderDetail.productPrice,
+                        quantity = orderDetail.productQuantity,
                     });
                 }
             }
@@ -95,9 +97,9 @@ namespace PointOfSaleSystem.ApiPost
                     {
                         orderDetails.Add(new OrderDetail
                         {
-                            ProductId = sqlite_datareader.GetInt32(0),
-                            Quantity = sqlite_datareader.GetInt32(1),
-                            UnitPrice = sqlite_datareader.GetInt32(2)
+                            productId = sqlite_datareader.GetInt32(0),
+                            productQuantity = sqlite_datareader.GetInt32(1),
+                            productPrice = sqlite_datareader.GetInt32(2)
                         });
                     }
                 }
@@ -113,10 +115,10 @@ namespace PointOfSaleSystem.ApiPost
         // Class to hold the order details
         public class OrderDetail
         {
-            public int order_id { get; set; }
-            public int ProductId { get; set; }
-            public int Quantity { get; set; }
-            public int UnitPrice { get; set; }
+            public int orderId { get; set; }
+            public int productId { get; set; }
+            public int productQuantity { get; set; }
+            public int productPrice { get; set; }
         }
 
 
