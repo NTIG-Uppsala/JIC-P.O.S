@@ -253,7 +253,7 @@ app.get('/api/sales/:product_id', async (req, res) => {
     }
 });
 
-// Post request to add restaurant sales data (restaurant will send restaurant_name, product_name, price, and quantity)
+// Post request to add restaurant sales data (restaurant will send restaurant_name, address, email, product_name, price, and quantity)
 app.post('/api/sales/:password', async (req, res) => {
     try {
         // Check if the password is correct
@@ -262,6 +262,9 @@ app.post('/api/sales/:password', async (req, res) => {
         }
 
         for (const saleData of req.body) {
+            // Find or create the restaurant and get the data
+            const restaurantData = await findOrCreateRestaurant(saleData);
+
             // Find or create the product with the correct price
             const [productData, productCreated] = await product.findOrCreate({
                 where: {
@@ -270,23 +273,24 @@ app.post('/api/sales/:password', async (req, res) => {
                 }
             });
 
-            // Find or create the sale record for the restaurant
-            const [restaurantSaleData, created] = await sale.findOrCreate({
-                where: {
-                    restaurant_name: saleData.restaurant_name,
-                    product_id: productData.id,
-                },
-                defaults: {
-                    quantity: saleData.quantity,  // Sets the quantity if the record is created
-                }
+            // Create the sale record for the restaurant
+            const restaurantSaleData = await sale.create({
+                restaurant_id: restaurantData.id,
+                total_price: saleData.price * saleData.quantity,
             });
 
-            // If the record already existed, increment the quantity
-            if (!created) {
-                restaurantSaleData.quantity += saleData.quantity;
-                await restaurantSaleData.save();
-            }
+            // Create the sale_product record for the sale
+            await sale_product.create({
+                sale_id: restaurantSaleData.id,
+                product_id: productData.id,
+                quantity: saleData.quantity,
+            });
+
+            // Update the total sales for the restaurant
+            restaurantData.total_sales += saleData.price * saleData.quantity;
+            await restaurantData.save();
         }
+
         res.status(200).send('Sales data processed successfully!');
     } catch (error) {
         console.error('Error processing sales data:', error);
@@ -294,6 +298,41 @@ app.post('/api/sales/:password', async (req, res) => {
     }
 });
 
+async function findOrCreateRestaurant(saleData) {
+    // Find or create the restaurant with the given name
+    const [restaurantData, restaurantCreated] = await restaurant.findOrCreate({
+        where: {
+            name: saleData.restaurant_name,
+        },
+        defaults: {
+            address: saleData.address,
+            email: saleData.email,
+            total_sales: saleData.total_sales || 0,  // Initialize total_sales if not provided
+        }
+    });
+
+    // If the restaurant already existed, update the address and email if they have changed
+    if (!restaurantCreated) {
+        let needsUpdate = false;
+
+        if (restaurantData.address !== saleData.address) {
+            restaurantData.address = saleData.address;
+            needsUpdate = true;
+        }
+
+        if (restaurantData.email !== saleData.email) {
+            restaurantData.email = saleData.email;
+            needsUpdate = true;
+        }
+
+        // Save updates if any fields were changed
+        if (needsUpdate) {
+            await restaurantData.save();
+        }
+    }
+
+    return restaurantData;
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
