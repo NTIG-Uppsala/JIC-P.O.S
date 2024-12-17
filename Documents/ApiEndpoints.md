@@ -12,7 +12,16 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ### **GET Endpoints**
 
-#### 1. **Get All Products**
+#### 1. **Get API Docs**  
+**URL:** `/api/docs`  
+**Description:** This endpoint provides interactive documentation for the API. It includes a complete list of available endpoints, their request parameters, and response formats. You can also use this documentation to test the endpoints directly within the interface.  
+
+**Response Format:**  
+A web-based interface displaying the available endpoints, their descriptions, request parameters, response formats, and interactive tools for making API requests. 
+
+![/api/docs](images/ApiDocs.png)
+
+#### 2. **Get All Products**
 **URL:** `/api/products`  
 **Description:** Retrieves a list of all products from the database.  
 **Response Format:**  
@@ -33,7 +42,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ---
 
-#### 2. **Get All Sales**
+#### 3. **Get All Sales**
 **URL:** `/api/sales`  
 **Description:** Retrieves a list of all sales from the database.  
 **Response Format:**  
@@ -54,7 +63,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ---
 
-#### 3. **Get Sales for a Specific Product**
+#### 4. **Get Sales for a Specific Product**
 **URL:** `/api/sales/:product_id`  
 **Description:** Retrieves sales data for a specific product by its `product_id`.  
 **Example Request:** `/api/sales/1`  
@@ -73,7 +82,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ---
 
-#### 4. **Get Total Sales**
+#### 5. **Get Total Sales**
 **URL:** `/api/sales/income`  
 **Description:** Calculates and retrieves the total income across all restaurants.  
 **Response Format:**  
@@ -85,7 +94,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ---
 
-#### 5. **Get Total Sales for a Specific Restaurant**
+#### 6. **Get Total Sales for a Specific Restaurant**
 **URL:** `/API/sales/income:restaurant_name`  
 **Description:** Retrieves total income for a specific restaurant.  
 **Example Request:** `/API/sales/income/Restaurant%20A`  
@@ -98,7 +107,7 @@ Replace `<ipaddress>` with the IP address of the machine where the API is runnin
 
 ---
 
-#### 6. **Get all restaurants**
+#### 7. **Get all restaurants**
 **URL:** `/API/restaurants`
 **Description:** Retrieves a list of all restaurants and restaurant information.  
 **Response Format:**
