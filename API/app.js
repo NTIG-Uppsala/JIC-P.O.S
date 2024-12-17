@@ -192,7 +192,7 @@ app.get('/api/sales/income', async (req, res) => {
         });
 
         // Return the total sales as JSON
-        res.json({ total_income: totalIncome });
+        res.json({ total_income: totalIncome + ' SEK' });
     } catch (error) {
         console.error('Error fetching total sales:', error);
         res.status(500).send('Unable to fetch total sales');
@@ -203,20 +203,21 @@ app.get('/api/sales/income', async (req, res) => {
 app.get('/api/sales/income/:restaurant_id', async (req, res) => {
     try {
         const restaurant_id = req.params.restaurant_id;
-        const restaurant = await restaurant.findByPk(restaurant_id);
+        const restaurant_name = await restaurant.findByPk(restaurant_id);
         // Fetch all sales from the database
         const income = await sale.findAll({
             where: { restaurant_id: restaurant_id },
             attributes: ['total_price'],
         });
 
+        let totalIncome = 0;
         // Calculate the total income
         income.forEach(sale => {
             totalIncome += sale.total_price;
         });
 
         // Return the total sales as JSON
-        res.json({ total_income: totalIncome + 'SEK for restaurant ' + restaurant.name });
+        res.json({ total_income: totalIncome + ' SEK for restaurant ' + restaurant_name.name });
     } catch (error) {
         console.error('Error fetching total sales:', error);
         res.status(500).send('Unable to fetch total sales');
