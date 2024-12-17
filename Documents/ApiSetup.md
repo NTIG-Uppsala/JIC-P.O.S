@@ -36,29 +36,11 @@ This guide outlines how to deploy and configure the API via the commandline. For
    ```
 
 4. **Create a `.env` File**  
+   If you previously created a `.env` file before cloning the project and it was added to `.gitignore`, you will need to create it again.
 
-   The API requires specific environment variables to run correctly. You can find the required structure in the [`.env.example`](../API/.env.example) file.
+   To create the .env file follow the instructions in [Create the `.env` file](/Documents/ApiDatabaseSetup.md#create-the-env-file)
 
-   In the root directory of the project (where `app.js` is located), create a `.env` file and add the necessary variables.
 
-   You can create and set up the `.env` file via the command line with the following steps:
-
-   1. Navigate to the root directory of the project:
-      ```bash
-      cd <project_directory>
-      ```
-
-   2. Copy the `.env.example` file to `.env`:
-      ```bash
-      cp .env.example .env
-      ```
-
-   3. Open the `.env` file in your preferred text editor (e.g., nano):
-      ```bash
-      nano .env
-      ```
-
-   4. Modify the values as needed and save the changes.
 
 5. **Start the API**  
    Run the following command to start the server:
