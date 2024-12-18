@@ -2,7 +2,7 @@
 
 ### Base URL
 The main API endpoint is as follows:  
-Replace `<ipaddress> and <port>` with the IP address and the port of the machine where the API is running.
+Replace `<ipaddress>` and `<port>` with the IP address and the port of the machine where the API is running.
 
 ```
 <ipaddress>:<port>/api/
